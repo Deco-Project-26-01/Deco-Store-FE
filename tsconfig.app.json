@@ -17,8 +17,9 @@
 		"jsx": "react-jsx",
 
 		/* Alias */
-		"baseUrl": "./src",
+		"baseUrl": ".",
 		"paths": {
+			"@/*": ["src/*"],
 			"@assets/*": ["assets/*"],
 			"@components/*": ["components/*"],
 			"@hooks/*": ["hooks/*"],
