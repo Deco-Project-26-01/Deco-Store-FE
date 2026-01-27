@@ -145,7 +145,7 @@ export const Text: Story = {
 	args: {
 		type: 'button',
 		variant: 'text',
-		size: 'medium',
+		size: 'small',
 		children: 'Button',
 		isDisabled: false,
 	},
