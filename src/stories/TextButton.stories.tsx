@@ -43,7 +43,7 @@ const meta = {
 			options: ['small', 'medium', 'fullSmall', 'fullMedium'],
 		},
 		children: { control: 'text', description: '버튼 내용' },
-		isDisabled: { control: 'boolean', description: '버튼 비활성화 여부' },
+		disabled: { control: 'boolean', description: '버튼 비활성화 여부' },
 	},
 	args: { onClick: fn() },
 } satisfies Meta<typeof TextButton>;
@@ -57,7 +57,7 @@ export const Dark_Small: Story = {
 		variant: 'dark',
 		size: 'small',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -67,7 +67,7 @@ export const Dark_Medium: Story = {
 		variant: 'dark',
 		size: 'medium',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -77,7 +77,7 @@ export const Dark_Full_Small: Story = {
 		variant: 'dark',
 		size: 'fullSmall',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -87,7 +87,7 @@ export const Dark_Full_Medium: Story = {
 		variant: 'dark',
 		size: 'fullMedium',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -97,7 +97,7 @@ export const Light_Small: Story = {
 		variant: 'light',
 		size: 'small',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -107,7 +107,7 @@ export const Light_Medium: Story = {
 		variant: 'light',
 		size: 'medium',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -117,7 +117,7 @@ export const Light_Full_Small: Story = {
 		variant: 'light',
 		size: 'fullSmall',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -127,7 +127,7 @@ export const Light_Full_Medium: Story = {
 		variant: 'light',
 		size: 'fullMedium',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -137,7 +137,7 @@ export const Outlined: Story = {
 		variant: 'outlined',
 		size: 'medium',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -147,7 +147,7 @@ export const Text: Story = {
 		variant: 'text',
 		size: 'small',
 		children: 'Button',
-		isDisabled: false,
+		disabled: false,
 	},
 };
 
@@ -157,6 +157,6 @@ export const Disabled: Story = {
 		variant: 'light',
 		size: 'small',
 		children: 'Button',
-		isDisabled: true,
+		disabled: true,
 	},
 };

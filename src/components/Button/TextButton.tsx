@@ -4,12 +4,9 @@ type ButtonVariant = 'dark' | 'light' | 'gray' | 'outlined' | 'text';
 type ButtonSize = 'small' | 'medium' | 'fullSmall' | 'fullMedium';
 
 interface ITextButtonProps extends ComponentPropsWithoutRef<'button'> {
-	type: 'button' | 'submit' | 'reset';
 	variant: ButtonVariant;
 	size: ButtonSize;
 	children: string;
-	onClick: React.MouseEventHandler<HTMLButtonElement>;
-	isDisabled: boolean;
 }
 
 const small = 'px-md py-sm';
@@ -45,18 +42,16 @@ const buttonVariant: Record<ButtonVariant, string> = {
 	text,
 };
 
-const Button = ({
-	type,
+const TextButton = ({
+	type = 'button',
 	variant,
 	size,
 	children,
-	onClick,
-	isDisabled,
+	...rest
 }: ITextButtonProps) => {
 	return (
 		<button
 			type={type}
-			onClick={onClick}
 			className={`
 				text-titleBase
 				rounded-xs
@@ -64,11 +59,11 @@ const Button = ({
 				${buttonSize[size]}
 				${disabled}
 				flex items-center justify-center`}
-			disabled={isDisabled}
+			{...rest}
 		>
 			{children}
 		</button>
 	);
 };
 
-export default Button;
+export default TextButton;
