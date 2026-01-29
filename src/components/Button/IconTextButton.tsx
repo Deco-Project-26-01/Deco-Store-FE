@@ -7,7 +7,6 @@ interface IIconTextButtonProps extends ComponentPropsWithoutRef<'button'> {
 	variant: ButtonVariant;
 	size: ButtonSize;
 	iconPath: string;
-	iconAlt: string;
 	children: string;
 }
 
@@ -36,16 +35,17 @@ const buttonVariant: Record<ButtonVariant, string> = {
 };
 
 const IconTextButton = ({
+	type = 'button',
 	variant,
 	size,
 	iconPath,
-	iconAlt,
 	children,
 	onClick,
+	...rest
 }: IIconTextButtonProps) => {
 	return (
 		<button
-			type="button"
+			type={type}
 			onClick={onClick}
 			className={`
 				text-titleBase
@@ -54,8 +54,13 @@ const IconTextButton = ({
 				duration
 				${buttonVariant[variant]}
 				${buttonSize[size]}`}
+			{...rest}
 		>
-			<img src={iconPath} alt={iconAlt} className="w-[1.6rem] h-[1.6rem]" />
+			<img
+				src={iconPath}
+				aria-hidden={true}
+				className="w-[1.6rem] h-[1.6rem]"
+			/>
 
 			{children}
 		</button>

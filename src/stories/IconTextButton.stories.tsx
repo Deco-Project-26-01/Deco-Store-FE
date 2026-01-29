@@ -35,23 +35,23 @@ const meta = {
 	],
 	argTypes: {
 		type: {
-			control: { type: 'select' },
+			control: { type: 'select', options: ['button', 'submit', 'reset'] },
 			description: 'HTML 버튼 타입 설정',
-			options: ['button', 'submit', 'reset'],
 		},
 		variant: {
-			control: { type: 'select' },
+			control: {
+				type: 'select',
+				options: ['dark', 'light', 'textGray', 'textDark'],
+			},
 			description: '버튼 테마 설정',
-			options: ['dark', 'light', 'textGray', 'textDark'],
 		},
 		size: {
-			control: { type: 'select' },
+			control: { type: 'select', options: ['small', 'medium'] },
 			description: '버튼 크기 설정',
-			options: ['small', 'medium'],
 		},
 		children: { control: 'text', description: '버튼 내용' },
-		iconPath: { control: { type: 'text', description: '아이콘 경로' } },
-		iconAlt: { control: { type: 'text', description: '아이콘 대체 텍스트' } },
+		iconPath: { control: 'text', description: '아이콘 경로' },
+		onClick: { action: 'clicked', description: '버튼 클릭 이벤트 핸들러' },
 	},
 	args: { onClick: fn() },
 } satisfies Meta<typeof IconTextButton>;
@@ -66,7 +66,6 @@ export const Dark_Small: Story = {
 		size: 'small',
 		children: 'Icon Button',
 		iconPath: iconBookWhite,
-		iconAlt: 'book icon',
 	},
 };
 
@@ -77,7 +76,6 @@ export const Dark_Medium: Story = {
 		size: 'medium',
 		children: 'Icon Button',
 		iconPath: iconBookWhite,
-		iconAlt: 'book icon',
 	},
 };
 
@@ -88,7 +86,6 @@ export const Light_Small: Story = {
 		size: 'small',
 		children: 'Icon Button',
 		iconPath: iconPlusPrimaryDark,
-		iconAlt: 'plus icon',
 	},
 };
 
@@ -99,7 +96,6 @@ export const Light_Medium: Story = {
 		size: 'medium',
 		children: 'Icon Button',
 		iconPath: iconPlusPrimaryDark,
-		iconAlt: 'plus icon',
 	},
 };
 
@@ -110,7 +106,6 @@ export const Text_Gray: Story = {
 		size: 'small',
 		children: 'Icon Button',
 		iconPath: iconInstagramGray,
-		iconAlt: 'instagram icon',
 	},
 };
 
@@ -121,6 +116,5 @@ export const Text_Dark: Story = {
 		size: 'small',
 		children: 'Icon Button',
 		iconPath: iconPlusPrimaryDark,
-		iconAlt: 'plus icon',
 	},
 };
