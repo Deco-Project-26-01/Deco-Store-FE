@@ -9,7 +9,6 @@ interface IIconTextButtonProps extends ComponentPropsWithoutRef<'button'> {
 	iconPath: string;
 	iconAlt: string;
 	children: string;
-	onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const small = 'px-sm py-xs';
@@ -22,9 +21,12 @@ const buttonSize: Record<ButtonSize, string> = {
 
 const dark =
 	'bg-primaryDark text-white hover:bg-primaryBase focus-visible:outline focus-visible:outline-secondaryBase';
-const light = '';
-const textDark = '';
-const textGray = '';
+const light =
+	'bg-base100 text-primaryDark hover:bg-base200 focus-visible:outline focus-visible:outline-primaryDark';
+const textDark =
+	'bg-transparent text-primaryDark hover:underline focus-visible:outline focus-visible:outline-primaryDark';
+const textGray =
+	'bg-transparent text-base300 hover:text-base100 focus-visible:outline focus-visible:outline-base300';
 
 const buttonVariant: Record<ButtonVariant, string> = {
 	dark,
@@ -45,10 +47,17 @@ const IconTextButton = ({
 		<button
 			type="button"
 			onClick={onClick}
-			className={`${buttonVariant[variant]} ${buttonSize[size]}`}
+			className={`
+				text-titleBase
+				rounded-xs
+				flex justify-center items-center gap-sm
+				duration
+				${buttonVariant[variant]}
+				${buttonSize[size]}`}
 		>
-			<img src={iconPath} alt={iconAlt} />
-			<span>{children}</span>
+			<img src={iconPath} alt={iconAlt} className="w-[1.6rem] h-[1.6rem]" />
+
+			{children}
 		</button>
 	);
 };

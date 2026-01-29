@@ -181,3 +181,14 @@ img {
 body {
 	font-family: 'Inter';
 }
+
+/* Tailwind Variables */
+@layer components {
+	.duration {
+		@apply transition duration-300;
+	}
+
+	.ellipsis {
+		@apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
+	}
+}
