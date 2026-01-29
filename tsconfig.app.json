@@ -19,7 +19,6 @@
 		/* Alias */
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"],
 			"@assets/*": ["src/assets/*"],
 			"@components/*": ["src/components/*"],
 			"@hooks/*": ["src/hooks/*"],
@@ -29,7 +28,8 @@
 			"@stories/*": ["src/stories/*"],
 			"@tests/*": ["src/tests/*"],
 			"#types/*": ["src/types/*"],
-			"@utils/*": ["src/utils/*"]
+			"@utils/*": ["src/utils/*"],
+			"@/*": ["src/*"],
 		},
 
 		/* Linting */
