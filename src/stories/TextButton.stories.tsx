@@ -12,35 +12,43 @@ const meta = {
 		layout: 'centered',
 	},
 	decorators: [
-		(Story) => (
-			<div
-				style={{
-					width: '300px',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
-			>
-				<Story />
-			</div>
-		),
+		(Story, context) => {
+			const hasDarkBg = context.args.variant === 'outlined';
+			return (
+				<div
+					style={{
+						backgroundColor: hasDarkBg ? '#004127' : '#FFF',
+						width: '400px',
+						padding: '40px 80px',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<Story />
+				</div>
+			);
+		},
 	],
 	tags: ['autodocs'],
 	argTypes: {
 		type: {
-			control: { type: 'select' },
+			control: { type: 'select', options: ['button', 'submit', 'reset'] },
 			description: 'HTML 버튼 타입 설정',
-			options: ['button', 'submit', 'reset'],
 		},
 		variant: {
-			control: { type: 'select' },
+			control: {
+				type: 'select',
+				options: ['dark', 'light', 'gray', 'outlined', 'text'],
+			},
 			description: '버튼 테마 설정',
-			options: ['dark', 'light', 'gray', 'outlined', 'text'],
 		},
 		size: {
-			control: { type: 'select' },
+			control: {
+				type: 'select',
+				options: ['small', 'medium', 'fullSmall', 'fullMedium'],
+			},
 			description: '버튼 크기 설정',
-			options: ['small', 'medium', 'fullSmall', 'fullMedium'],
 		},
 		children: { control: 'text', description: '버튼 내용' },
 		disabled: { control: 'boolean', description: '버튼 비활성화 여부' },
