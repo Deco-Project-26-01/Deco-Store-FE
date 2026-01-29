@@ -18,6 +18,7 @@ const meta = {
 				<div
 					style={{
 						backgroundColor: hasDarkBg ? '#004127' : '#FFF',
+						width: '400px',
 						padding: '40px 80px',
 						display: 'flex',
 						justifyContent: 'center',
