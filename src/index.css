@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.root {
-	min-width: 320px;
-}
-
 /* Reset */
 html,
 body,
@@ -141,20 +137,6 @@ textarea {
 	all: unset;
 }
 
-input {
-	all: unset;
-}
-
-/* search input의 기본 clear 버튼 제거 */
-input[type='search']::-webkit-search-cancel-button {
-	-webkit-appearance: none;
-}
-
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-results-button {
-	display: none;
-}
-
 /* Layout */
 body {
 	min-height: 100vh;
@@ -207,10 +189,6 @@ body {
 	}
 
 	.ellipsis {
-		@apply min-w-[0] overflow-hidden text-ellipsis whitespace-nowrap;
-	}
-
-	.full-inner {
-		@apply max-w-[1280px] mx-auto;
+		@apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
 	}
 }
