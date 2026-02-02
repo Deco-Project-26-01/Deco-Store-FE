@@ -1,4 +1,3 @@
-// Replace your-framework with the framework you are using, e.g. react-vite, nextjs, nextjs-vite, etc.
 import SearchForm from '@components/Search/SearchForm';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
