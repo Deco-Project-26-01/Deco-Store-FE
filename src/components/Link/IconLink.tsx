@@ -40,21 +40,18 @@ const IconLink = ({
 			</span>
 			{cartNum > 0 && (
 				<span
-					data-count={cartNum > 9 ? '9+' : cartNum}
 					className={`
             absolute top-[0] right-[0] -translate-y-1/2
             w-[1.2rem] h-[1.2rem]
             bg-secondaryBase
             rounded-[100%]
-            
-						after:content-[attr(data-count)]
-						after:block
-						after:text-[6px] after:font-semibold after:leading-[1.2rem]
-						after:text-center
+            text-[6px] font-semibold leading-[1.2rem]
+            text-center
             `}
 					aria-hidden="true"
-					role="presentation"
-				/>
+				>
+					{cartNum > 9 ? '9+' : cartNum}
+				</span>
 			)}
 		</Link>
 	);
