@@ -15,15 +15,15 @@ const SearchInput = ({ value, onIconClick, ...rest }: ISearchInputProps) => {
       `}
 		>
 			<input
-				id="header-search"
 				type="search"
-				placeholder=""
+				aria-label="Search for keyword"
 				value={value}
 				maxLength={50}
 				className={`
           text-white text-bodyMedium
           grow
           ellipsis
+				placeholder:text-base300
         `}
 				{...rest}
 			/>
