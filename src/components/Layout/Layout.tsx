@@ -1,5 +1,4 @@
-import Header from '@components/Header/Header';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
 	const { pathname } = useLocation();
@@ -7,7 +6,6 @@ const Layout = () => {
 
 	return (
 		<>
-			<Header type={isCheckoutPage ? 'checkout' : 'default'} />
 			<Outlet />
 		</>
 	);
