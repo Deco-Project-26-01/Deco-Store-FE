@@ -21,7 +21,6 @@ const SearchForm = () => {
 				Search for keywords
 			</label>
 			<SearchInput
-				id="header-search"
 				data-testid="header-search"
 				value={keyword}
 				onChange={(e) => setKeyword(e.target.value)}
