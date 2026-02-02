@@ -191,8 +191,4 @@ body {
 	.ellipsis {
 		@apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
 	}
-
-	.full-width-bg {
-		@apply max-w-[1280px] ml-auto mr-auto relative before:absolute before:content-[''] before:w-[100vw] before:inset-y-[0] before:left-1/2 before:-translate-x-1/2 before:-z-10;
-	}
 }
