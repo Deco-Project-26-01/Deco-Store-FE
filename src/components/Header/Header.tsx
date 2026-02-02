@@ -6,14 +6,19 @@ import iconUserWhite from '@assets/icons/icon-user-white.svg';
 import iconCartWhite from '@assets/icons/icon-cart-white.svg';
 import iconSupportWhite from '@assets/icons/icon-support-white.svg';
 
-type HeaderVariant = 'default' | 'checkout';
-
-interface IHeaderProps extends ComponentPropsWithoutRef<'header'> {
-	type: HeaderVariant;
+interface IDefaultHeaderProps extends ComponentPropsWithoutRef<'header'> {
+	type: 'default';
 	cartNum?: number;
 }
 
-const Header = ({ type = 'default', cartNum = 0 }: IHeaderProps) => {
+interface ICheckoutHeaderProps extends ComponentPropsWithoutRef<'header'> {
+	type: 'checkout';
+	cartNum?: never;
+}
+
+type HeaderProps = IDefaultHeaderProps | ICheckoutHeaderProps;
+
+const Header = ({ type = 'default', cartNum = 0 }: HeaderProps) => {
 	return (
 		<header className="bg-primaryDark">
 			<div
