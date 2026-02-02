@@ -10,13 +10,12 @@ const meta = {
 	},
 	tags: ['autodocs'],
 	argTypes: {
-		type: {
-			control: { type: 'select', options: ['default', 'checkout'] },
-			description: 'Header 타입 설정',
-		},
+		type: { table: { disable: true } },
+
 		cartNum: {
-			control: 'number',
+			control: { type: 'number' },
 			description: 'Cart에 상품이 있는 경우, 상품의 개수',
+			if: { arg: 'type', neq: 'checkout' },
 		},
 	},
 } satisfies Meta<typeof Header>;
