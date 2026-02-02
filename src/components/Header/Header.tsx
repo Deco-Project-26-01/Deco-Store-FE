@@ -5,7 +5,6 @@ import type { ComponentPropsWithoutRef } from 'react';
 import iconUserWhite from '@assets/icons/icon-user-white.svg';
 import iconCartWhite from '@assets/icons/icon-cart-white.svg';
 import iconSupportWhite from '@assets/icons/icon-support-white.svg';
-import SearchForm from '@components/Search/SearchForm';
 
 interface IDefaultHeaderProps extends ComponentPropsWithoutRef<'header'> {
 	type: 'default';
@@ -19,21 +18,39 @@ interface ICheckoutHeaderProps extends ComponentPropsWithoutRef<'header'> {
 
 type HeaderProps = IDefaultHeaderProps | ICheckoutHeaderProps;
 
-const Header = ({ type, cartNum = 0 }: HeaderProps) => {
+const Header = ({ type = 'default', cartNum = 0 }: HeaderProps) => {
 	return (
-		<header className="w-full bg-primaryDark">
+		<header className="bg-primaryDark">
 			<div
 				className={`
 				full-inner
 				px-3xl py-lg box-border
-				flex justify-between items-center gap-2xl
+				flex justify-between items-center gap-3xl
 			`}
 			>
 				<LogoLink variant="white" />
 				<h1 className="sr-only">Deco</h1>
 				{type === 'default' && (
 					<>
-						<SearchForm />
+						<div className="w-[60rem]">
+							<form
+								role="search"
+								onSubmit={(e) => {
+									e.preventDefault();
+								}}
+							>
+								<div>
+									<label htmlFor="header-search" className="sr-only">
+										Search for keywords
+									</label>
+									<input id="header-search" type="search" placeholder="" />
+								</div>
+								<button type="submit">
+									<span className="sr-only">Search</span>
+									<img src="" alt="" aria-hidden="true" />
+								</button>
+							</form>
+						</div>
 						<nav className="flex-shrink-0">
 							<ul className="flex items-center gap-xl">
 								<li>
