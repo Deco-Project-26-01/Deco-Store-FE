@@ -18,6 +18,7 @@ const LogoLink = ({ variant }: ILinkProps) => {
         w-[12rem] h-[4.8rem]
         px-lg py-[1.4rem]
         duration
+				flex-shrink-0
         focus-visible:rounded-xs
         focus-visible:outline
         ${variant === 'white' ? 'focus-visible:outline-white' : 'focus-visible:outline-base300'}
