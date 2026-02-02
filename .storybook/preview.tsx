@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
+import { MemoryRouter } from 'react-router-dom';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -13,7 +14,6 @@ const preview: Preview = {
 				date: /Date$/i,
 			},
 		},
-
 		a11y: {
 			// 'todo' - show a11y violations in the test UI only
 			// 'error' - fail CI on a11y violations
@@ -24,6 +24,13 @@ const preview: Preview = {
 			},
 		},
 	},
+	decorators: [
+		(Story) => (
+			<MemoryRouter>
+				<Story />
+			</MemoryRouter>
+		),
+	],
 };
 
 export default preview;
