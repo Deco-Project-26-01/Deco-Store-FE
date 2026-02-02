@@ -16,7 +16,7 @@ const SearchInput = ({ value, onIconClick, ...rest }: ISearchInputProps) => {
 		>
 			<input
 				type="search"
-				aria-label="Search for keyword"
+				aria-label="Search for keywords"
 				value={value}
 				maxLength={50}
 				className={`

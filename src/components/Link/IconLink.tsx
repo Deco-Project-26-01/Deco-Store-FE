@@ -54,7 +54,6 @@ const IconLink = ({
 						after:text-center
             `}
 					aria-hidden="true"
-					role="presentation"
 				/>
 			)}
 		</Link>

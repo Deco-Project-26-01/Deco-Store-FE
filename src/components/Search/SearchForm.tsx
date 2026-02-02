@@ -17,11 +17,7 @@ const SearchForm = () => {
 					border-b-1 [border-bottom-style:solid] border-white
 				`}
 		>
-			<label htmlFor="header-search" className="sr-only">
-				Search for keywords
-			</label>
 			<SearchInput
-				id="header-search"
 				data-testid="header-search"
 				value={keyword}
 				onChange={(e) => setKeyword(e.target.value)}
