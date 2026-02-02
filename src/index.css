@@ -152,6 +152,21 @@ img {
 	vertical-align: top;
 }
 
+/* input */
+input {
+	all: unset;
+}
+
+/* search input의 기본 clear 버튼 제거 */
+input[type='search']::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-results-button {
+	display: none;
+}
+
 /* Theme for CSS Variables */
 :root {
 	--color-primary-light: #def7e5;
@@ -193,7 +208,7 @@ body {
 	}
 
 	.ellipsis {
-		@apply min-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
+		@apply min-w-[0] overflow-hidden text-ellipsis whitespace-nowrap;
 	}
 
 	.full-inner {

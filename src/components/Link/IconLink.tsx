@@ -23,8 +23,9 @@ const IconLink = ({
         text-white
         relative
         flex flex-col items-center gap-sm
+				active:scale-95 active:rounded-xs active:bg-white/10
         focus-visible:rounded-xs
-        focus-visible:outline focus-visible:outline-white focus-visible:outline-offset-4
+        focus-visible:outline focus-visible:outline-white focus-visible:outline-offset-8
     `}
 			aria-label={cartNum > 0 ? `${title}, ${cartNum} items in cart` : title}
 			{...rest}
@@ -40,18 +41,21 @@ const IconLink = ({
 			</span>
 			{cartNum > 0 && (
 				<span
+					data-count={cartNum > 9 ? '9+' : cartNum}
 					className={`
             absolute top-[0] right-[0] -translate-y-1/2
             w-[1.2rem] h-[1.2rem]
             bg-secondaryBase
             rounded-[100%]
-            text-[6px] font-semibold leading-[1.2rem]
-            text-center
+            
+						after:content-[attr(data-count)]
+						after:block
+						after:text-[6px] after:font-semibold after:leading-[1.2rem]
+						after:text-center
             `}
 					aria-hidden="true"
-				>
-					{cartNum > 9 ? '9+' : cartNum}
-				</span>
+					role="presentation"
+				/>
 			)}
 		</Link>
 	);
