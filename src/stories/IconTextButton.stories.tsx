@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { fn } from 'storybook/test';
 
-import IconTextButton from '@/components/Button/IconTextButton';
-import iconPlusPrimaryDark from '@/assets/icons/icon-plus-primaryDark.svg';
-import iconBookWhite from '@/assets/icons/icon-book-white.svg';
-import iconInstagramGray from '@/assets/icons/icon-instagram-gray.svg';
+import iconBookWhite from '@assets/icons/icon-book-white.svg';
+import iconInstagramGray from '@assets/icons/icon-instagram-gray.svg';
+import iconPlusPrimaryDark from '@assets/icons/icon-plus-primaryDark.svg';
+import IconTextButton from '@components/Button/IconTextButton';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
