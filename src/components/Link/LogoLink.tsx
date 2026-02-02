@@ -14,7 +14,6 @@ const LogoLink = ({ variant }: ILinkProps) => {
 			to="/"
 			aria-label="To DECO Store Home"
 			className={`
-        inline-block
         w-[12rem] h-[4.8rem]
         px-lg py-[1.4rem]
         duration
@@ -26,7 +25,6 @@ const LogoLink = ({ variant }: ILinkProps) => {
 			<img
 				src={variant === 'white' ? logoWhite : logoBase300}
 				alt=""
-				className="w-full h-full object-contain"
 				aria-hidden="true"
 			/>
 		</Link>
