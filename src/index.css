@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.root {
-	min-width: 320px;
-}
-
 /* Reset */
 html,
 body,
