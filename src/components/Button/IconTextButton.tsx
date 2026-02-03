@@ -25,7 +25,7 @@ const light =
 const textDark =
 	'bg-transparent text-primaryDark hover:underline focus-visible:outline focus-visible:outline-primaryDark';
 const textGray =
-	'bg-transparent text-base300 hover:text-base100 focus-visible:outline focus-visible:outline-base300';
+	'bg-transparent text-base400 hover:text-base100 focus-visible:outline focus-visible:outline-base400';
 
 const buttonVariant: Record<ButtonVariant, string> = {
 	dark,
