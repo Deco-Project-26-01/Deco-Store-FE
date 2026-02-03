@@ -146,6 +146,11 @@ body {
 	min-height: 100vh;
 }
 
+/* footer */
+footer {
+	all: unset;
+}
+
 /* img */
 img {
 	max-width: 100%;
