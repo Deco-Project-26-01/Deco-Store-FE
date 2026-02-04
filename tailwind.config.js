@@ -14,6 +14,7 @@ export default {
 			base100: '#F5F5F5',
 			base200: '#E6E6E6',
 			base300: '#CFCFCF',
+			base400: '#909090',
 			base500: '#7D7D7D',
 			base700: '#4F4F4F',
 			base900: '#1A1A1A',

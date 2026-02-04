@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.root {
-	min-width: 320px;
-}
-
 /* Reset */
 html,
 body,
@@ -144,6 +140,11 @@ textarea {
 /* Layout */
 body {
 	min-height: 100vh;
+}
+
+/* footer */
+footer {
+	all: unset;
 }
 
 /* img */

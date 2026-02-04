@@ -1,11 +1,11 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
-type ButtonVariant = 'dark' | 'light' | 'textDark' | 'textGray';
-type ButtonSize = 'small' | 'medium';
+type IconTextLinkVariant = 'dark' | 'light' | 'textDark' | 'textGray';
+type IconTextLinkSize = 'small' | 'medium';
 
-interface IIconTextButtonProps extends ComponentPropsWithoutRef<'button'> {
-	variant: ButtonVariant;
-	size: ButtonSize;
+interface IIconTextLinkProps extends ComponentPropsWithoutRef<'a'> {
+	variant: IconTextLinkVariant;
+	size: IconTextLinkSize;
 	iconPath: string;
 	children: string;
 }
@@ -13,7 +13,7 @@ interface IIconTextButtonProps extends ComponentPropsWithoutRef<'button'> {
 const small = 'px-sm py-xs';
 const medium = 'px-md py-sm';
 
-const buttonSize: Record<ButtonSize, string> = {
+const linkSize: Record<IconTextLinkSize, string> = {
 	small,
 	medium,
 };
@@ -27,33 +27,29 @@ const textDark =
 const textGray =
 	'bg-transparent text-base400 hover:text-base100 focus-visible:outline focus-visible:outline-base400';
 
-const buttonVariant: Record<ButtonVariant, string> = {
+const linkVariant: Record<IconTextLinkVariant, string> = {
 	dark,
 	light,
 	textDark,
 	textGray,
 };
 
-const IconTextButton = ({
-	type = 'button',
+const IconTextLink = ({
 	variant,
 	size,
 	iconPath,
 	children,
-	onClick,
 	...rest
-}: IIconTextButtonProps) => {
+}: IIconTextLinkProps) => {
 	return (
-		<button
-			type={type}
-			onClick={onClick}
+		<a
 			className={`
-				text-titleBase
-				rounded-xs
-				flex justify-center items-center gap-sm
-				duration
-				${buttonVariant[variant]}
-				${buttonSize[size]}`}
+        text-titleBase
+        rounded-xs
+        flex justify-center items-center gap-sm
+        duration
+        ${linkVariant[variant]}
+        ${linkSize[size]}`}
 			{...rest}
 		>
 			<img
@@ -62,10 +58,9 @@ const IconTextButton = ({
 				aria-hidden={true}
 				className="w-[1.6rem] h-[1.6rem]"
 			/>
-
 			{children}
-		</button>
+		</a>
 	);
 };
 
-export default IconTextButton;
+export default IconTextLink;

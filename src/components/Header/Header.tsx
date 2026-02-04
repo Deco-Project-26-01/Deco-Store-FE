@@ -21,20 +21,19 @@ type HeaderProps = IDefaultHeaderProps | ICheckoutHeaderProps;
 
 const Header = ({ type, cartNum = 0 }: HeaderProps) => {
 	return (
-		<header className="w-full bg-primaryDark">
+		<header className="shrink-0 mb-auto min-w-max bg-primaryDark">
 			<div
 				className={`
-				full-inner
-				px-3xl py-lg box-border
-				flex justify-between items-center gap-2xl
-			`}
+					full-inner
+					px-3xl py-lg box-border
+					flex justify-between items-center gap-2xl
+				`}
 			>
 				<LogoLink variant="white" />
 				<h1 className="sr-only">Deco</h1>
 				{type === 'default' && (
 					<>
 						<SearchForm />
-
 						<nav className="flex-shrink-0">
 							<ul className="flex items-center gap-xl">
 								<li>
