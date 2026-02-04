@@ -58,6 +58,7 @@ const IconTextButton = ({
 		>
 			<img
 				src={iconPath}
+				alt=""
 				aria-hidden={true}
 				className="w-[1.6rem] h-[1.6rem]"
 			/>

@@ -43,7 +43,7 @@ const meta = {
 			control: { type: 'select', options: ['small', 'medium'] },
 			description: '링크 크기 설정',
 		},
-		children: { control: 'text', description: '버튼 내용' },
+		children: { control: 'text', description: '링크 내용' },
 		iconPath: { control: 'text', description: '아이콘 경로' },
 	},
 } satisfies Meta<typeof IconTextLink>;

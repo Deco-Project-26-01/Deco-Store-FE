@@ -39,7 +39,6 @@ const IconTextLink = ({
 	size,
 	iconPath,
 	children,
-	onClick,
 	...rest
 }: IIconTextLinkProps) => {
 	return (
@@ -55,6 +54,7 @@ const IconTextLink = ({
 		>
 			<img
 				src={iconPath}
+				alt=""
 				aria-hidden={true}
 				className="w-[1.6rem] h-[1.6rem]"
 			/>

@@ -41,7 +41,7 @@ const meta = {
 			},
 			description: '링크 크기 설정',
 		},
-		children: { control: 'text', description: '버튼 내용' },
+		children: { control: 'text', description: '링크 내용' },
 	},
 } satisfies Meta<typeof TextLink>;
 
