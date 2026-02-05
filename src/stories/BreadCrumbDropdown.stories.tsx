@@ -9,20 +9,22 @@ const meta = {
 		layout: 'centered',
 	},
 	decorators: [
-		(Story) => (
-			<div
-				style={{
-					width: '400px',
-					height: '400px',
-					padding: '40px 80px',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
-			>
-				<Story />
-			</div>
-		),
+		(Story, context) => {
+			const hasDarkBg = context.args.variant === 'secondary';
+			return (
+				<div
+					style={{
+						backgroundColor: hasDarkBg ? '#1E150E' : '#FFF',
+						padding: '40px 80px',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<Story />
+				</div>
+			);
+		},
 	],
 	tags: ['autodocs'],
 	argTypes: {
