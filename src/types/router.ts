@@ -1,4 +1,4 @@
-interface IRouteSiblings {
+export interface IRouteSiblings {
 	label: string;
 	path: string;
 }
