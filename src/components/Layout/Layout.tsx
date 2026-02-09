@@ -2,6 +2,7 @@ import type { IRouteHandle } from '#types/router';
 import BreadCrumb from '@components/BreadCrumb/BreadCrumb';
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
+import ProductsTab from '@components/Tab/ProductsTab';
 
 import { Outlet, useLocation, useMatches } from 'react-router-dom';
 
@@ -19,9 +20,16 @@ const Layout = () => {
 
 	return (
 		<div className="flex min-w-max min-h-screen flex-col">
-			<Header type={pathname.startsWith('checkout') ? 'checkout' : 'default'} />
+			<Header
+				type={pathname.startsWith('/checkout') ? 'checkout' : 'default'}
+			/>
 			<main className="grow">
+				{/* 상품 탭 */}
+				{!pathname.startsWith('/cart') && !pathname.startsWith('/checkout') && (
+					<ProductsTab />
+				)}
 				<div className="full-inner px-3xl py-2xl">
+					{/* 브레드크럼 */}
 					{pathname !== '/' && !pathname.startsWith('checkout') && (
 						<BreadCrumb variant="primary" items={breadCrumbs} />
 					)}
