@@ -1,12 +1,19 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 
 const useOutsideClick = (
 	ref: RefObject<HTMLElement | null>,
 	callback: () => void,
 ) => {
+	const savedCallback = useRef(callback);
+
+	useEffect(() => {
+		savedCallback.current = callback;
+	}, [callback]);
+
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent | TouchEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) callback();
+			if (ref.current && !ref.current.contains(e.target as Node))
+				savedCallback.current();
 		};
 
 		// 클릭 이벤트와 터치 이벤트 대응
@@ -18,7 +25,7 @@ const useOutsideClick = (
 			document.removeEventListener('mousedown', handleClickOutside);
 			document.removeEventListener('touchstart', handleClickOutside);
 		};
-	}, [ref, callback]);
+	}, [ref]);
 };
 
 export default useOutsideClick;

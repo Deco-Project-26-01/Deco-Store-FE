@@ -23,7 +23,6 @@ const BreadCrumb = ({ variant, items }: IBreadCrumbProps) => {
 				{items.map((breadCrumb, index) => {
 					// 마지막 요소인지 판단
 					const isLast = index === items.length - 1;
-					console.log(breadCrumb.siblings);
 
 					return (
 						<li

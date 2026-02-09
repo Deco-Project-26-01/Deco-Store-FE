@@ -35,9 +35,9 @@ const meta = {
 			},
 			description: '브레드크럼 드롭다운 테마 설정',
 		},
-		current: { control: 'text', description: '현재 페이지' },
+		current: { control: 'text', description: '현재 활성 된 페이지' },
 		siblings: { control: 'object', description: '형제 페이지 목록' },
-		children: { control: 'text', description: '현재 페이지' },
+		children: { control: 'text', description: '페이지 표시 텍스트' },
 	},
 } satisfies Meta<typeof BreadCrumbDropdown>;
 

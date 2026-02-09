@@ -19,10 +19,10 @@ const Layout = () => {
 
 	return (
 		<div className="flex min-w-max min-h-screen flex-col">
-			<Header type={pathname.includes('checkout') ? 'checkout' : 'default'} />
+			<Header type={pathname.startsWith('checkout') ? 'checkout' : 'default'} />
 			<main className="grow">
 				<div className="full-inner px-3xl py-2xl">
-					{pathname !== '/' && !pathname.includes('checkout') && (
+					{pathname !== '/' && !pathname.startsWith('checkout') && (
 						<BreadCrumb variant="primary" items={breadCrumbs} />
 					)}
 					<Outlet />
