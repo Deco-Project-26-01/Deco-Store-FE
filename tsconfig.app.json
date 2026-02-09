@@ -29,6 +29,7 @@
 			"@tests/*": ["src/tests/*"],
 			"#types/*": ["src/types/*"],
 			"@utils/*": ["src/utils/*"],
+			"@constants/*": ["src/constants/*"],
 			"@/*": ["src/*"],
 		},
 

@@ -1,16 +1,22 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from '@components/Layout/Layout';
 import Error from '@components/Error/Error';
-import Home from '@pages/Home/Home';
+import Layout from '@components/Layout/Layout';
+import { MYPAGE_SIBLINGS } from '@constants/siblings';
 import Cart from '@pages/Cart/Cart';
+import Home from '@pages/Home/Home';
+import Account from '@pages/Mypage/Account';
 import MyPage from '@pages/Mypage/Mypage';
+import Order from '@pages/Mypage/Order/Order';
+import OrderLayout from '@pages/Mypage/Order/OrderLayout';
+import Orders from '@pages/Mypage/Order/Orders';
 import Support from '@pages/Mypage/Support';
+import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Layout />,
 		errorElement: <Error />,
+		handle: { label: 'Home' },
 		children: [
 			// 홈
 			{
@@ -21,19 +27,48 @@ const router = createBrowserRouter([
 			{
 				path: 'cart',
 				element: <Cart />,
+				handle: { label: 'Cart' },
 			},
 			// 마이페이지
 			{
 				path: 'mypage',
-
+				handle: { label: 'My Page' },
 				children: [
 					{
 						index: true,
 						element: <MyPage />,
 					},
 					{
+						path: 'account',
+						element: <Account />,
+						handle: {
+							label: 'Account',
+							siblings: MYPAGE_SIBLINGS,
+						},
+					},
+					{
+						path: 'order',
+						element: <OrderLayout />,
+						handle: {
+							label: 'Orders',
+							siblings: MYPAGE_SIBLINGS,
+						},
+						children: [
+							{ index: true, element: <Orders /> },
+							{
+								path: ':_id',
+								element: <Order />,
+								handle: { label: 'Order' },
+							},
+						],
+					},
+					{
 						path: 'support',
 						element: <Support />,
+						handle: {
+							label: 'Support',
+							siblings: MYPAGE_SIBLINGS,
+						},
 					},
 				],
 			},
