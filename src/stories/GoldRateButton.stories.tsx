@@ -12,7 +12,6 @@ const meta = {
 	decorators: [
 		(Story) => (
 			<div
-				role="tablist"
 				style={{
 					backgroundColor: '#f5f5f5',
 					padding: '40px',

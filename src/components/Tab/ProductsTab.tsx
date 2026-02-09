@@ -27,35 +27,35 @@ const ProductsTab = () => {
 
 	return (
 		<nav className="min-w-max bg-base100">
-			<ul
-				role="tablist"
-				className="full-inner px-3xl flex items-center gap-2xl text-titleMedium text-base700"
-			>
-				{categories.map((category) => {
-					const isActive = getIsActive(category);
-					return (
-						<li key={category} role="presentation">
-							<Link
-								to={
-									category === 'All'
-										? '/'
-										: `/?products=${category.toLowerCase()}`
-								}
-								className={getStyle(isActive)}
-								role="tab"
-								aria-selected={isActive}
-								aria-current={isActive ? 'page' : undefined}
-							>
-								{category}
-							</Link>
-						</li>
-					);
-				})}
+			<div className="full-inner px-3xl flex items-center gap-2xl">
+				<ul
+					role="tablist"
+					className="flex items-center gap-2xl text-titleMedium text-base700"
+				>
+					{categories.map((category) => {
+						const isActive = getIsActive(category);
+						return (
+							<li key={category} role="presentation">
+								<Link
+									to={
+										category === 'All'
+											? '/'
+											: `/?products=${category.toLowerCase()}`
+									}
+									className={getStyle(isActive)}
+									role="tab"
+									aria-selected={isActive}
+									aria-current={isActive ? 'page' : undefined}
+								>
+									{category}
+								</Link>
+							</li>
+						);
+					})}
+				</ul>
 				{/* 금 시세 조회 버튼 영역 */}
-				<li role="presentation">
-					<GoldRateButton />
-				</li>
-			</ul>
+				<GoldRateButton />
+			</div>
 		</nav>
 	);
 };
