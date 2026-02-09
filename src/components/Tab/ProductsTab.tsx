@@ -18,7 +18,7 @@ const ProductsTab = () => {
     w-[12rem] py-[2.8rem]
     flex justify-center items-center
     duration
-    ${isActive && 'text-primaryDark font-bold shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]'}
+    ${isActive ? 'text-primaryDark font-bold shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]' : ''}
 
     hover:shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]
     focus-visible:outline-none focus-visible:shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]

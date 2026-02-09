@@ -1,8 +1,6 @@
 import GoldRateButton from '@components/Tab/GoldRateButton';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { fn } from 'storybook/test';
-
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
 	title: 'Tab/GoldRateButton',
@@ -26,7 +24,6 @@ const meta = {
 			</div>
 		),
 	],
-	args: { onClick: fn() },
 } satisfies Meta<typeof GoldRateButton>;
 
 export default meta;

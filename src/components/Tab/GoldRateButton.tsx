@@ -12,13 +12,12 @@ const GoldRateButton = () => {
           flex justify-center items-center
           text-titleMedium text-base700
           duration
-          ${isGoldRateOpen && 'text-primaryDark'}
+          ${isGoldRateOpen ? 'text-primaryDark' : ''}
 
           hover:shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]
           focus-visible:outline-none focus-visible:shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]
           focus-visible:outline focus-visible:outline-2 focus-visible:outline-transparent focus-visible:-outline-offset-2
         `}
-				role="tab"
 				aria-haspopup="dialog"
 				aria-expanded={isGoldRateOpen}
 			>
