@@ -62,7 +62,7 @@ const DefaultInput = ({
 				)}
 			</div>
 			{description && (
-				<p className="text-bodyXsmall text-base500">{description}</p>
+				<p className="text-bodyXsmall text-base700">{description}</p>
 			)}
 			{isError && <p className="text-bodyXsmall text-alert">{errorMessage}</p>}
 		</div>
