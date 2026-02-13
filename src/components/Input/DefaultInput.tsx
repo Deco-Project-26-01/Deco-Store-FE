@@ -26,11 +26,10 @@ const DefaultInput = ({
 					mb-xs
 					flex items-center gap-sm
 					pl-lg pr-md py-sm
-					rounded-xs
-					box-border
-					border-solid border-2 border-base300
-					focus-within:border-primaryDark
-					${isError ? 'border-alert focus-within:border-alert' : ''}
+					rounded-xs box-border
+					border-solid border-2
+					${isError ? 'border-alert' : 'border-base300'}
+					${isError ? 'focus-within:border-alert' : 'focus-within:border-primaryDark'}
 			`}
 			>
 				<input
