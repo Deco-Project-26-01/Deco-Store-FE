@@ -15,15 +15,20 @@ const ProductsTab = () => {
 			: currentCategory?.toLowerCase() === category.toLowerCase();
 
 	const getStyle = (isActive: boolean) => `
-    w-[12rem] py-[2.8rem]
-    flex justify-center items-center
-    duration
-    ${isActive ? 'text-primaryDark font-bold shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]' : ''}
+		relative w-[12rem] py-[2.8rem]
+		flex justify-center items-center
+		duration
+		${isActive ? 'text-primaryDark font-bold' : 'text-base700 hover:text-primaryDark'}
 
-    hover:shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]
-    focus-visible:outline-none focus-visible:shadow-[inset_0_-2px_0_0_var(--color-primary-dark)]
-    focus-visible:outline focus-visible:outline-2 focus-visible:outline-transparent focus-visible:-outline-offset-2  
-  `;
+		after:content-['']
+		after:absolute after:bottom-[0] after:inset-x-[0] after:h-[2px]
+		after:bg-primaryDark
+		after:duration after:origin-center
+
+		${isActive ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}
+		
+		focus-visible:outline-none focus-visible:bg-primaryDark/5 focus-visible:rounded-xs
+	`;
 
 	return (
 		<nav className="min-w-max bg-base100">
