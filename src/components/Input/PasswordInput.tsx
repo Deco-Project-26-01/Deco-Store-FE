@@ -1,33 +1,37 @@
-import iconEyePrimaryDark from '@assets/icons/icon-eye-primaryDark.svg';
 import iconEyeOffPrimaryDark from '@assets/icons/icon-eye-off-primaryDark.svg';
+import iconEyePrimaryDark from '@assets/icons/icon-eye-primaryDark.svg';
 import DefaultInput from '@components/Input/DefaultInput';
-import { useState, type ComponentPropsWithoutRef } from 'react';
-import PasswordToggle from '@components/Input/PasswordToggle';
+import InputButton from '@components/Input/InputButton';
+import { useState } from 'react';
 
-interface IPasswordInputProps extends ComponentPropsWithoutRef<'input'> {
+interface IPasswordInputProps {
+	id: string;
 	value: string;
-	onIconClick: React.MouseEventHandler<HTMLButtonElement>;
+	onChange: React.ChangeEventHandler<HTMLInputElement>;
+	onClearIconClick: React.MouseEventHandler<HTMLButtonElement>;
 	description?: string;
 	error?: string;
 }
 
 const PasswordInput = ({
+	id,
 	value,
-	onIconClick,
+	onChange,
+	onClearIconClick,
 	description,
 	error,
-	...rest
 }: IPasswordInputProps) => {
 	const [isVisible, setIsVisible] = useState(false);
 
 	return (
 		<DefaultInput
-			id="password"
+			id={id}
 			type={isVisible ? 'text' : 'password'}
 			value={value}
-			onIconClick={onIconClick}
+			onChange={onChange}
+			onClearIconClick={onClearIconClick}
 			passwordToggle={
-				<PasswordToggle
+				<InputButton
 					iconPath={isVisible ? iconEyeOffPrimaryDark : iconEyePrimaryDark}
 					iconAlt={isVisible ? 'Hide password' : 'Show password'}
 					onClick={() => setIsVisible((prev) => !prev)}
@@ -35,7 +39,6 @@ const PasswordInput = ({
 			}
 			description={description}
 			error={error}
-			{...rest}
 		/>
 	);
 };

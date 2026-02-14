@@ -23,14 +23,15 @@ const meta = {
 		),
 	],
 	argTypes: {
+		id: { control: 'text', description: '입력 필드의 id' },
 		value: { control: 'text', description: '비밀번호 입력 값' },
 		onChange: {
 			action: 'changed',
 			description: '입력 값 변경 시 호출되는 함수',
 		},
-		onIconClick: {
+		onClearIconClick: {
 			action: 'icon clicked',
-			description: '아이콘 클릭 시 호출되는 함수',
+			description: '입력값 초기화 아이콘 클릭 시 호출되는 함수',
 		},
 		description: {
 			control: 'text',
@@ -41,7 +42,7 @@ const meta = {
 			description: '입력 필드 아래에 표시되는 에러 메시지',
 		},
 	},
-	args: { onChange: fn(), onIconClick: fn() },
+	args: { onChange: fn(), onClearIconClick: fn() },
 } satisfies Meta<typeof PasswordInput>;
 
 export default meta;
@@ -49,12 +50,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
+		id: 'password',
 		value: 'password123',
 	},
 };
 
 export const With_Description: Story = {
 	args: {
+		id: 'password',
 		value: 'password123',
 		description:
 			'Your password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character (e.g. ! @ # $ %).',
@@ -63,6 +66,7 @@ export const With_Description: Story = {
 
 export const With_Error: Story = {
 	args: {
+		id: 'password',
 		value: 'pass',
 		error: 'Password does not meet the requirements.',
 	},

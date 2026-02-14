@@ -1,16 +1,12 @@
 import IconButton from '@components/Button/IconButton';
 
-interface IPasswordToggleProps {
+interface IInputButtonProps {
 	iconPath: string;
 	iconAlt: string;
 	onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const PasswordToggle = ({
-	iconPath,
-	iconAlt,
-	onClick,
-}: IPasswordToggleProps) => {
+const InputButton = ({ iconPath, iconAlt, onClick }: IInputButtonProps) => {
 	return (
 		<div
 			className={`
@@ -28,4 +24,4 @@ const PasswordToggle = ({
 	);
 };
 
-export default PasswordToggle;
+export default InputButton;

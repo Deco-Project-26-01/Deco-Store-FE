@@ -20,25 +20,32 @@ const meta = {
 		value: { control: 'text', description: '입력 필드의 값' },
 		description: { control: 'text', description: '입력값의 조건 설명' },
 		error: { control: 'text', description: '에러 메시지' },
-		onIconClick: {
+		onClearIconClick: {
 			action: 'clicked',
 			description: '입력 필드 초기화 아이콘 클릭 이벤트 핸들러',
 		},
 	},
-	args: { onChange: fn(), onIconClick: fn() },
+	args: { onChange: fn(), onClearIconClick: fn() },
 } satisfies Meta<typeof DefaultInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default_Without_Error: Story = {
+export const Default: Story = {
 	args: {
 		placeholder: 'Placeholder',
 		value: '',
 	},
 };
 
-export const Default_With_Error: Story = {
+export const With_Value: Story = {
+	args: {
+		placeholder: 'Placeholder',
+		value: 'this is input',
+	},
+};
+
+export const With_Error: Story = {
 	args: {
 		type: 'email',
 		placeholder: 'Placeholder',
@@ -47,13 +54,12 @@ export const Default_With_Error: Story = {
 	},
 };
 
-export const Default_With_Description: Story = {
+export const With_Description: Story = {
 	args: {
 		type: 'text',
 		placeholder: 'Placeholder',
-		value: 'qwer1234',
-		description:
-			'Your password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character (e.g. ! @ # $ %).',
+		value: 'this is input',
+		description: 'Description',
 		error: '',
 	},
 };
