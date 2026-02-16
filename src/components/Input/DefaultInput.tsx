@@ -10,6 +10,7 @@ interface IDefaultInputProps extends ComponentPropsWithoutRef<'input'> {
 }
 
 const DefaultInput = ({
+	id,
 	value,
 	passwordToggle,
 	onClearIconClick,
@@ -31,20 +32,20 @@ const DefaultInput = ({
 			`}
 			>
 				<input
+					id={id}
 					value={value}
 					className="grow ellipsis text-bodyBase placeholder:text-base500"
 					aria-invalid={!!error}
+					data-testid={id}
 					{...rest}
 				/>
 				{passwordToggle}
-				{!!value ? (
+				{!!value && (
 					<InputButton
 						iconPath={iconXCircleBase300}
 						iconAlt={'Clear'}
 						onClick={onClearIconClick}
 					/>
-				) : (
-					<div className="w-[2.4rem] h-[2.4rem] ml-auto" />
 				)}
 			</div>
 			{description && (

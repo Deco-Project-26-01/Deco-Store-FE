@@ -1,11 +1,15 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
 interface IInputLabelProps extends ComponentPropsWithoutRef<'label'> {
-	isRequired: boolean;
+	isRequired?: boolean;
 	children: string;
 }
 
-const InputLabel = ({ isRequired, children, ...rest }: IInputLabelProps) => {
+const InputLabel = ({
+	isRequired = false,
+	children,
+	...rest
+}: IInputLabelProps) => {
 	return (
 		<label
 			className={`
