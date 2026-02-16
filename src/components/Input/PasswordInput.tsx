@@ -5,12 +5,14 @@ import InputButton from '@components/Input/InputButton';
 import { useState, type ComponentPropsWithoutRef } from 'react';
 
 interface IPasswordInputProps extends ComponentPropsWithoutRef<'input'> {
+	showClearIcon?: boolean;
 	onClearIconClick: React.MouseEventHandler<HTMLButtonElement>;
 	description?: string;
 	error?: string;
 }
 
 const PasswordInput = ({
+	showClearIcon,
 	onClearIconClick,
 	description,
 	error,
@@ -21,6 +23,7 @@ const PasswordInput = ({
 	return (
 		<DefaultInput
 			type={isVisible ? 'text' : 'password'}
+			showClearIcon={showClearIcon}
 			onClearIconClick={onClearIconClick}
 			passwordToggle={
 				<InputButton

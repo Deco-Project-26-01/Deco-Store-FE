@@ -4,6 +4,7 @@ import { type ComponentPropsWithoutRef, type ReactElement } from 'react';
 
 interface IDefaultInputProps extends ComponentPropsWithoutRef<'input'> {
 	passwordToggle?: ReactElement;
+	showClearIcon?: boolean;
 	onClearIconClick: React.MouseEventHandler<HTMLButtonElement>;
 	description?: string;
 	error?: string;
@@ -11,13 +12,17 @@ interface IDefaultInputProps extends ComponentPropsWithoutRef<'input'> {
 
 const DefaultInput = ({
 	id,
-	value,
 	passwordToggle,
+	showClearIcon,
 	onClearIconClick,
 	description,
 	error,
+	value,
 	...rest
 }: IDefaultInputProps) => {
+	// value가 undefined가 아니면 제어 컴포넌트로 간주
+	const isControlled = value !== undefined;
+
 	return (
 		<div className="w-full">
 			<div
@@ -33,14 +38,14 @@ const DefaultInput = ({
 			>
 				<input
 					id={id}
-					value={value}
 					className="grow ellipsis text-bodyBase placeholder:text-base500"
 					aria-invalid={!!error}
 					data-testid={id}
+					{...(isControlled ? { value } : {})}
 					{...rest}
 				/>
 				{passwordToggle}
-				{!!value && (
+				{showClearIcon && (
 					<InputButton
 						iconPath={iconXCircleBase300}
 						iconAlt={'Clear'}

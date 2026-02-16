@@ -13,6 +13,7 @@ const LoginForm = () => {
 	const {
 		handleSubmit,
 		register,
+		watch,
 		resetField,
 		formState: { errors, isSubmitting },
 	} = useForm<ILoginData>({
@@ -43,6 +44,7 @@ const LoginForm = () => {
 							message: 'Please enter a valid email address',
 						},
 					})}
+					showClearIcon={!!watch('email')}
 					onClearIconClick={() => resetField('email')}
 					error={errors.email?.message}
 				/>
@@ -56,6 +58,7 @@ const LoginForm = () => {
 					{...register('password', {
 						required: 'Password is required',
 					})}
+					showClearIcon={!!watch('password')}
 					onClearIconClick={() => resetField('password')}
 					error={errors.password?.message}
 				/>
