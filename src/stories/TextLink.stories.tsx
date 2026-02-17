@@ -42,6 +42,7 @@ const meta = {
 			description: '링크 크기 설정',
 		},
 		children: { control: 'text', description: '링크 내용' },
+		to: { control: 'text', description: '링크 경로' },
 	},
 } satisfies Meta<typeof TextLink>;
 
@@ -52,7 +53,7 @@ export const Gray_Small: Story = {
 	args: {
 		variant: 'gray',
 		size: 'small',
-		href: '#',
+		to: '/',
 		children: 'Link',
 	},
 };
@@ -61,7 +62,7 @@ export const Gray_Medium: Story = {
 	args: {
 		variant: 'gray',
 		size: 'medium',
-		href: '#',
+		to: '/',
 		children: 'Link',
 	},
 };
@@ -70,7 +71,7 @@ export const Gray_Full_Small: Story = {
 	args: {
 		variant: 'gray',
 		size: 'fullSmall',
-		href: '#',
+		to: '/',
 		children: 'Link',
 	},
 };
@@ -79,7 +80,7 @@ export const Gray_Full_Medium: Story = {
 	args: {
 		variant: 'gray',
 		size: 'fullMedium',
-		href: '#',
+		to: '/',
 		children: 'Link',
 	},
 };

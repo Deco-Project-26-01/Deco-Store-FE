@@ -1,10 +1,10 @@
 import IconTextLink from '@components/Link/IconTextLink';
 import LogoLink from '@components/Link/LogoLink';
-import TextLink from '@components/Link/TextLink';
 
 import iconInstagramGray from '@assets/icons/icon-instagram-gray.svg';
 import iconLinkedInGray from '@assets/icons/icon-linkedin-gray.svg';
 import iconYouTubeGray from '@assets/icons/icon-youtube-gray.svg';
+import TextAnchor from '@components/Link/TextAnchor';
 
 const Footer = () => {
 	return (
@@ -18,9 +18,9 @@ const Footer = () => {
 				{/* Link - 메인 페이지 or brand.contact 페이지로 이동 (추후 링크 수정) */}
 				<div className="pr-lg mb-sm flex items-center justify-between gap-3xl">
 					<LogoLink variant="gray" />
-					<TextLink variant="gray" size="medium" href="#">
+					<TextAnchor variant="gray" size="medium" href="/">
 						Contact
-					</TextLink>
+					</TextAnchor>
 				</div>
 				{/* 주소 및 대표자 정보 */}
 				<div className="mb-sm px-lg py-md text-bodyCaption">
@@ -51,7 +51,7 @@ const Footer = () => {
 					<ul className="py-xs flex items-center gap-xl ml-auto">
 						<li>
 							<IconTextLink
-								href="#"
+								href="/"
 								variant="textGray"
 								size="medium"
 								iconPath={iconLinkedInGray}
@@ -61,7 +61,7 @@ const Footer = () => {
 						</li>
 						<li>
 							<IconTextLink
-								href="#"
+								href="/"
 								variant="textGray"
 								size="medium"
 								iconPath={iconInstagramGray}
@@ -71,7 +71,7 @@ const Footer = () => {
 						</li>
 						<li>
 							<IconTextLink
-								href="#"
+								href="/"
 								variant="textGray"
 								size="medium"
 								iconPath={iconYouTubeGray}

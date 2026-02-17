@@ -1,11 +1,11 @@
-import { Link, type LinkProps } from 'react-router-dom';
+import type { ComponentPropsWithoutRef } from 'react';
 
-type TextLinkVariant = 'dark' | 'light' | 'gray' | 'outlined' | 'text';
-type TextLinkSize = 'small' | 'medium' | 'fullSmall' | 'fullMedium';
+type TextAnchorVariant = 'dark' | 'light' | 'gray' | 'outlined' | 'text';
+type TextAnchorSize = 'small' | 'medium' | 'fullSmall' | 'fullMedium';
 
-interface ITextLinkProps extends LinkProps {
-	variant: TextLinkVariant;
-	size: TextLinkSize;
+interface ITextAnchorProps extends ComponentPropsWithoutRef<'a'> {
+	variant: TextAnchorVariant;
+	size: TextAnchorSize;
 	children: string;
 }
 
@@ -14,7 +14,7 @@ const medium = 'px-lg py-md';
 const fullSmall = 'w-full py-sm';
 const fullMedium = 'w-full py-md';
 
-const linkSize: Record<TextLinkSize, string> = {
+const anchorSize: Record<TextAnchorSize, string> = {
 	small,
 	medium,
 	fullSmall,
@@ -32,7 +32,7 @@ const outlined =
 const text =
 	'bg-transparent text-primaryDark hover:underline hover:decoration-solid focus-visible:outline focus-visible:outline-primaryDark';
 
-const linkVariant: Record<TextLinkVariant, string> = {
+const anchorVariant: Record<TextAnchorVariant, string> = {
 	dark,
 	light,
 	gray,
@@ -40,21 +40,21 @@ const linkVariant: Record<TextLinkVariant, string> = {
 	text,
 };
 
-const TextLink = ({ variant, size, children, ...rest }: ITextLinkProps) => {
+const TextAnchor = ({ variant, size, children, ...rest }: ITextAnchorProps) => {
 	return (
-		<Link
+		<a
 			className={`text-titleBase
 				rounded-xs
 				duration
-				${linkVariant[variant]}
-				${linkSize[size]}
+				${anchorVariant[variant]}
+				${anchorSize[size]}
 				flex items-center justify-center
       `}
 			{...rest}
 		>
 			{children}
-		</Link>
+		</a>
 	);
 };
 
-export default TextLink;
+export default TextAnchor;
