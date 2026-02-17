@@ -77,9 +77,16 @@ export const Submitting_Form: Story = {
 		const loginButton = canvas.getByRole('button', { name: 'Login' });
 		await userEvent.click(loginButton);
 
-		// 버튼이 클릭된 후 2초 동안은 비활성화되어야 함
-		await expect(loginButton).toBeDisabled();
-		await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate waiting for API call
-		await expect(loginButton).toBeEnabled();
+		// 버튼이 클릭된 후 잠시 비활성화되어야 함
+		await waitFor(() => {
+			expect(canvas.getByRole('button', { name: /login/i })).toBeDisabled();
+		});
+
+		await waitFor(
+			() => {
+				expect(canvas.getByRole('button', { name: /login/i })).toBeEnabled();
+			},
+			{ timeout: 2000 },
+		);
 	},
 };

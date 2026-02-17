@@ -12,6 +12,7 @@ interface IDefaultInputProps extends ComponentPropsWithoutRef<'input'> {
 
 const DefaultInput = ({
 	id,
+	type = 'text',
 	passwordToggle,
 	showClearIcon,
 	onClearIconClick,
@@ -22,6 +23,8 @@ const DefaultInput = ({
 }: IDefaultInputProps) => {
 	// value가 undefined가 아니면 제어 컴포넌트로 간주
 	const isControlled = value !== undefined;
+	const shouldShowActions = isControlled ? !!value : !!showClearIcon;
+	const reserveWidth = passwordToggle ? 'w-[5.6rem]' : 'w-[2.4rem]';
 
 	return (
 		<div className="w-full">
@@ -38,20 +41,25 @@ const DefaultInput = ({
 			>
 				<input
 					id={id}
+					type={type}
 					className="grow ellipsis text-bodyBase placeholder:text-base500"
 					aria-invalid={!!error}
 					data-testid={id}
 					{...(isControlled ? { value } : {})}
 					{...rest}
 				/>
-				{passwordToggle}
-				{showClearIcon && (
-					<InputButton
-						iconPath={iconXCircleBase300}
-						iconAlt={'Clear'}
-						onClick={onClearIconClick}
-					/>
-				)}
+				<div className={`shrink-0 ${reserveWidth}`}>
+					<div
+						className={`flex items-center gap-sm ${shouldShowActions ? '' : 'invisible pointer-events-none'}`}
+					>
+						{passwordToggle}
+						<InputButton
+							iconPath={iconXCircleBase300}
+							iconAlt={'Clear'}
+							onClick={onClearIconClick}
+						/>
+					</div>
+				</div>
 			</div>
 			{description && (
 				<p role="note" className="text-bodyXsmall text-base700">

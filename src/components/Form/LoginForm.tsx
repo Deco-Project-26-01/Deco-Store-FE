@@ -24,18 +24,20 @@ const LoginForm = () => {
 	});
 
 	const handleLogin = async (data: ILoginData) => {
-		await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate an API call
+		await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate an API call
 		console.log('Login data:', data);
 	};
 
 	return (
-		<form onSubmit={handleSubmit(handleLogin)}>
+		// React-Hook-Form의 validation을 위해 기본 validation 삭제
+		<form noValidate onSubmit={handleSubmit(handleLogin)}>
 			{/* 이메일 */}
 			<div className="mb-lg flex flex-col gap-sm">
 				<InputLabel htmlFor="email">E-mail</InputLabel>
 				<DefaultInput
 					id="email"
 					type="email"
+					inputMode="email"
 					placeholder="Enter your email"
 					{...register('email', {
 						required: 'E-mail is required',
