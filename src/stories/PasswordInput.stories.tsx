@@ -18,7 +18,7 @@ const meta = {
 				<InputLabel isRequired={false} htmlFor="password">
 					Password
 				</InputLabel>
-				<Story />
+				<Story args={{ id: 'password' }} />
 			</div>
 		),
 	],

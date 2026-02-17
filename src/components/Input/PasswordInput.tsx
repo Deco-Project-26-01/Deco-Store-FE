@@ -2,33 +2,28 @@ import iconEyeOffPrimaryDark from '@assets/icons/icon-eye-off-primaryDark.svg';
 import iconEyePrimaryDark from '@assets/icons/icon-eye-primaryDark.svg';
 import DefaultInput from '@components/Input/DefaultInput';
 import InputButton from '@components/Input/InputButton';
-import { useState } from 'react';
+import { useState, type ComponentPropsWithoutRef } from 'react';
 
-interface IPasswordInputProps {
-	id: string;
-	value: string;
-	onChange: React.ChangeEventHandler<HTMLInputElement>;
+interface IPasswordInputProps extends ComponentPropsWithoutRef<'input'> {
+	showClearIcon?: boolean;
 	onClearIconClick: React.MouseEventHandler<HTMLButtonElement>;
 	description?: string;
 	error?: string;
 }
 
 const PasswordInput = ({
-	id,
-	value,
-	onChange,
+	showClearIcon,
 	onClearIconClick,
 	description,
 	error,
+	...rest
 }: IPasswordInputProps) => {
 	const [isVisible, setIsVisible] = useState(false);
 
 	return (
 		<DefaultInput
-			id={id}
 			type={isVisible ? 'text' : 'password'}
-			value={value}
-			onChange={onChange}
+			showClearIcon={showClearIcon}
 			onClearIconClick={onClearIconClick}
 			passwordToggle={
 				<InputButton
@@ -39,6 +34,7 @@ const PasswordInput = ({
 			}
 			description={description}
 			error={error}
+			{...rest}
 		/>
 	);
 };

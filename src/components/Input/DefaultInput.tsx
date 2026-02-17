@@ -4,19 +4,28 @@ import { type ComponentPropsWithoutRef, type ReactElement } from 'react';
 
 interface IDefaultInputProps extends ComponentPropsWithoutRef<'input'> {
 	passwordToggle?: ReactElement;
+	showClearIcon?: boolean;
 	onClearIconClick: React.MouseEventHandler<HTMLButtonElement>;
 	description?: string;
 	error?: string;
 }
 
 const DefaultInput = ({
-	value,
+	id,
+	type = 'text',
 	passwordToggle,
+	showClearIcon,
 	onClearIconClick,
 	description,
 	error,
+	value,
 	...rest
 }: IDefaultInputProps) => {
+	// value가 undefined가 아니면 제어 컴포넌트로 간주
+	const isControlled = value !== undefined;
+	const shouldShowActions = isControlled ? !!value : !!showClearIcon;
+	const reserveWidth = passwordToggle ? 'w-[5.6rem]' : 'w-[2.4rem]';
+
 	return (
 		<div className="w-full">
 			<div
@@ -31,21 +40,26 @@ const DefaultInput = ({
 			`}
 			>
 				<input
-					value={value}
+					id={id}
+					type={type}
 					className="grow ellipsis text-bodyBase placeholder:text-base500"
 					aria-invalid={!!error}
+					data-testid={id}
+					{...(isControlled ? { value } : {})}
 					{...rest}
 				/>
-				{passwordToggle}
-				{!!value ? (
-					<InputButton
-						iconPath={iconXCircleBase300}
-						iconAlt={'Clear'}
-						onClick={onClearIconClick}
-					/>
-				) : (
-					<div className="w-[2.4rem] h-[2.4rem] ml-auto" />
-				)}
+				<div className={`shrink-0 ${reserveWidth}`}>
+					<div
+						className={`flex items-center gap-sm ${shouldShowActions ? '' : 'invisible pointer-events-none'}`}
+					>
+						{passwordToggle}
+						<InputButton
+							iconPath={iconXCircleBase300}
+							iconAlt={'Clear'}
+							onClick={onClearIconClick}
+						/>
+					</div>
+				</div>
 			</div>
 			{description && (
 				<p role="note" className="text-bodyXsmall text-base700">
