@@ -30,9 +30,12 @@ const Layout = () => {
 				)}
 				<div className="full-inner px-3xl py-2xl">
 					{/* 브레드크럼 */}
-					{pathname !== '/' && !pathname.startsWith('/checkout') && (
-						<BreadCrumb variant="primary" items={breadCrumbs} />
-					)}
+					{pathname !== '/' &&
+						!pathname.startsWith('/checkout') &&
+						!pathname.startsWith('/login') &&
+						!pathname.startsWith('/register') && (
+							<BreadCrumb variant="primary" items={breadCrumbs} />
+						)}
 					<Outlet />
 				</div>
 			</main>

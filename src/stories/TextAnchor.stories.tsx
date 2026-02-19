@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import TextLink from '@components/Link/TextLink';
+import TextAnchor from '@components/Link/TextAnchor';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-	title: 'Links/TextLink',
-	component: TextLink,
+	title: 'Links/TextAnchor',
+	component: TextAnchor,
 	parameters: {
 		layout: 'centered',
 	},
@@ -42,9 +42,9 @@ const meta = {
 			description: '링크 크기 설정',
 		},
 		children: { control: 'text', description: '링크 내용' },
-		to: { control: 'text', description: '링크 경로' },
+		href: { control: 'text', description: '링크 경로' },
 	},
-} satisfies Meta<typeof TextLink>;
+} satisfies Meta<typeof TextAnchor>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -53,7 +53,7 @@ export const Gray_Small: Story = {
 	args: {
 		variant: 'gray',
 		size: 'small',
-		to: '/',
+		href: '/',
 		children: 'Link',
 	},
 };
@@ -62,7 +62,7 @@ export const Gray_Medium: Story = {
 	args: {
 		variant: 'gray',
 		size: 'medium',
-		to: '/',
+		href: '/',
 		children: 'Link',
 	},
 };
@@ -71,7 +71,7 @@ export const Gray_Full_Small: Story = {
 	args: {
 		variant: 'gray',
 		size: 'fullSmall',
-		to: '/',
+		href: '/',
 		children: 'Link',
 	},
 };
@@ -80,7 +80,7 @@ export const Gray_Full_Medium: Story = {
 	args: {
 		variant: 'gray',
 		size: 'fullMedium',
-		to: '/',
+		href: '/',
 		children: 'Link',
 	},
 };

@@ -1,6 +1,8 @@
 import Error from '@components/Error/Error';
 import Layout from '@components/Layout/Layout';
 import { MYPAGE_SIBLINGS } from '@constants/siblings';
+import Login from '@pages/Auth/Login';
+import Register from '@pages/Auth/Register';
 import Cart from '@pages/Cart/Cart';
 import Home from '@pages/Home/Home';
 import Account from '@pages/Mypage/Account';
@@ -71,6 +73,18 @@ const router = createBrowserRouter([
 						},
 					},
 				],
+			},
+			// 로그인
+			{
+				path: 'login',
+				element: <Login />,
+				handle: { label: 'Login' },
+			},
+			// 회원가입
+			{
+				path: 'register',
+				element: <Register />,
+				handle: { label: 'Register' },
 			},
 		],
 	},
