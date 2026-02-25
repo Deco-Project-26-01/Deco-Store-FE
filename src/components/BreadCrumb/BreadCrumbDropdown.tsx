@@ -33,7 +33,7 @@ const BreadCrumbDropdown = ({
 	useOutsideClick(containerRef, () => setIsOpened(false));
 
 	// 키보드 이벤트 대응  -> 사용자 경험 향상
-	useKeyboardNavigation(isOpened, () => setIsOpened(false), menuRef);
+	useKeyboardNavigation(isOpened, 'a', () => setIsOpened(false), menuRef);
 
 	return (
 		// 버튼을 감싼 영역까지 포함해야 버튼 클릭 시 setIsOpened가 중복 실행되는 것 방지

@@ -2,6 +2,7 @@ import { useEffect, useRef, type RefObject } from 'react';
 
 const useKeyboardNavigation = (
 	isOpened: boolean,
+	element: 'a' | 'button',
 	callback: () => void,
 	ref: RefObject<HTMLElement | null>,
 ) => {
@@ -23,7 +24,7 @@ const useKeyboardNavigation = (
 				// 기본 동작 - 페이지 스크롤 방지
 				e.preventDefault();
 
-				const items = ref.current?.querySelectorAll('a');
+				const items = ref.current?.querySelectorAll(element);
 				if (!items) return;
 
 				const currentIndex = Array.from(items).findIndex(
