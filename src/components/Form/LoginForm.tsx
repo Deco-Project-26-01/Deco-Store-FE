@@ -17,7 +17,7 @@ const LoginForm = () => {
 		resetField,
 		formState: { errors, isSubmitting },
 	} = useForm<ILoginData>({
-		mode: 'onBlur',
+		mode: 'onChange',
 		defaultValues: {
 			email: '',
 			password: '',
