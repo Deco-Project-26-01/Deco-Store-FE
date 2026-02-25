@@ -5,7 +5,7 @@ const Login = () => {
 	return (
 		<>
 			<title>Login</title>
-			<section className="w-[60rem] py-[12.8rem] mx-auto">
+			<section className="w-[60rem] py-4xl mx-auto">
 				<h2 className="mb-2xl text-center text-title2Xlarge text-primaryDark">
 					Login
 				</h2>
