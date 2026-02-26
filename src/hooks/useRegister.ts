@@ -31,7 +31,7 @@ const useRegister = () => {
 	return useMutation({
 		mutationFn: register,
 		onSuccess: (data) => {
-			console.log('Verification code sent successfully:', data);
+			console.log('User registered successfully:', data);
 		},
 	});
 };

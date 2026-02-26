@@ -23,7 +23,7 @@ const PasswordForm = () => {
 						required: 'Password is required',
 						pattern: {
 							value:
-								/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+								/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{8,}$/,
 							message: 'Password does not meet the requirements.',
 						},
 					})}

@@ -46,7 +46,7 @@ const useEmailVerify = () => {
 	>({
 		mutationFn: verifyEmail,
 		onSuccess: (data) => {
-			console.log('Verification code sent successfully:', data);
+			console.log('Email verified successfully:', data);
 		},
 	});
 };
