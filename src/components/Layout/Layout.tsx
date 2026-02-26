@@ -23,12 +23,12 @@ const Layout = () => {
 			<Header
 				type={pathname.startsWith('/checkout') ? 'checkout' : 'default'}
 			/>
-			<main className="grow">
+			<main className="grow flex flex-col">
 				{/* 상품 탭 */}
 				{!pathname.startsWith('/cart') && !pathname.startsWith('/checkout') && (
 					<ProductsTab />
 				)}
-				<div className="full-inner px-3xl py-2xl">
+				<div className="grow w-full full-inner px-3xl py-2xl">
 					{/* 브레드크럼 */}
 					{pathname !== '/' &&
 						!pathname.startsWith('/checkout') &&

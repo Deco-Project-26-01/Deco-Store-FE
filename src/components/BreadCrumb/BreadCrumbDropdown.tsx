@@ -33,39 +33,7 @@ const BreadCrumbDropdown = ({
 	useOutsideClick(containerRef, () => setIsOpened(false));
 
 	// 키보드 이벤트 대응  -> 사용자 경험 향상
-	// useEffect(() => {
-	// 	const handleKeyDown = (e: KeyboardEvent) => {
-	// 		if (!isOpened) return;
-
-	// 		// ESC 종료 로직
-	// 		if (e.key === 'Escape') setIsOpened(false);
-
-	// 		// 방향키 탐색 로직
-	// 		if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-	// 			// 기본 동작 - 페이지 스크롤 방지
-	// 			e.preventDefault();
-
-	// 			const items = menuRef.current?.querySelectorAll('a');
-	// 			if (!items) return;
-
-	// 			const currentIndex = Array.from(items).findIndex(
-	// 				(item) => item === document.activeElement,
-	// 			);
-
-	// 			if (e.key === 'ArrowDown') {
-	// 				const nextIndex = (currentIndex + 1) % items.length;
-	// 				items[nextIndex].focus();
-	// 			} else if (e.key === 'ArrowUp') {
-	// 				const prevIndex = (currentIndex - 1 + items.length) % items.length;
-	// 				items[prevIndex].focus();
-	// 			}
-	// 		}
-	// 	};
-
-	// 	document.addEventListener('keydown', handleKeyDown);
-	// 	return () => document.removeEventListener('keydown', handleKeyDown);
-	// }, [isOpened]);
-	useKeyboardNavigation(isOpened, () => setIsOpened(false), menuRef);
+	useKeyboardNavigation(isOpened, 'a', () => setIsOpened(false), menuRef);
 
 	return (
 		// 버튼을 감싼 영역까지 포함해야 버튼 클릭 시 setIsOpened가 중복 실행되는 것 방지

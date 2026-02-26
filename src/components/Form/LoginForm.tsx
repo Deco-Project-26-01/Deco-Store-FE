@@ -17,6 +17,7 @@ const LoginForm = () => {
 		resetField,
 		formState: { errors, isSubmitting },
 	} = useForm<ILoginData>({
+		mode: 'onChange',
 		defaultValues: {
 			email: '',
 			password: '',

@@ -158,6 +158,10 @@ input {
 	all: unset;
 }
 
+input[type='checkbox'] {
+	cursor: pointer;
+}
+
 /* search input의 기본 clear 버튼 제거 */
 input[type='search']::-webkit-search-cancel-button {
 	-webkit-appearance: none;

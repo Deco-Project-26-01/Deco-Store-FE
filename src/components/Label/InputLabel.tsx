@@ -22,6 +22,7 @@ const InputLabel = ({
 			{isRequired && (
 				<>
 					<span className="text-alert" aria-hidden="true">
+						{' '}
 						*
 					</span>
 					<span className="sr-only">Required</span>
