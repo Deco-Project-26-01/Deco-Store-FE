@@ -40,11 +40,21 @@ const Register = () => {
 	const navigate = useNavigate();
 
 	// TODO: 회원가입 제출 로직 구현
-	const handleRegister = (data: IRegisterFormData) => {
+	const handleRegister = async (data: IRegisterFormData) => {
+		// 이메일 인증 여부 체크
 		if (!data.isEmailVerified) {
 			methods.setFocus('emailVerification');
 			return;
 		}
+
+		// userType에 따라 필요한 필드만 강제로 검증
+		const fields =
+			userType === 'personal'
+				? (['firstName', 'lastName'] as const)
+				: (['companyName', 'businessNumber'] as const);
+
+		const ok = await methods.trigger(fields);
+		if (!ok) return;
 
 		const formData = {
 			email: data.email,
