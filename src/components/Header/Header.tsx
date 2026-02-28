@@ -1,11 +1,10 @@
-import IconLink from '@components/Link/IconLink';
-import LogoLink from '@components/Link/LogoLink';
-import type { ComponentPropsWithoutRef } from 'react';
-
-import iconUserWhite from '@assets/icons/icon-user-white.svg';
 import iconCartWhite from '@assets/icons/icon-cart-white.svg';
 import iconSupportWhite from '@assets/icons/icon-support-white.svg';
+import iconUserWhite from '@assets/icons/icon-user-white.svg';
+import IconLink from '@components/Link/IconLink';
+import LogoLink from '@components/Link/LogoLink';
 import SearchForm from '@components/Search/SearchForm';
+import type { ComponentPropsWithoutRef } from 'react';
 
 interface IDefaultHeaderProps extends ComponentPropsWithoutRef<'header'> {
 	type: 'default';
