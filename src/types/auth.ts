@@ -38,11 +38,27 @@ export interface IEmailVerificationCheckSuccessResponse extends IEmailVerificati
 	error: null;
 }
 
+// 로그인 요청의 데이터 타입
+export interface ILoginData {
+	email: string;
+	password: string;
+}
+
 // 로그인 요청의 응답 타입
-export interface ILoginResponse {
+export interface ILoginSuccessResponse {
 	grantType: 'Bearer';
 	accessToken: string;
 	refreshToken: string;
+}
+
+export interface ILoginFailureResponse {
+	success: false;
+	message: string;
+	data: null;
+	error: {
+		status: number;
+		code: string;
+	};
 }
 
 // 회원가입 폼의 데이터 타입

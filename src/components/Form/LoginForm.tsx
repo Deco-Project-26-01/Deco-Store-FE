@@ -1,19 +1,18 @@
+import type { ILoginData } from '#types/auth';
 import TextButton from '@components/Button/TextButton';
 import DefaultInput from '@components/Input/DefaultInput';
 import PasswordInput from '@components/Input/PasswordInput';
 import InputLabel from '@components/Label/InputLabel';
+import useLogin from '@hooks/useLogin';
 import { useForm } from 'react-hook-form';
-
-interface ILoginData {
-	email: string;
-	password: string;
-}
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
 	const {
 		handleSubmit,
 		register,
 		watch,
+		setFocus,
 		resetField,
 		formState: { errors, isSubmitting },
 	} = useForm<ILoginData>({
@@ -23,10 +22,25 @@ const LoginForm = () => {
 			password: '',
 		},
 	});
+	const { mutate: login } = useLogin();
+	const { state } = useLocation();
+	const navigate = useNavigate();
 
 	const handleLogin = async (data: ILoginData) => {
-		await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate an API call
 		console.log('Login data:', data);
+		login(data, {
+			onSuccess: () => {
+				// TODO: 모달 추가, 리디렉션 경로 설정
+				console.log('Logged in successfully');
+				navigate(state?.from || '/', { replace: true });
+			},
+			onError: (error: Error) => {
+				// TODO: 모달 추가
+				console.error(error.message);
+				resetField('password');
+				setFocus('email');
+			},
+		});
 	};
 
 	return (
