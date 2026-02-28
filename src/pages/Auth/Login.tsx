@@ -5,12 +5,12 @@ const Login = () => {
 	return (
 		<>
 			<title>Login</title>
-			<section className="w-[60rem] py-4xl mx-auto">
+			<section className="w-[60rem] py-4xl mx-auto my-auto">
 				<h2 className="mb-2xl text-center text-title2Xlarge text-primaryDark">
 					Login
 				</h2>
 				{/* 로그인 폼 영역 */}
-				<div className="p-md">
+				<div className="p-md ">
 					<LoginForm />
 					<div className="mt-xl px-md py-xs flex items-center justify-center gap-md">
 						<p className="text-titleBase text-black">Don't have an account?</p>

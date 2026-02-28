@@ -28,7 +28,7 @@ const Layout = () => {
 				{!pathname.startsWith('/cart') && !pathname.startsWith('/checkout') && (
 					<ProductsTab />
 				)}
-				<div className="grow w-full full-inner px-3xl py-2xl">
+				<div className="grow flex flex-col w-full full-inner px-3xl py-2xl">
 					{/* 브레드크럼 */}
 					{pathname !== '/' &&
 						!pathname.startsWith('/checkout') &&
