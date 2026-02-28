@@ -3,12 +3,22 @@ import BreadCrumb from '@components/BreadCrumb/BreadCrumb';
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import ProductsTab from '@components/Tab/ProductsTab';
-
-import { Outlet, useLocation, useMatches } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useLocation, useMatches, useNavigate } from 'react-router-dom';
 
 const Layout = () => {
-	const { pathname } = useLocation();
+	const { pathname, state } = useLocation();
 	const matches = useMatches();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		// TODO: 모달 추가
+		if (state?.message) {
+			alert(state.message);
+
+			navigate(pathname, { replace: true });
+		}
+	}, [state]);
 
 	// breadcrumb 목록 생성
 	const breadCrumbs = matches
