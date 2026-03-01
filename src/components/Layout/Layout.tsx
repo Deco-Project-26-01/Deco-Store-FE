@@ -3,7 +3,6 @@ import BreadCrumb from '@components/BreadCrumb/BreadCrumb';
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import ProductsTab from '@components/Tab/ProductsTab';
-
 import { Outlet, useLocation, useMatches } from 'react-router-dom';
 
 const Layout = () => {
@@ -28,7 +27,7 @@ const Layout = () => {
 				{!pathname.startsWith('/cart') && !pathname.startsWith('/checkout') && (
 					<ProductsTab />
 				)}
-				<div className="grow w-full full-inner px-3xl py-2xl">
+				<div className="grow flex flex-col w-full full-inner px-3xl py-2xl">
 					{/* 브레드크럼 */}
 					{pathname !== '/' &&
 						!pathname.startsWith('/checkout') &&

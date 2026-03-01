@@ -1,4 +1,6 @@
 import Error from '@components/Error/Error';
+import ProtectedRoute from '@components/Guard/ProtectedRoute';
+import PublicRoute from '@components/Guard/PublicRoute';
 import Layout from '@components/Layout/Layout';
 import { MYPAGE_SIBLINGS } from '@constants/siblings';
 import Login from '@pages/Auth/Login';
@@ -31,60 +33,72 @@ const router = createBrowserRouter([
 				element: <Cart />,
 				handle: { label: 'Cart' },
 			},
-			// 마이페이지
+			// 🔐 로그인 필요 영역
 			{
-				path: 'mypage',
-				handle: { label: 'My Page' },
+				element: <ProtectedRoute />,
 				children: [
+					// 마이페이지
 					{
-						index: true,
-						element: <MyPage />,
-					},
-					{
-						path: 'account',
-						element: <Account />,
-						handle: {
-							label: 'Account',
-							siblings: MYPAGE_SIBLINGS,
-						},
-					},
-					{
-						path: 'order',
-						element: <OrderLayout />,
-						handle: {
-							label: 'Orders',
-							siblings: MYPAGE_SIBLINGS,
-						},
+						path: 'mypage',
+						handle: { label: 'My Page' },
 						children: [
-							{ index: true, element: <Orders /> },
 							{
-								path: ':_id',
-								element: <Order />,
-								handle: { label: 'Order' },
+								index: true,
+								element: <MyPage />,
+							},
+							{
+								path: 'account',
+								element: <Account />,
+								handle: {
+									label: 'Account',
+									siblings: MYPAGE_SIBLINGS,
+								},
+							},
+							{
+								path: 'order',
+								element: <OrderLayout />,
+								handle: {
+									label: 'Orders',
+									siblings: MYPAGE_SIBLINGS,
+								},
+								children: [
+									{ index: true, element: <Orders /> },
+									{
+										path: ':_id',
+										element: <Order />,
+										handle: { label: 'Order' },
+									},
+								],
+							},
+							{
+								path: 'support',
+								element: <Support />,
+								handle: {
+									label: 'Support',
+									siblings: MYPAGE_SIBLINGS,
+								},
 							},
 						],
 					},
-					{
-						path: 'support',
-						element: <Support />,
-						handle: {
-							label: 'Support',
-							siblings: MYPAGE_SIBLINGS,
-						},
-					},
 				],
 			},
-			// 로그인
+			// 🚫 로그인 상태면 접근 불가 영역
 			{
-				path: 'login',
-				element: <Login />,
-				handle: { label: 'Login' },
-			},
-			// 회원가입
-			{
-				path: 'register',
-				element: <Register />,
-				handle: { label: 'Register' },
+				element: <PublicRoute />,
+				children: [
+					// 로그인
+					{
+						path: 'login',
+						element: <Login />,
+						handle: { label: 'Login' },
+					},
+					// 회원가입
+					{
+						path: 'register',
+						element: <Register />,
+						handle: { label: 'Register' },
+					},
+				],
 			},
 		],
 	},
