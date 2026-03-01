@@ -14,7 +14,7 @@ const LoginForm = () => {
 		watch,
 		setFocus,
 		resetField,
-		formState: { errors, isSubmitting },
+		formState: { errors },
 	} = useForm<ILoginData>({
 		mode: 'onChange',
 		defaultValues: {
@@ -22,7 +22,7 @@ const LoginForm = () => {
 			password: '',
 		},
 	});
-	const { mutate: login } = useLogin();
+	const { mutate: login, isPending } = useLogin();
 	const { state } = useLocation();
 	const navigate = useNavigate();
 
@@ -87,7 +87,7 @@ const LoginForm = () => {
 					variant="dark"
 					size="fullMedium"
 					// API 요청 시 비활성화되도록 설정 - 반복적인 API 호출 방지
-					disabled={isSubmitting}
+					disabled={isPending}
 				>
 					Login
 				</TextButton>
