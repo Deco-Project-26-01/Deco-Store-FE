@@ -17,12 +17,19 @@ const meta = {
 		),
 	],
 	tags: ['autodocs'],
+	argTypes: {
+		redirectTo: {
+			control: 'text',
+			description: '로그인 성공 후 리디렉션할 경로',
+		},
+	},
 } satisfies Meta<typeof LoginForm>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Empty_Form: Story = {
+	args: { redirectTo: '/' },
 	play: async ({ canvas }) => {
 		const emailInput = canvas.getByTestId('email');
 		await expect(emailInput).toBeInTheDocument();
@@ -36,6 +43,7 @@ export const Empty_Form: Story = {
 };
 
 export const Invalid_Form: Story = {
+	args: { redirectTo: '/' },
 	play: async ({ canvas, userEvent }) => {
 		const emailInput = canvas.getByTestId('email');
 		await userEvent.type(emailInput, 'invalid@email');
@@ -54,6 +62,7 @@ export const Invalid_Form: Story = {
 };
 
 export const Filled_Form: Story = {
+	args: { redirectTo: '/' },
 	play: async ({ canvas, userEvent }) => {
 		const emailInput = canvas.getByTestId('email');
 		await userEvent.type(emailInput, 'test@email.com');
@@ -67,6 +76,7 @@ export const Filled_Form: Story = {
 };
 
 export const Submitting_Form: Story = {
+	args: { redirectTo: '/' },
 	play: async ({ canvas, userEvent }) => {
 		const emailInput = canvas.getByTestId('email');
 		await userEvent.type(emailInput, 'test@email.com');
