@@ -5,7 +5,6 @@ import axios, {
 	type AxiosInstance,
 	type InternalAxiosRequestConfig,
 } from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL;
 const REFRESH_TOKEN_URL = '/auth/refresh';
@@ -16,7 +15,6 @@ const useCustomAxios = () => {
 	const { accessToken, refreshToken, setTokens, clearTokens } = useUserStore(
 		(state) => state,
 	);
-	const navigate = useNavigate();
 
 	// 사설 인스턴스 (인증 필요한 요청용)
 	const instance = axios.create({
@@ -49,10 +47,13 @@ const useCustomAxios = () => {
 			// 무한 루프 방지
 			const originalConfig = config as RetryConfig;
 
+			if (originalConfig.url === '/auth/logout') {
+				return Promise.reject(error);
+			}
+
 			// ⚠️ TODO: refresh token 만료 시 로그아웃 처리
 			if (originalConfig.url === REFRESH_TOKEN_URL) {
 				clearTokens();
-				navigate('/login');
 				return Promise.reject(error);
 			}
 
