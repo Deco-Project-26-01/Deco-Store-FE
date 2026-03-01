@@ -5,9 +5,9 @@ import PasswordInput from '@components/Input/PasswordInput';
 import InputLabel from '@components/Label/InputLabel';
 import useLogin from '@hooks/useLogin';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+const LoginForm = ({ redirectTo }: { redirectTo: string }) => {
 	const {
 		handleSubmit,
 		register,
@@ -23,7 +23,6 @@ const LoginForm = () => {
 		},
 	});
 	const { mutate: login, isPending } = useLogin();
-	const { state } = useLocation();
 	const navigate = useNavigate();
 
 	const handleLogin = async (data: ILoginData) => {
@@ -32,7 +31,8 @@ const LoginForm = () => {
 			onSuccess: () => {
 				// TODO: 모달 추가, 리디렉션 경로 설정
 				console.log('Logged in successfully');
-				navigate(state?.from || '/', { replace: true });
+				console.log('Redirecting to:', redirectTo);
+				navigate(redirectTo, { replace: true });
 			},
 			onError: (error: Error) => {
 				// TODO: 모달 추가
