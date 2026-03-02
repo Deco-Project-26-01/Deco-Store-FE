@@ -1,5 +1,6 @@
 import LoginForm from '@components/Form/LoginForm';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { delay, http, HttpResponse } from 'msw';
 
 import { expect, waitFor } from 'storybook/test';
 
@@ -77,12 +78,28 @@ export const Filled_Form: Story = {
 
 export const Submitting_Form: Story = {
 	args: { redirectTo: '/' },
+	parameters: {
+		msw: {
+			handlers: [
+				http.post('*/auth/login', async () => {
+					await delay(300);
+					return HttpResponse.json({
+						success: true,
+						data: {
+							accessToken: 'mock-access',
+							refreshToken: 'mock-refresh',
+						},
+					});
+				}),
+			],
+		},
+	},
 	play: async ({ canvas, userEvent }) => {
 		const emailInput = canvas.getByTestId('email');
-		await userEvent.type(emailInput, '39busy@naver.com');
+		await userEvent.type(emailInput, 'test@email.com');
 
 		const passwordInput = canvas.getByTestId('password');
-		await userEvent.type(passwordInput, '123456');
+		await userEvent.type(passwordInput, 'Qwer123!@#');
 
 		const loginButton = canvas.getByRole('button', { name: 'Login' });
 		await userEvent.click(loginButton);
@@ -91,5 +108,12 @@ export const Submitting_Form: Story = {
 		await waitFor(() => {
 			expect(canvas.getByRole('button', { name: /login/i })).toBeDisabled();
 		});
+
+		await waitFor(
+			() => {
+				expect(canvas.getByRole('button', { name: /login/i })).toBeEnabled();
+			},
+			{ timeout: 8000 },
+		);
 	},
 };
