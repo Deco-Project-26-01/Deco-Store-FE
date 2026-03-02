@@ -120,3 +120,23 @@ export interface IRefreshTokenResponse {
 	};
 	error: null;
 }
+
+// 로그아웃 요청의 응답 타입
+export interface ILogoutResponse {
+	success: boolean;
+	message: string;
+	data: null;
+}
+
+export interface ILogoutFailureResponse extends ILogoutResponse {
+	success: false;
+	error: {
+		status: number;
+		code: string;
+	};
+}
+
+export interface ILogoutSuccessResponse extends ILogoutResponse {
+	success: true;
+	error: null;
+}

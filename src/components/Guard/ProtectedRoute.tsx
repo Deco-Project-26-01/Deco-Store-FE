@@ -4,10 +4,12 @@ import { useUserStore } from '@store/useUserStore';
 // TODO: 추후 모달을 추가하여 UX 개선 (로그인 페이지로 이동)
 const ProtectedRoute = () => {
 	const { pathname } = useLocation();
-	const accessToken = useUserStore((state) => state.accessToken);
+	const { accessToken, isLoggingOut } = useUserStore((state) => state);
 	const hasHydrated = useUserStore.persist.hasHydrated();
 
 	if (!hasHydrated) return null;
+
+	if (isLoggingOut) return <Navigate to="/" replace />;
 
 	if (!accessToken) {
 		return (

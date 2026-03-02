@@ -8,7 +8,7 @@ import Register from '@pages/Auth/Register';
 import Cart from '@pages/Cart/Cart';
 import Home from '@pages/Home/Home';
 import Account from '@pages/Mypage/Account';
-import MyPage from '@pages/Mypage/Mypage';
+import Mypage from '@pages/Mypage/Mypage';
 import Order from '@pages/Mypage/Order/Order';
 import OrderLayout from '@pages/Mypage/Order/OrderLayout';
 import Orders from '@pages/Mypage/Order/Orders';
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
 						children: [
 							{
 								index: true,
-								element: <MyPage />,
+								element: <Mypage />,
 							},
 							{
 								path: 'account',
