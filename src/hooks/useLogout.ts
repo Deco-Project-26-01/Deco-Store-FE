@@ -38,7 +38,6 @@ const useLogout = () => {
 			setIsLoggingOut(true);
 		},
 		onSettled: () => {
-			setIsLoggingOut(true);
 			navigate('/', { replace: true });
 			setTimeout(() => {
 				clearTokens();
