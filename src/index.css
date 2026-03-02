@@ -128,6 +128,11 @@ table {
 	border-spacing: 0;
 }
 
+button {
+	all: unset;
+	cursor: pointer;
+}
+
 textarea {
 	all: unset;
 }
@@ -137,10 +142,34 @@ body {
 	min-height: 100vh;
 }
 
+/* footer */
+footer {
+	all: unset;
+}
+
 /* img */
 img {
 	max-width: 100%;
 	vertical-align: top;
+}
+
+/* input */
+input {
+	all: unset;
+}
+
+input[type='checkbox'] {
+	cursor: pointer;
+}
+
+/* search input의 기본 clear 버튼 제거 */
+input[type='search']::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-results-button {
+	display: none;
 }
 
 /* Theme for CSS Variables */
@@ -157,6 +186,7 @@ img {
 	--color-black: #000000;
 
 	--color-base-100: #f5f5f5;
+	--color-base-200: #e6e6e6;
 	--color-base-300: #cfcfcf;
 	--color-base-500: #7d7d7d;
 	--color-base-700: #4f4f4f;
@@ -174,4 +204,19 @@ img {
 
 body {
 	font-family: 'Inter';
+}
+
+/* Tailwind Variables */
+@layer components {
+	.duration {
+		@apply transition duration-300;
+	}
+
+	.ellipsis {
+		@apply min-w-[0] overflow-hidden text-ellipsis whitespace-nowrap;
+	}
+
+	.full-inner {
+		@apply max-w-[1280px] mx-auto;
+	}
 }

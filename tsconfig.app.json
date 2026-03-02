@@ -19,17 +19,18 @@
 		/* Alias */
 		"baseUrl": ".",
 		"paths": {
+			"@assets/*": ["src/assets/*"],
+			"@components/*": ["src/components/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@pages/*": ["src/pages/*"],
+			"@store/*": ["src/store/*"],
+			"@styles/*": ["src/styles/*"],
+			"@stories/*": ["src/stories/*"],
+			"@tests/*": ["src/tests/*"],
+			"#types/*": ["src/types/*"],
+			"@utils/*": ["src/utils/*"],
+			"@constants/*": ["src/constants/*"],
 			"@/*": ["src/*"],
-			"@assets/*": ["assets/*"],
-			"@components/*": ["components/*"],
-			"@hooks/*": ["hooks/*"],
-			"@pages/*": ["pages/*"],
-			"@store/*": ["store/*"],
-			"@styles/*": ["styles/*"],
-			"@stories/*": ["stories/*"],
-			"@tests/*": ["tests/*"],
-			"#types/*": ["/types/*"],
-			"@utils/*": ["utils/*"]
 		},
 
 		/* Linting */
