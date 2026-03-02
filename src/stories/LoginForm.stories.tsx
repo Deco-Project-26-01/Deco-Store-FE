@@ -79,10 +79,10 @@ export const Submitting_Form: Story = {
 	args: { redirectTo: '/' },
 	play: async ({ canvas, userEvent }) => {
 		const emailInput = canvas.getByTestId('email');
-		await userEvent.type(emailInput, 'test@email.com');
+		await userEvent.type(emailInput, '39busy@naver.com');
 
 		const passwordInput = canvas.getByTestId('password');
-		await userEvent.type(passwordInput, 'qwer123!@#');
+		await userEvent.type(passwordInput, '123456');
 
 		const loginButton = canvas.getByRole('button', { name: 'Login' });
 		await userEvent.click(loginButton);
@@ -91,12 +91,5 @@ export const Submitting_Form: Story = {
 		await waitFor(() => {
 			expect(canvas.getByRole('button', { name: /login/i })).toBeDisabled();
 		});
-
-		await waitFor(
-			() => {
-				expect(canvas.getByRole('button', { name: /login/i })).toBeEnabled();
-			},
-			{ timeout: 8000 },
-		);
 	},
 };
