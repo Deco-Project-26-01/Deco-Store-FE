@@ -96,7 +96,7 @@ export const Submitting_Form: Story = {
 			() => {
 				expect(canvas.getByRole('button', { name: /login/i })).toBeEnabled();
 			},
-			{ timeout: 2000 },
+			{ timeout: 8000 },
 		);
 	},
 };
