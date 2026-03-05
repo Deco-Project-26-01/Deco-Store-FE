@@ -4,14 +4,16 @@ import iconUserBase900 from '@assets/icons/icon-user-base900.svg';
 import MypageMenuLink from '@components/Link/MypageMenuLink';
 import TextButton from '@components/Button/TextButton';
 import useLogout from '@hooks/useLogout';
+import { useNavigate } from 'react-router-dom';
 
 const Mypage = () => {
 	const { mutate: logout } = useLogout();
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		// 모달 추가
 		console.log('User logged out');
-
+		navigate('/', { replace: true });
 		logout();
 	};
 

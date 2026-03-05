@@ -1,20 +1,21 @@
+import type { IGuardState } from '#types/router';
 import LoginForm from '@components/Form/LoginForm';
 import TextLink from '@components/Link/TextLink';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-
-type LoginState = {
-	from?: string;
-	message?: string;
-};
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-	const { state } = useLocation() as { state: LoginState | null };
+	const location = useLocation();
+	const navigate = useNavigate();
+	const state: IGuardState | null = location.state;
 
 	useEffect(() => {
-		// TODO: 모달 추가
-		if (state?.message) alert(state.message);
-	}, [state]);
+		if (state?.reason === 'auth' && state?.from) {
+			alert('You need to log in to access this page.');
+		}
+
+		navigate(location.pathname, { replace: true, state: null });
+	}, []);
 
 	const redirectTo = state?.from ?? '/';
 

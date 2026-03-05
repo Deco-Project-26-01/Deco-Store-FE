@@ -5,9 +5,9 @@ import PasswordInput from '@components/Input/PasswordInput';
 import InputLabel from '@components/Label/InputLabel';
 import useLogin from '@hooks/useLogin';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, type Location } from 'react-router-dom';
 
-const LoginForm = ({ redirectTo }: { redirectTo: string }) => {
+const LoginForm = ({ redirectTo }: { redirectTo: '/' | Location<any> }) => {
 	const {
 		handleSubmit,
 		register,
