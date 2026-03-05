@@ -22,7 +22,7 @@ const Mypage = () => {
 				<h1 className="sr-only">My Page</h1>
 				<div className="mb-4xl flex gap-lg items-center justify-between">
 					<h2 className="text-titleXlarge text-primaryDark">Hello, User!</h2>
-					<TextButton variant="light" size="small" onClick={handleLogout}>
+					<TextButton variant="dark" size="small" onClick={handleLogout}>
 						Logout
 					</TextButton>
 				</div>
