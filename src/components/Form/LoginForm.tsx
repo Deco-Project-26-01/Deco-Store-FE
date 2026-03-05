@@ -26,7 +26,6 @@ const LoginForm = ({ redirectTo }: { redirectTo: string }) => {
 	const navigate = useNavigate();
 
 	const handleLogin = async (data: ILoginData) => {
-		console.log('Login data:', data);
 		login(data, {
 			onSuccess: () => {
 				// TODO: 모달 추가, 리디렉션 경로 설정
