@@ -1,13 +1,15 @@
 import type { IGuardState } from '#types/router';
 import LoginForm from '@components/Form/LoginForm';
 import TextLink from '@components/Link/TextLink';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const state: IGuardState | null = location.state;
+
+	const fromRef = useRef(state?.from);
 
 	useEffect(() => {
 		if (state?.reason === 'auth' && state?.from) {
@@ -16,8 +18,6 @@ const Login = () => {
 
 		navigate(location.pathname, { replace: true, state: null });
 	}, []);
-
-	const redirectTo = state?.from ?? '/';
 
 	return (
 		<>
@@ -28,7 +28,7 @@ const Login = () => {
 				</h2>
 				{/* 로그인 폼 영역 */}
 				<div className="p-md ">
-					<LoginForm redirectTo={redirectTo} />
+					<LoginForm redirectTo={fromRef.current ?? '/'} />
 					<div className="mt-xl px-md py-xs flex items-center justify-center gap-md">
 						<p className="text-titleBase text-black">Don't have an account?</p>
 						<TextLink to="/register" variant="text" size="small">

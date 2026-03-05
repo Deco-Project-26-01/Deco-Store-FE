@@ -1,9 +1,10 @@
+import Dropdown from '@components/Dropdown/Dropdown';
+import { BLOCKED_COUNTRIES } from '@constants/countries';
 import {
 	getCountries,
 	getCountryCallingCode,
 } from 'react-phone-number-input/input';
 import en from 'react-phone-number-input/locale/en';
-import Dropdown from '@components/Dropdown/Dropdown';
 
 interface ICountryDropdownProps {
 	value?: string;
@@ -12,9 +13,7 @@ interface ICountryDropdownProps {
 
 const CountryDropdown = ({ value, onChange }: ICountryDropdownProps) => {
 	const list = getCountries()
-		.filter(
-			(country) => country !== 'CN' && country !== 'KP' && country !== 'IR',
-		)
+		.filter((country) => !BLOCKED_COUNTRIES.includes(country))
 		.map((country) => ({
 			value: country,
 			label: `${en[country]} +${getCountryCallingCode(country)}`,

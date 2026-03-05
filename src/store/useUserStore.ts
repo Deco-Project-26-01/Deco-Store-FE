@@ -18,7 +18,6 @@ export const useUserStore = create<UserState & UserActions>()(
 		(set) => ({
 			accessToken: null,
 			refreshToken: null,
-			isLoggingOut: false,
 			setTokens: (accessToken, refreshToken) =>
 				set({ accessToken, refreshToken }),
 			clearTokens: () => set({ accessToken: null, refreshToken: null }),

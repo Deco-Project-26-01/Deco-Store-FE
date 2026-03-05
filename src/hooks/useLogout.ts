@@ -33,9 +33,7 @@ const useLogout = () => {
 	return useMutation({
 		mutationFn: () => logout(axios),
 		onError: (error) => {
-			{
-				console.error('Logout failed:', error);
-			}
+			console.error('Logout failed:', error);
 		},
 		onSettled: () => {
 			clearTokens();
