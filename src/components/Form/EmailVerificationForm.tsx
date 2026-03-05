@@ -3,8 +3,10 @@ import TextButton from '@components/Button/TextButton';
 import DefaultInput from '@components/Input/DefaultInput';
 import TimerInput from '@components/Input/TimerInput';
 import InputLabel from '@components/Label/InputLabel';
+import ConfirmModal from '@components/Modal/ConfirmModal';
 import useEmailVerification from '@hooks/useEmailVerification';
 import useEmailVerify from '@hooks/useEmailVerify';
+import { useModalStore } from '@store/useModalStore';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
@@ -37,6 +39,7 @@ const EmailVerificationForm = () => {
 	const { mutate: emailVerification, reset: resetEmailVerification } =
 		useEmailVerification();
 	const { mutate: emailVerify } = useEmailVerify();
+	const openModal = useModalStore((state) => state.openModal);
 
 	// 타이머 로직
 	useEffect(() => {
@@ -111,12 +114,18 @@ const EmailVerificationForm = () => {
 					resetField('emailVerification');
 				},
 				onError: (error: Error) => {
-					setIsSent(false);
-					setIsExpired(false);
-					setSecond(0);
-
-					// TODO: 모달 구현
-					console.error(error.message);
+					openModal(
+						<ConfirmModal
+							title="Failed to Send Verification Code"
+							description={error.message}
+							buttonText="Retry"
+							onConfirm={() => {
+								setIsSent(false);
+								setIsExpired(false);
+								setSecond(0);
+							}}
+						/>,
+					);
 				},
 				onSettled: () => {
 					setIsSending(false);
@@ -144,13 +153,19 @@ const EmailVerificationForm = () => {
 					setSecond(0);
 				},
 				onError: (error: Error) => {
-					setValue('isEmailVerified', false);
-					setIsSent(false);
-					setIsExpired(true);
-					setSecond(0);
-
-					// TODO: 모달 구현
-					console.error(error.message);
+					openModal(
+						<ConfirmModal
+							title="Verification Failed"
+							description={error.message}
+							buttonText="Retry"
+							onConfirm={() => {
+								setValue('isEmailVerified', false);
+								setIsSent(false);
+								setIsExpired(true);
+								setSecond(0);
+							}}
+						/>,
+					);
 				},
 				onSettled: () => {
 					setIsVerifying(false);
