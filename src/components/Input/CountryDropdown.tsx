@@ -11,10 +11,14 @@ interface ICountryDropdownProps {
 }
 
 const CountryDropdown = ({ value, onChange }: ICountryDropdownProps) => {
-	const list = getCountries().map((country) => ({
-		value: country,
-		label: `${en[country]} +${getCountryCallingCode(country)}`,
-	}));
+	const list = getCountries()
+		.filter(
+			(country) => country !== 'CN' && country !== 'KP' && country !== 'IR',
+		)
+		.map((country) => ({
+			value: country,
+			label: `${en[country]} +${getCountryCallingCode(country)}`,
+		}));
 
 	return (
 		<Dropdown
