@@ -51,6 +51,7 @@ const meta = {
 			description: '버튼 크기 설정',
 		},
 		children: { control: 'text', description: '버튼 내용' },
+		rect: { control: 'boolean', description: '버튼 모서리 직각 여부' },
 		disabled: { control: 'boolean', description: '버튼 비활성화 여부' },
 	},
 	args: { onClick: fn() },
