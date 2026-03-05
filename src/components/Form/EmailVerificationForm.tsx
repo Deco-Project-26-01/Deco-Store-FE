@@ -69,7 +69,7 @@ const EmailVerificationForm = () => {
 		setSecond(0);
 		resetField('emailVerification');
 		resetEmailVerification();
-	}, [[email, resetEmailVerification, setValue, resetField]]);
+	}, [email, resetEmailVerification, setValue, resetField]);
 
 	// 버튼 disabled 상태
 	const isButtonDisabled =
