@@ -4,14 +4,16 @@ import iconUserBase900 from '@assets/icons/icon-user-base900.svg';
 import MypageMenuLink from '@components/Link/MypageMenuLink';
 import TextButton from '@components/Button/TextButton';
 import useLogout from '@hooks/useLogout';
+import { useNavigate } from 'react-router-dom';
 
 const Mypage = () => {
 	const { mutate: logout } = useLogout();
+	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		// 모달 추가
 		console.log('User logged out');
-
+		navigate('/', { replace: true });
 		logout();
 	};
 
@@ -22,7 +24,7 @@ const Mypage = () => {
 				<h1 className="sr-only">My Page</h1>
 				<div className="mb-4xl flex gap-lg items-center justify-between">
 					<h2 className="text-titleXlarge text-primaryDark">Hello, User!</h2>
-					<TextButton variant="light" size="small" onClick={handleLogout}>
+					<TextButton variant="dark" size="small" onClick={handleLogout}>
 						Logout
 					</TextButton>
 				</div>

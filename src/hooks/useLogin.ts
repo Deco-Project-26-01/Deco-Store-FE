@@ -34,7 +34,6 @@ const useLogin = () => {
 	return useMutation({
 		mutationFn: login,
 		onSuccess: (data) => {
-			console.log('Logged in successfully:', data);
 			setTokens(data.accessToken, data.refreshToken);
 		},
 	});

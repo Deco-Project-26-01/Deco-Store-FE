@@ -7,7 +7,6 @@ import { useUserStore } from '@store/useUserStore';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosInstance } from 'axios';
 import { isAxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const logout = async (instance: AxiosInstance) => {
 	try {
@@ -29,20 +28,15 @@ const logout = async (instance: AxiosInstance) => {
 
 const useLogout = () => {
 	const axios = useCustomAxios();
-	const navigate = useNavigate();
-	const { clearTokens, setIsLoggingOut } = useUserStore((state) => state);
+	const { clearTokens } = useUserStore((state) => state);
 
 	return useMutation({
 		mutationFn: () => logout(axios),
-		onMutate: () => {
-			setIsLoggingOut(true);
+		onError: (error) => {
+			console.error('Logout failed:', error);
 		},
 		onSettled: () => {
-			navigate('/', { replace: true });
-			setTimeout(() => {
-				clearTokens();
-				setIsLoggingOut(false);
-			}, 0);
+			clearTokens();
 		},
 	});
 };

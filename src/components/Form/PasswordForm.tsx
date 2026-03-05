@@ -1,15 +1,28 @@
 import type { IRegisterFormData } from '#types/auth';
 import PasswordInput from '@components/Input/PasswordInput';
 import InputLabel from '@components/Label/InputLabel';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const PasswordForm = () => {
 	const {
 		register,
 		resetField,
+		getValues,
 		watch,
+		trigger,
 		formState: { errors },
 	} = useFormContext<Pick<IRegisterFormData, 'password' | 'passwordConfirm'>>();
+
+	const password = watch('password');
+	const passwordConfirm = watch('passwordConfirm');
+
+	// 비밀번호 변경 시, 비밀번호 확인 유효성 검사 트리거
+	useEffect(() => {
+		if (!passwordConfirm) return;
+		trigger('passwordConfirm');
+	}, [password, trigger]);
+
 	return (
 		<>
 			<div className="flex flex-col gap-sm mb-lg">
@@ -47,7 +60,7 @@ const PasswordForm = () => {
 					{...register('passwordConfirm', {
 						required: 'Please confirm your password',
 						validate: (value) =>
-							value === watch('password') || 'Passwords do not match',
+							value === getValues('password') || 'Passwords do not match',
 					})}
 					showClearIcon={!!watch('passwordConfirm')}
 					onClearIconClick={() => resetField('passwordConfirm')}
