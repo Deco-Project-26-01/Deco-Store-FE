@@ -31,7 +31,6 @@ const LoginForm = ({ redirectTo }: { redirectTo: string }) => {
 			onSuccess: () => {
 				// TODO: 모달 추가, 리디렉션 경로 설정
 				console.log('Logged in successfully');
-				console.log('Redirecting to:', redirectTo);
 				navigate(redirectTo, { replace: true });
 			},
 			onError: (error: Error) => {
