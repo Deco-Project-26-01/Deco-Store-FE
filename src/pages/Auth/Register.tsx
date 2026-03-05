@@ -68,8 +68,6 @@ const Register = () => {
 			phone: `${data.callingCode}-${data.phone}`,
 		};
 
-		console.log('Registering user with data:', formData);
-
 		registerUser(formData, {
 			onSuccess: () => {
 				// TODO: 모달 오픈

@@ -30,8 +30,8 @@ const register = async (formData: IRegisterRequestData) => {
 const useRegister = () => {
 	return useMutation({
 		mutationFn: register,
-		onSuccess: (data) => {
-			console.log('User registered successfully:', data);
+		onSuccess: () => {
+			console.log('User registered successfully:');
 		},
 	});
 };
