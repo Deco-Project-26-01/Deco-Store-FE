@@ -17,7 +17,7 @@ const meta = {
 				el.id = id;
 				document.body.appendChild(el);
 			}
-			return Story();
+			return <Story />;
 		},
 	],
 	argTypes: {

@@ -7,9 +7,8 @@ import AlertModal from '@components/Modal/AlertModal';
 import useLogin from '@hooks/useLogin';
 import { useModalStore } from '@store/useModalStore';
 import { useForm } from 'react-hook-form';
-import { useNavigate, type Location } from 'react-router-dom';
 
-const LoginForm = ({ redirectTo }: { redirectTo: '/' | Location<any> }) => {
+const LoginForm = () => {
 	const {
 		handleSubmit,
 		register,
@@ -25,23 +24,10 @@ const LoginForm = ({ redirectTo }: { redirectTo: '/' | Location<any> }) => {
 		},
 	});
 	const { mutate: login, isPending } = useLogin();
-	const navigate = useNavigate();
 	const openModal = useModalStore((state) => state.openModal);
 
 	const handleLogin = async (data: ILoginData) => {
 		login(data, {
-			onSuccess: () => {
-				openModal(
-					<AlertModal
-						title="Login Successful"
-						description="You have successfully logged in."
-						buttonText="Home"
-						onConfirm={() => {
-							navigate(redirectTo, { replace: true });
-						}}
-					/>,
-				);
-			},
 			onError: (error: Error) => {
 				openModal(
 					<AlertModal
