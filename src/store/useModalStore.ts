@@ -1,11 +1,12 @@
+import type { ReactNode } from 'react';
 import { create } from 'zustand';
 
 interface ModalState {
-	node: React.ReactNode | null;
+	node: ReactNode | null;
 }
 
 interface ModalActions {
-	openModal: (node: React.ReactNode) => void;
+	openModal: (node: ReactNode) => void;
 	closeModal: () => void;
 }
 

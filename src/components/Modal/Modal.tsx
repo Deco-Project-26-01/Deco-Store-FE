@@ -27,10 +27,14 @@ const getFocusableElements = (container: HTMLElement) => {
 };
 
 const Modal = ({ title, children, onClose }: IModalProps) => {
-	const element = document.getElementById('modal-portal') as HTMLElement;
 	const modalRef = useRef<HTMLDivElement>(null);
 	const titleId = useId();
 	const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+
+	const portalElement =
+		typeof document !== 'undefined'
+			? (document.getElementById('modal-portal') ?? document.body)
+			: null;
 
 	// 모달이 열릴 때 배경 스크롤 방지
 	useEffect(() => {
@@ -109,6 +113,8 @@ const Modal = ({ title, children, onClose }: IModalProps) => {
 		}
 	};
 
+	if (!portalElement) return null;
+
 	return createPortal(
 		<div
 			className={`
@@ -171,7 +177,7 @@ const Modal = ({ title, children, onClose }: IModalProps) => {
 				<div>{children}</div>
 			</div>
 		</div>,
-		element,
+		portalElement,
 	);
 };
 

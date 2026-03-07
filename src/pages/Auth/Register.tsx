@@ -89,7 +89,7 @@ const Register = () => {
 			onError: (error: Error) => {
 				openModal(
 					<AlertModal
-						title="Login Failed"
+						title="Registration Failed"
 						description={error.message}
 						buttonText="Retry"
 						onConfirm={() => {

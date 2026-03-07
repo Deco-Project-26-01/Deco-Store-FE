@@ -12,8 +12,6 @@ const Login = () => {
 	const openModal = useModalStore((state) => state.openModal);
 	const state: IGuardState | null = location.state;
 
-	const from = state?.from ?? '/';
-
 	useEffect(() => {
 		if (state?.reason === 'auth' && state?.from) {
 			openModal(
@@ -40,7 +38,7 @@ const Login = () => {
 				</h2>
 				{/* 로그인 폼 영역 */}
 				<div className="p-md ">
-					<LoginForm redirectTo={from} />
+					<LoginForm />
 					<div className="mt-xl px-md py-xs flex items-center justify-center gap-md">
 						<p className="text-titleBase text-black">Don't have an account?</p>
 						<TextLink to="/register" variant="text" size="small">
