@@ -7,7 +7,7 @@ import PasswordForm from '@components/Form/PasswordForm';
 import PhoneForm from '@components/Form/PhoneForm';
 import RadioForm from '@components/Form/RadioForm';
 import CheckboxInput from '@components/Input/CheckboxInput';
-import ConfirmModal from '@components/Modal/ConfirmModal';
+import AlertModal from '@components/Modal/AlertModal';
 import useRegister from '@hooks/useRegister';
 import { useModalStore } from '@store/useModalStore';
 import { useState } from 'react';
@@ -74,7 +74,7 @@ const Register = () => {
 		registerUser(formData, {
 			onSuccess: () => {
 				openModal(
-					<ConfirmModal
+					<AlertModal
 						title="Welcome to Deco!"
 						description="Your account has been successfully created."
 						buttonText="Login"
@@ -88,7 +88,7 @@ const Register = () => {
 			},
 			onError: (error: Error) => {
 				openModal(
-					<ConfirmModal
+					<AlertModal
 						title="Login Failed"
 						description={error.message}
 						buttonText="Retry"

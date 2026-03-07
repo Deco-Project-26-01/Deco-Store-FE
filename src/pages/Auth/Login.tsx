@@ -1,7 +1,7 @@
 import type { IGuardState } from '#types/router';
 import LoginForm from '@components/Form/LoginForm';
 import TextLink from '@components/Link/TextLink';
-import ConfirmModal from '@components/Modal/ConfirmModal';
+import AlertModal from '@components/Modal/AlertModal';
 import { useModalStore } from '@store/useModalStore';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ const Login = () => {
 	useEffect(() => {
 		if (state?.reason === 'auth' && state?.from) {
 			openModal(
-				<ConfirmModal
+				<AlertModal
 					title="Authentication Required"
 					description="You need to log in to access this page."
 					buttonText="Login"

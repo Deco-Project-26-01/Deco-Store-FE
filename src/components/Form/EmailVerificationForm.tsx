@@ -3,7 +3,7 @@ import TextButton from '@components/Button/TextButton';
 import DefaultInput from '@components/Input/DefaultInput';
 import TimerInput from '@components/Input/TimerInput';
 import InputLabel from '@components/Label/InputLabel';
-import ConfirmModal from '@components/Modal/ConfirmModal';
+import AlertModal from '@components/Modal/AlertModal';
 import useEmailVerification from '@hooks/useEmailVerification';
 import useEmailVerify from '@hooks/useEmailVerify';
 import { useModalStore } from '@store/useModalStore';
@@ -115,7 +115,7 @@ const EmailVerificationForm = () => {
 				},
 				onError: (error: Error) => {
 					openModal(
-						<ConfirmModal
+						<AlertModal
 							title="Failed to Send Verification Code"
 							description={error.message}
 							buttonText="Retry"
@@ -154,7 +154,7 @@ const EmailVerificationForm = () => {
 				},
 				onError: (error: Error) => {
 					openModal(
-						<ConfirmModal
+						<AlertModal
 							title="Verification Failed"
 							description={error.message}
 							buttonText="Retry"

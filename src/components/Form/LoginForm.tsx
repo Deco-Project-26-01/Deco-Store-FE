@@ -3,7 +3,7 @@ import TextButton from '@components/Button/TextButton';
 import DefaultInput from '@components/Input/DefaultInput';
 import PasswordInput from '@components/Input/PasswordInput';
 import InputLabel from '@components/Label/InputLabel';
-import ConfirmModal from '@components/Modal/ConfirmModal';
+import AlertModal from '@components/Modal/AlertModal';
 import useLogin from '@hooks/useLogin';
 import { useModalStore } from '@store/useModalStore';
 import { useForm } from 'react-hook-form';
@@ -32,7 +32,7 @@ const LoginForm = ({ redirectTo }: { redirectTo: '/' | Location<any> }) => {
 		login(data, {
 			onSuccess: () => {
 				openModal(
-					<ConfirmModal
+					<AlertModal
 						title="Login Successful"
 						description="You have successfully logged in."
 						buttonText="Home"
@@ -44,7 +44,7 @@ const LoginForm = ({ redirectTo }: { redirectTo: '/' | Location<any> }) => {
 			},
 			onError: (error: Error) => {
 				openModal(
-					<ConfirmModal
+					<AlertModal
 						title="Login Failed"
 						description={error.message}
 						buttonText="Retry"
