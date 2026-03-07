@@ -5,14 +5,16 @@ import { useModalStore } from '@store/useModalStore';
 interface IConfirmModalProps {
 	title: string;
 	description: string;
-	buttonText: string;
+	firstButtonText: string;
+	secondButtonText: string;
 	onConfirm?: () => void;
 }
 
 const ConfirmModal = ({
 	title,
 	description,
-	buttonText,
+	firstButtonText,
+	secondButtonText,
 	onConfirm,
 }: IConfirmModalProps) => {
 	const closeModal = useModalStore((state) => state.closeModal);
@@ -23,7 +25,17 @@ const ConfirmModal = ({
 				<h3 className="text-titleLarge text-primaryDark mb-2xl">{title}</h3>
 				<p className="text-bodyBase text-black">{description}</p>
 			</div>
-			<div>
+			<div className="flex">
+				<TextButton
+					variant="light"
+					size="fullMedium"
+					rect={true}
+					onClick={() => {
+						closeModal();
+					}}
+				>
+					{firstButtonText}
+				</TextButton>
 				<TextButton
 					variant="dark"
 					size="fullMedium"
@@ -33,7 +45,7 @@ const ConfirmModal = ({
 						closeModal();
 					}}
 				>
-					{buttonText}
+					{secondButtonText}
 				</TextButton>
 			</div>
 		</Modal>

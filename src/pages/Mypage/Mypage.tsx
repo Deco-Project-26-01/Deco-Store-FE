@@ -5,16 +5,28 @@ import MypageMenuLink from '@components/Link/MypageMenuLink';
 import TextButton from '@components/Button/TextButton';
 import useLogout from '@hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
+import { useModalStore } from '@store/useModalStore';
+import ConfirmModal from '@components/Modal/ConfirmModal';
 
 const Mypage = () => {
 	const { mutate: logout } = useLogout();
+	const openModal = useModalStore((state) => state.openModal);
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		// 모달 추가
-		console.log('User logged out');
-		navigate('/', { replace: true });
-		logout();
+		openModal(
+			<ConfirmModal
+				title="Logout"
+				description="Do you really want to logout from the service?"
+				firstButtonText="Cancel"
+				secondButtonText="Logout"
+				onConfirm={() => {
+					navigate('/', { replace: true });
+					logout();
+				}}
+			/>,
+		);
 	};
 
 	return (
