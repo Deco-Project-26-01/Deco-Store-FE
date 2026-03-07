@@ -35,15 +35,19 @@ const Dropdown = ({
 		list.find((x) => x.value === selectedValue)?.label ?? placeholder;
 
 	return (
-		<div ref={containerRef} className="relative">
+		<div
+			ref={containerRef}
+			style={{ width: `${width}rem` }}
+			className="relative"
+		>
 			<button
 				type="button"
 				aria-haspopup="true"
 				aria-expanded={isOpened}
 				onClick={() => setIsOpened((prev) => !prev)}
-				style={{ width: `${width}rem` }}
 				className={`
-					px-lg py-[6px]
+					w-full
+					px-lg py-[6px] box-border
 					flex items-center justify-between
 					border-2 border-solid border-base300 rounded-xs
 					focus-visible:border-primaryDark
@@ -62,7 +66,7 @@ const Dropdown = ({
 				<ul
 					role="listbox"
 					ref={menuRef}
-					style={{ maxHeight: `${listHeight}rem` }}
+					style={{ width: `${width}rem`, maxHeight: `${listHeight}rem` }}
 					className={`
 						absolute top-[calc(100%+8px)] left-0
 						w-full overflow-x-hidden overflow-y-auto
