@@ -23,7 +23,8 @@ const meta = {
 	argTypes: {
 		title: { control: 'text', description: '모달의 제목' },
 		description: { control: 'text', description: '모달의 내용' },
-		buttonText: { control: 'text', description: '버튼의 텍스트' },
+		firstButtonText: { control: 'text', description: '첫 번째 버튼의 텍스트' },
+		secondButtonText: { control: 'text', description: '두 번째 버튼의 텍스트' },
 	},
 	args: { onConfirm: fn() },
 	tags: ['autodocs'],
@@ -36,6 +37,7 @@ export const Default: Story = {
 	args: {
 		title: 'Confirm Modal!',
 		description: 'This is a confirm modal.',
-		buttonText: 'Close',
+		firstButtonText: 'Cancel',
+		secondButtonText: 'Confirm',
 	},
 };
