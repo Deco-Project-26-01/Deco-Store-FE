@@ -12,5 +12,5 @@ export interface IRouteHandle {
 
 export interface IGuardState {
 	from?: Location;
-	reason: string;
+	reason?: 'auth';
 }

@@ -3,7 +3,9 @@ import TextButton from '@components/Button/TextButton';
 import DefaultInput from '@components/Input/DefaultInput';
 import PasswordInput from '@components/Input/PasswordInput';
 import InputLabel from '@components/Label/InputLabel';
+import AlertModal from '@components/Modal/AlertModal';
 import useLogin from '@hooks/useLogin';
+import { useModalStore } from '@store/useModalStore';
 import { useForm } from 'react-hook-form';
 import { useNavigate, type Location } from 'react-router-dom';
 
@@ -24,19 +26,34 @@ const LoginForm = ({ redirectTo }: { redirectTo: '/' | Location<any> }) => {
 	});
 	const { mutate: login, isPending } = useLogin();
 	const navigate = useNavigate();
+	const openModal = useModalStore((state) => state.openModal);
 
 	const handleLogin = async (data: ILoginData) => {
 		login(data, {
 			onSuccess: () => {
-				// TODO: 모달 추가, 리디렉션 경로 설정
-				console.log('Logged in successfully');
-				navigate(redirectTo, { replace: true });
+				openModal(
+					<AlertModal
+						title="Login Successful"
+						description="You have successfully logged in."
+						buttonText="Home"
+						onConfirm={() => {
+							navigate(redirectTo, { replace: true });
+						}}
+					/>,
+				);
 			},
 			onError: (error: Error) => {
-				// TODO: 모달 추가
-				console.error(error.message);
-				resetField('password');
-				setFocus('email');
+				openModal(
+					<AlertModal
+						title="Login Failed"
+						description={error.message}
+						buttonText="Retry"
+						onConfirm={() => {
+							resetField('password');
+							setFocus('email');
+						}}
+					/>,
+				);
 			},
 		});
 	};
