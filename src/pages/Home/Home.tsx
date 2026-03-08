@@ -173,6 +173,8 @@ const Home = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('products');
 
+	console.log(setSearchParams);
+
 	return (
 		<div>
 			<h1 className="sr-only">Home</h1>
