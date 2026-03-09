@@ -170,10 +170,8 @@ const productData: IProductData[] = [
 
 const Home = () => {
 	const accessToken = useUserStore((state) => state.accessToken);
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
 	const category = searchParams.get('products');
-
-	console.log(setSearchParams);
 
 	return (
 		<div>
@@ -221,9 +219,9 @@ const Home = () => {
 					/>
 				</div>
 				{/* 상품 리스트 */}
-				<div className={`grid grid-cols-4 gap-xl`}>
-					{productData.length &&
-						productData.map((product) => (
+				{productData.length > 0 ? (
+					<div className={`grid grid-cols-4 gap-xl`}>
+						{productData.map((product) => (
 							<ProductLink
 								key={product.id}
 								id={product.id}
@@ -234,8 +232,10 @@ const Home = () => {
 								isAuthorized={!!accessToken}
 							/>
 						))}
-				</div>
-				<div></div>
+					</div>
+				) : (
+					<p className="text-center">No products available.</p>
+				)}
 			</section>
 		</div>
 	);
