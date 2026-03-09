@@ -13,6 +13,7 @@ import Order from '@pages/Mypage/Order/Order';
 import OrderLayout from '@pages/Mypage/Order/OrderLayout';
 import Orders from '@pages/Mypage/Order/Orders';
 import Support from '@pages/Mypage/Support';
+import ProductDetail from '@pages/ProductDetail/ProductDetail';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -26,6 +27,12 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Home />,
+			},
+			// 상품 상세
+			{
+				path: 'products/:id',
+				element: <ProductDetail />,
+				handle: { label: `Product` },
 			},
 			// 장바구니
 			{
