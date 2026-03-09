@@ -23,7 +23,6 @@ const ProductLink = ({
 		<button
 			type="button"
 			onClick={() => navigate(`/products/${id}`)}
-			key={id}
 			className={`
         flex flex-col gap-sm
       `}
@@ -38,7 +37,7 @@ const ProductLink = ({
 				</span>
 				{isAuthorized && (
 					<span className="text-titleBase text-primaryDark">
-						$ {price.toLocaleString().slice(0, -4)}
+						$ {(price / 1000).toLocaleString()}
 					</span>
 				)}
 			</span>

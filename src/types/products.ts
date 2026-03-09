@@ -20,6 +20,12 @@ export interface IProductData {
 
 interface IProductListData {
 	content: IProductData[];
+	currentPage: number;
+	totalPages: number;
+	totalElements: number;
+	size: number;
+	hasNext: boolean;
+	hasPrevious: boolean;
 }
 
 export interface IProductListResponse {
@@ -30,12 +36,7 @@ export interface IProductListResponse {
 export interface IProductListSuccessResponse extends IProductListResponse {
 	success: true;
 	data: IProductListData;
-	currentPage: number;
-	totalPages: number;
-	totalElements: number;
-	size: number;
-	hasNext: boolean;
-	hasPrevious: boolean;
+	error: null;
 }
 
 export interface IProductListFailureResponse extends IProductListResponse {
