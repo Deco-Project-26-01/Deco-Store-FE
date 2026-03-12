@@ -4,16 +4,19 @@ import TextLink from '@components/Link/TextLink';
 import AlertModal from '@components/Modal/AlertModal';
 import { useModalStore } from '@store/useModalStore';
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 const Login = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
 	const openModal = useModalStore((state) => state.openModal);
+
 	const state: IGuardState | null = location.state;
+	const reason = state?.reason ?? searchParams.get('reason');
 
 	useEffect(() => {
-		if (state?.reason === 'auth' && state?.from) {
+		if (reason === 'auth' && state?.from) {
 			openModal(
 				<AlertModal
 					title="Authentication Required"
@@ -26,8 +29,23 @@ const Login = () => {
 				replace: true,
 				state: { from: state.from },
 			});
+			return;
 		}
-	}, [state?.reason, state?.from, openModal, navigate, location.pathname]);
+
+		if (reason === 'session-expired') {
+			openModal(
+				<AlertModal
+					title="Session Expired"
+					description="Your session has expired. Please log in again."
+					buttonText="OK"
+				/>,
+			);
+
+			navigate(location.pathname, {
+				replace: true,
+			});
+		}
+	}, [reason, state?.from, openModal, navigate, location.pathname]);
 
 	return (
 		<>
@@ -36,8 +54,7 @@ const Login = () => {
 				<h2 className="mb-2xl text-center text-title2Xlarge text-primaryDark">
 					Login
 				</h2>
-				{/* 로그인 폼 영역 */}
-				<div className="p-md ">
+				<div className="p-md">
 					<LoginForm />
 					<div className="mt-xl px-md py-xs flex items-center justify-center gap-md">
 						<p className="text-titleBase text-black">Don't have an account?</p>

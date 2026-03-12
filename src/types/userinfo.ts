@@ -36,3 +36,14 @@ export interface IUserInfoFailureResponse extends IUserInfoResponse {
 		code: string;
 	};
 }
+
+// 회원 정보 수정 요청의 데이터 타입
+export interface IChangeProfileRequestData {
+	lastName?: string | null;
+	firstName?: string | null;
+	companyName?: string | null;
+	businessNumber?: string | null;
+	nation?: string;
+	phone?: string;
+	shippingAddress?: string;
+}

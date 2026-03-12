@@ -7,11 +7,34 @@ import useLogout from '@hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
 import { useModalStore } from '@store/useModalStore';
 import ConfirmModal from '@components/Modal/ConfirmModal';
+import useGetUserInfo from '@hooks/useGetUserInfo';
+import { useEffect } from 'react';
+import AlertModal from '@components/Modal/AlertModal';
 
 const Mypage = () => {
 	const { mutate: logout } = useLogout();
 	const openModal = useModalStore((state) => state.openModal);
 	const navigate = useNavigate();
+	const { data, isError, error } = useGetUserInfo();
+
+	useEffect(() => {
+		if (!isError) return;
+
+		// 세부 로직은 추후 수정
+		openModal(
+			<AlertModal
+				title="Error"
+				description={
+					error instanceof Error ? error.message : 'An unknown error occurred.'
+				}
+				buttonText="OK"
+				onConfirm={() => {
+					logout();
+					navigate('/');
+				}}
+			/>,
+		);
+	}, [isError, error, openModal]);
 
 	const handleLogout = () => {
 		// 모달 추가
@@ -25,6 +48,7 @@ const Mypage = () => {
 					navigate('/', { replace: true });
 					logout();
 				}}
+				closeOnOverlayClick={false}
 			/>,
 		);
 	};
@@ -35,7 +59,12 @@ const Mypage = () => {
 			<section className="py-2xl">
 				<h1 className="sr-only">My Page</h1>
 				<div className="mb-4xl flex gap-lg items-center justify-between">
-					<h2 className="text-titleXlarge text-primaryDark">Hello, User!</h2>
+					<h2 className="text-titleXlarge text-primaryDark">
+						Hello,{' '}
+						{data.data.userType === 'PERSONAL'
+							? `${data.data.firstName} ${data.data.lastName}`
+							: `${data.data.companyName}`}
+					</h2>
 					<TextButton variant="dark" size="small" onClick={handleLogout}>
 						Logout
 					</TextButton>

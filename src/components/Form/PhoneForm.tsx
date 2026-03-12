@@ -4,7 +4,6 @@ import DefaultInput from '@components/Input/DefaultInput';
 import InputLabel from '@components/Label/InputLabel';
 import { Controller, useFormContext } from 'react-hook-form';
 import { getCountryCallingCode } from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';
 
 const PhoneForm = () => {
 	const {

@@ -11,6 +11,12 @@ const REFRESH_TOKEN_URL = '/auth/refresh';
 
 type RetryConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 
+const redirectToLogin = () => {
+	if (window.location.pathname !== '/login') {
+		window.location.replace('/login?reason=session-expired');
+	}
+};
+
 const useCustomAxios = () => {
 	const { accessToken, refreshToken, setTokens, clearTokens } = useUserStore(
 		(state) => state,
@@ -48,16 +54,21 @@ const useCustomAxios = () => {
 			const originalConfig = config as RetryConfig;
 
 			if (originalConfig.url === '/auth/logout') {
+				clearTokens();
+				redirectToLogin();
 				return Promise.reject(error);
 			}
 
 			// ⚠️ TODO: refresh token 만료 시 로그아웃 처리
 			if (originalConfig.url === REFRESH_TOKEN_URL) {
 				clearTokens();
+				redirectToLogin();
 				return Promise.reject(error);
 			}
 
 			if (originalConfig._retry) {
+				clearTokens();
+				redirectToLogin();
 				return Promise.reject(error);
 			}
 			originalConfig._retry = true;
