@@ -1,5 +1,4 @@
 import TextButton from '@components/Button/TextButton';
-import AlertModal from '@components/Modal/AlertModal';
 import ChangeProfileModal from '@components/Modal/ChangeProfileModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 import { useModalStore } from '@store/useModalStore';
@@ -8,31 +7,15 @@ import { useEffect, useState } from 'react';
 
 const Account = () => {
 	const openModal = useModalStore((state) => state.openModal);
-	const { data, isError, error } = useGetUserInfo();
+	const { data } = useGetUserInfo();
 	const [selectedItems] = useState<string[]>([]);
 	const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
 
-	useEffect(() => {
-		if (!isError) return;
-
-		// 세부 로직은 추후 수정
-		openModal(
-			<AlertModal
-				title="Error"
-				description={
-					error instanceof Error ? error.message : 'An unknown error occurred.'
-				}
-				buttonText="Error"
-			/>,
-		);
-	}, [isError, error, openModal]);
-
-	useEffect(() => {
-		if (!data) return;
-		setUserInfo(data.data);
-	}, [data, setUserInfo]);
-
 	const userData = data.data;
+
+	useEffect(() => {
+		setUserInfo(userData);
+	}, [userData, setUserInfo]);
 
 	return (
 		<>
