@@ -2,50 +2,50 @@ import TextButton from '@components/Button/TextButton';
 import Modal from '@components/Modal/Modal';
 import { useModalStore } from '@store/useModalStore';
 
-interface IConfirmModalProps {
+interface IFormModalProps {
 	title: string;
-	description: string;
 	firstButtonText: string;
 	secondButtonText: string;
-	onConfirm?: () => void;
+	formId: string;
 	closeOnOverlayClick?: boolean;
+	isPending?: boolean;
+	children: React.ReactNode;
 }
 
-const ConfirmModal = ({
+const FormModal = ({
 	title,
-	description,
 	firstButtonText,
 	secondButtonText,
-	onConfirm,
+	formId,
 	closeOnOverlayClick = true,
-}: IConfirmModalProps) => {
+	isPending = false,
+	children,
+}: IFormModalProps) => {
 	const closeModal = useModalStore((state) => state.closeModal);
-
 	return (
-		<Modal onClose={closeModal} closeOnOverlayClick={closeOnOverlayClick}>
-			<div className="pt-2xl pb-4xl px-2xl text-center">
-				<h3 className="text-titleLarge text-primaryDark mb-2xl">{title}</h3>
-				<p className="text-bodyBase text-black">{description}</p>
-			</div>
+		<Modal
+			title={title}
+			onClose={closeModal}
+			closeOnOverlayClick={closeOnOverlayClick}
+		>
+			<div className="px-2xl pt-2xl pb-4xl">{children}</div>
 			<div className="flex">
 				<TextButton
 					variant="light"
 					size="fullMedium"
 					rect={true}
-					onClick={() => {
-						closeModal();
-					}}
+					onClick={closeModal}
+					disabled={isPending}
 				>
 					{firstButtonText}
 				</TextButton>
 				<TextButton
+					type="submit"
+					form={formId}
 					variant="dark"
 					size="fullMedium"
 					rect={true}
-					onClick={() => {
-						if (onConfirm) onConfirm();
-						closeModal();
-					}}
+					disabled={isPending}
 				>
 					{secondButtonText}
 				</TextButton>
@@ -54,4 +54,4 @@ const ConfirmModal = ({
 	);
 };
 
-export default ConfirmModal;
+export default FormModal;

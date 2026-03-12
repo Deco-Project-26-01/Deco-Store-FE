@@ -23,6 +23,10 @@ const meta = {
 	argTypes: {
 		title: { control: 'text', description: '모달의 제목' },
 		onClose: { action: 'close', description: '모달을 닫는 함수' },
+		closeOnOverlayClick: {
+			control: 'boolean',
+			description: '오버레이 클릭으로 모달을 닫을 수 있는지 여부',
+		},
 	},
 	args: { onClose: fn() },
 	tags: ['autodocs'],

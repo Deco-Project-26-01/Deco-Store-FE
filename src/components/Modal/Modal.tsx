@@ -7,6 +7,7 @@ interface IModalProps {
 	title?: string;
 	children: React.ReactNode;
 	onClose: () => void;
+	closeOnOverlayClick?: boolean;
 }
 
 const getFocusableElements = (container: HTMLElement) => {
@@ -26,7 +27,12 @@ const getFocusableElements = (container: HTMLElement) => {
 	});
 };
 
-const Modal = ({ title, children, onClose }: IModalProps) => {
+const Modal = ({
+	title,
+	children,
+	onClose,
+	closeOnOverlayClick = true,
+}: IModalProps) => {
 	const modalRef = useRef<HTMLDivElement>(null);
 	const titleId = useId();
 	const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
@@ -122,7 +128,7 @@ const Modal = ({ title, children, onClose }: IModalProps) => {
         flex items-center justify-center
       `}
 			// 모달 외부 클릭 시 모달 닫기
-			onClick={onClose}
+			onClick={closeOnOverlayClick ? onClose : undefined}
 		>
 			<div
 				ref={modalRef}
