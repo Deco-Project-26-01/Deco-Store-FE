@@ -1,43 +1,21 @@
 import iconOrderBase900 from '@assets/icons/icon-order-base900.svg';
 import iconSupportBase900 from '@assets/icons/icon-support-base900.svg';
 import iconUserBase900 from '@assets/icons/icon-user-base900.svg';
-import MypageMenuLink from '@components/Link/MypageMenuLink';
 import TextButton from '@components/Button/TextButton';
-import useLogout from '@hooks/useLogout';
-import { useNavigate } from 'react-router-dom';
-import { useModalStore } from '@store/useModalStore';
+import MypageMenuLink from '@components/Link/MypageMenuLink';
 import ConfirmModal from '@components/Modal/ConfirmModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
-import { useEffect } from 'react';
-import AlertModal from '@components/Modal/AlertModal';
+import useLogout from '@hooks/useLogout';
+import { useModalStore } from '@store/useModalStore';
+import { useNavigate } from 'react-router-dom';
 
 const Mypage = () => {
 	const { mutate: logout } = useLogout();
 	const openModal = useModalStore((state) => state.openModal);
 	const navigate = useNavigate();
-	const { data, isError, error } = useGetUserInfo();
-
-	useEffect(() => {
-		if (!isError) return;
-
-		// 세부 로직은 추후 수정
-		openModal(
-			<AlertModal
-				title="Error"
-				description={
-					error instanceof Error ? error.message : 'An unknown error occurred.'
-				}
-				buttonText="OK"
-				onConfirm={() => {
-					logout();
-					navigate('/');
-				}}
-			/>,
-		);
-	}, [isError, error, openModal]);
+	const { data } = useGetUserInfo();
 
 	const handleLogout = () => {
-		// 모달 추가
 		openModal(
 			<ConfirmModal
 				title="Logout"
