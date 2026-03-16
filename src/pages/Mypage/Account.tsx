@@ -1,4 +1,5 @@
 import TextButton from '@components/Button/TextButton';
+import ChangePasswordModal from '@components/Modal/ChangePasswordModal';
 import ChangeProfileModal from '@components/Modal/ChangeProfileModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 import { useModalStore } from '@store/useModalStore';
@@ -21,7 +22,7 @@ const Account = () => {
 		<>
 			<title>My Page | Account</title>
 			<section className="py-2xl">
-				<h1 className="sr-only">My Page</h1>
+				<h1 className="sr-only">Account</h1>
 				{/* 프로필 */}
 				<div className="mb-2xl">
 					<h2 className="text-titleXlarge text-primaryDark mb-2xl">Profile</h2>
@@ -59,7 +60,13 @@ const Account = () => {
 						>
 							Change Profile
 						</TextButton>
-						<TextButton variant="dark" size="small" onClick={() => {}}>
+						<TextButton
+							variant="dark"
+							size="small"
+							onClick={() => {
+								openModal(<ChangePasswordModal />);
+							}}
+						>
 							Change Password
 						</TextButton>
 					</div>
