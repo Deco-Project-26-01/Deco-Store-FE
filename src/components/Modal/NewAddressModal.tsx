@@ -1,7 +1,4 @@
-import type {
-	INewAddressFormData,
-	INewAddressRequestData,
-} from '#types/userinfo';
+import type { INewAddressRequestData } from '#types/userinfo';
 import NewAddressForm from '@components/Form/NewAddressForm';
 import FormModal from '@components/Modal/FormModal';
 
@@ -11,14 +8,7 @@ const NewAddressModal = () => {
 	// 추후 mutate의 isPending으로 변경 예정 - 아직 개발 전
 	const isPending = false;
 
-	const handleSave = (data: INewAddressFormData) => {
-		const formData: INewAddressRequestData = {
-			label: data.addressLabel ? data.addressLabel : 'Default',
-			recipientName: data.recipientName,
-			phone: data.phone,
-			address: data.address,
-		};
-
+	const handleSave = (formData: INewAddressRequestData) => {
 		console.log(formData);
 	};
 

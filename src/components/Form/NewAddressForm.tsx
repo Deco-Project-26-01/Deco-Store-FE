@@ -1,4 +1,7 @@
-import type { INewAddressFormData } from '#types/userinfo';
+import type {
+	INewAddressFormData,
+	INewAddressRequestData,
+} from '#types/userinfo';
 import CountryDropdown from '@components/Input/CountryDropdown';
 import DefaultInput from '@components/Input/DefaultInput';
 import InputLabel from '@components/Label/InputLabel';
@@ -6,7 +9,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { getCountryCallingCode } from 'react-phone-number-input';
 
 interface INewAddressForm {
-	onSubmit: (data: any) => void;
+	onSubmit: (data: INewAddressRequestData) => void;
 	isPending: boolean;
 }
 
@@ -25,13 +28,27 @@ const NewAddressForm = ({ onSubmit, isPending }: INewAddressForm) => {
 			recipientName: '',
 			nation: '',
 			phone: '',
-			callingCode: '',
 			address: '',
 		},
 	});
 
+	const handleSave = (data: INewAddressFormData) => {
+		const callingCode = data.nation
+			? `+${getCountryCallingCode(data.nation as any)}`
+			: '';
+
+		const formData: INewAddressRequestData = {
+			label: data.addressLabel ? data.addressLabel : null,
+			recipientName: data.recipientName,
+			phone: `${callingCode}-${data.phone}`,
+			address: data.address,
+		};
+
+		onSubmit(formData);
+	};
+
 	return (
-		<form id="newAddressForm" onSubmit={handleSubmit(onSubmit)}>
+		<form id="newAddressForm" onSubmit={handleSubmit(handleSave)}>
 			{/* 배송지 이름 */}
 			<div className="flex flex-col gap-sm mb-lg">
 				<InputLabel htmlFor="addressLabel">Label</InputLabel>
@@ -89,16 +106,7 @@ const NewAddressForm = ({ onSubmit, isPending }: INewAddressForm) => {
 									value={field.value || undefined}
 									onChange={(next) => {
 										if (isPending) return;
-
-										const nextNation = next ?? '';
-										field.onChange(nextNation);
-
-										const code = next ? getCountryCallingCode(next as any) : '';
-
-										setValue('callingCode', code ? `+${code}` : '', {
-											shouldDirty: true,
-											shouldValidate: true,
-										});
+										field.onChange(next ?? '');
 									}}
 								/>
 							)}

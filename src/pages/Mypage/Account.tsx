@@ -77,38 +77,49 @@ const Account = () => {
 				<div>
 					<h2 className="text-titleXlarge text-primaryDark mb-2xl">Address</h2>
 					<div>
-						<table className="w-full text-center">
+						<table className="table-fixed w-full text-center">
+							<colgroup>
+								<col className="w-[20%]" />
+								<col className="w-[20%]" />
+								<col className="w-[20%]" />
+								<col className="w-[32rem]" />
+								<col className="w-[5.5rem]" />
+							</colgroup>
 							<thead className="text-titleBase bg-base100 border-solid border-0 border-y border-base500 box-border">
-								<tr className="flex items-center gap-lg">
-									<th className="py-sm flex-1" scope="col">
+								<tr>
+									<th className="px-lg py-sm" scope="col">
 										Label
 									</th>
 
-									<th className="py-sm flex-1" scope="col">
+									<th className="px-lg py-sm" scope="col">
 										Recipient
 									</th>
 
-									<th className="py-sm flex-1" scope="col">
+									<th className="px-lg py-sm" scope="col">
 										Phone
 									</th>
 
-									<th className="py-sm w-[32rem] shrink-0" scope="col">
+									<th className="py-sm w-[32rem]" scope="col">
 										Address
 									</th>
 
-									<th className="py-sm w-[5.5rem] shrink-0" scope="col">
+									<th className="py-sm w-[5.5rem]" scope="col">
 										<span className="sr-only">Edit</span>
 									</th>
 								</tr>
 							</thead>
 							<tbody>
 								{userData.shippingAddress ? (
-									<tr className="flex items-center gap-lg">
-										<td>Home</td>
-										<td>Elon Musk</td>
-										<td>+1 512-555-0000</td>
-										<td>1 Tesla Road, Austin, TX 78725, USA</td>
-										<td>
+									<tr className="border-solid border-0 border-b border-base500">
+										<td className="px-lg py-lg align-middle">Home</td>
+										<td className="px-lg py-lg align-middle">Elon Musk</td>
+										<td className="px-lg py-lg align-middle">
+											+1 512-555-0000
+										</td>
+										<td className="px-lg py-lg text-left align-middle">
+											1 Tesla Road, Austin, TX 78725, USA
+										</td>
+										<td className="px-lg py-lg align-middle">
 											<button type="button">Edit</button>
 										</td>
 									</tr>
