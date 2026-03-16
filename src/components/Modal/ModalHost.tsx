@@ -8,7 +8,7 @@ const ModalHost = () => {
 
 	useEffect(() => {
 		closeModal();
-	}, [location.key, closeModal]);
+	}, [location.pathname, location.search, closeModal]);
 
 	const node = useModalStore((state) => state.node);
 

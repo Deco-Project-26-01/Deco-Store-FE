@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 interface IChangePasswordForm {
 	onSubmit: (data: IChangePasswordRequestData) => void;
-	isPending: boolean;
+	isPending?: boolean;
 }
 
 interface IChangePasswordFormData {
@@ -77,7 +77,7 @@ const ChangePasswordForm = ({
 						},
 						validate: (value) =>
 							value !== getValues('currentPassword') ||
-							'New password must be different from the cusrrent password',
+							'New password must be different from the current password',
 					})}
 					showClearIcon={!!watch('newPassword')}
 					onClearIconClick={() => resetField('newPassword')}
