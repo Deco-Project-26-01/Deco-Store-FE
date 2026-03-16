@@ -2,6 +2,7 @@ import type { IRouteHandle } from '#types/router';
 import BreadCrumb from '@components/BreadCrumb/BreadCrumb';
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
+import ModalHost from '@components/Modal/ModalHost';
 import ProductsTab from '@components/Tab/ProductsTab';
 import { Outlet, useLocation, useMatches } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ const Layout = () => {
 			<Header
 				type={pathname.startsWith('/checkout') ? 'checkout' : 'default'}
 			/>
+			<ModalHost />
 			<main className="grow flex flex-col">
 				{/* 상품 탭 */}
 				{!pathname.startsWith('/cart') && !pathname.startsWith('/checkout') && (

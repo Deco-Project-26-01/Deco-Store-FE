@@ -47,3 +47,31 @@ export interface IChangeProfileRequestData {
 	phone?: string;
 	shippingAddress?: string;
 }
+
+// 비밀번호 수정 요청의 데이터 타입
+export interface IChangePasswordRequestData {
+	currentPassword: string;
+	newPassword: string;
+}
+
+// 비밀번호 수정 응답의 데이터 타입
+export interface IChangePasswordResponse {
+	success: boolean;
+	message: string;
+	data: null;
+}
+
+// 비밀번호 수정 성공 응답의 타입
+export interface IChangePasswordSuccessResponse extends IChangePasswordResponse {
+	success: true;
+	error: null;
+}
+
+// 비밀번호 수정 실패 응답의 타입
+export interface IChangePasswordFailureResponse extends IChangePasswordResponse {
+	success: false;
+	error: {
+		status: number;
+		code: string;
+	};
+}

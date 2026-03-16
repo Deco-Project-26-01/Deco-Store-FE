@@ -209,7 +209,7 @@ const ChangeProfileForm = ({
 					Phone Number
 				</InputLabel>
 
-				<div className="flex items-start gap-lg">
+				<div className="flex items-start gap-lg mb-2xl">
 					<div>
 						<Controller
 							name="nation"
@@ -217,6 +217,7 @@ const ChangeProfileForm = ({
 							rules={{ required: 'Please select a country' }}
 							render={({ field }) => (
 								<CountryDropdown
+									listHeight={10}
 									value={field.value || undefined}
 									onChange={(next) => {
 										if (isPending) return;
