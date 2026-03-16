@@ -75,3 +75,20 @@ export interface IChangePasswordFailureResponse extends IChangePasswordResponse 
 		code: string;
 	};
 }
+
+// 배송지 정보 추가 폼의 데이터 타입
+export interface INewAddressFormData {
+	addressLabel: string;
+	recipientName: string;
+	nation: string;
+	phone: string;
+	address: string;
+}
+
+// 배송지 정보 등록 요청의 데이터 타입
+export interface INewAddressRequestData {
+	label: string | null;
+	recipientName: string;
+	phone: string;
+	address: string;
+}
