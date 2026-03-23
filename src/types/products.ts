@@ -18,6 +18,13 @@ export interface IProductData {
 	updatedAt: string;
 }
 
+export interface IPageInfo {
+	currentPage: number;
+	totalPages: number;
+	hasNext: boolean;
+	hasPrevious: boolean;
+}
+
 interface IProductListData {
 	content: IProductData[];
 	currentPage: number;

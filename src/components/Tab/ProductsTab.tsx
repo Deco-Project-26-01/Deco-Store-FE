@@ -6,7 +6,7 @@ type Category = 'All' | 'Bracelets' | 'Necklaces';
 const ProductsTab = () => {
 	const [searchParams] = useSearchParams();
 	const { pathname } = useLocation();
-	const currentCategory = searchParams.get('products');
+	const currentCategory = searchParams.get('category');
 	const categories: Category[] = ['All', 'Bracelets', 'Necklaces'];
 
 	const getIsActive = (category: Category) =>
@@ -45,7 +45,7 @@ const ProductsTab = () => {
 									to={
 										category === 'All'
 											? '/'
-											: `/?products=${category.toLowerCase()}`
+											: `/?category=${category.toLowerCase()}`
 									}
 									className={getStyle(isActive)}
 									role="tab"
