@@ -12,7 +12,9 @@ const ProductCardSkeleton = () => {
 const ProductListSkeleton = () => {
 	return (
 		<div className={`grid grid-cols-4 gap-xl`}>
-			{Array.from({ length: 8 }).map((_, index) => (
+			{Array.from({
+				length: Number(import.meta.env.VITE_PRODUCTS_PER_PAGE),
+			}).map((_, index) => (
 				<ProductCardSkeleton key={index} />
 			))}
 		</div>

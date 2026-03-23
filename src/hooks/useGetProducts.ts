@@ -13,7 +13,7 @@ const fetchProducts = async (
 ) => {
 	try {
 		const response = await instance.get<IProductListSuccessResponse>(
-			`/products?size=8${pageNum > 0 ? `&page=${pageNum}` : ''}${params ? `&${params}` : ''}`,
+			`/products?size=${import.meta.env.VITE_PRODUCTS_PER_PAGE}${pageNum > 0 ? `&page=${pageNum}` : ''}${params ? `&${params}` : ''}`,
 		);
 		return response.data;
 	} catch (error) {
