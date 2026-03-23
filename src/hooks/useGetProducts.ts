@@ -38,8 +38,6 @@ const useGetProducts = (pageNum: number = 0, params: string = '') => {
 			pageInfo: {
 				currentPage: response.data.currentPage,
 				totalPages: response.data.totalPages,
-				totalElements: response.data.totalElements,
-				size: response.data.size,
 				hasNext: response.data.hasNext,
 				hasPrevious: response.data.hasPrevious,
 			},
