@@ -12,7 +12,7 @@ const Home = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('category') || '';
 	const sortBy = searchParams.get('sortBy') || '';
-	const pageNum = Number(searchParams.get('page') || '1');
+	const pageNum = Math.max(1, Number(searchParams.get('page') || '1'));
 
 	const queryParams = useMemo(() => {
 		const params = new URLSearchParams(searchParams);
@@ -27,11 +27,11 @@ const Home = () => {
 	const products = data?.products ?? [];
 	const baseImageUrl = import.meta.env.VITE_DECO_BACKEND_URL;
 
-	const pageInfo = data?.pageInfo ?? {
-		currentPage: 1,
-		totalPages: 0,
-		hasNext: false,
-		hasPrevious: false,
+	const pageInfo = {
+		currentPage: data?.pageInfo?.currentPage ?? 1,
+		totalPages: data?.pageInfo?.totalPages ?? 0,
+		hasNext: data?.pageInfo?.hasNext ?? false,
+		hasPrevious: data?.pageInfo?.hasPrevious ?? false,
 	};
 
 	return (
@@ -71,7 +71,15 @@ const Home = () => {
 					<Dropdown
 						width={20}
 						listHeight={20}
-						selectedValue={sortBy}
+						selectedValue={
+							sortBy === 'createdAt'
+								? 'newest'
+								: sortBy === 'price'
+									? 'price'
+									: sortBy === 'name'
+										? 'name'
+										: ''
+						}
 						onChange={(value) => {
 							const nextParams = new URLSearchParams(searchParams);
 							// 정렬 변경 시 1페이지로 이동
