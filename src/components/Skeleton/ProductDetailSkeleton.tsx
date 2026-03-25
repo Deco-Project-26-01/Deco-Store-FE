@@ -72,7 +72,7 @@ const ProductDetailSkeleton = ({
 					)}
 				</div>
 
-				{/* 버튼 영역] */}
+				{/* 버튼 영역 */}
 				<div className="mt-auto flex gap-lg">
 					<div className="h-12 w-full rounded-md bg-base200 animate-pulse" />
 					{isAuthorized && (

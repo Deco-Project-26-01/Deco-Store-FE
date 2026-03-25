@@ -102,7 +102,7 @@ const ImageSwiper = ({ images }: { images: IProductImage[] }) => {
 						>
 							<img
 								src={image.imageUrl}
-								alt={`Thumbnail ${+1}`}
+								alt=""
 								className="h-24 w-24 object-cover"
 								aria-hidden="true"
 							/>

@@ -1,6 +1,6 @@
 import type {
-	IProductListFailureResponse,
-	IProductListSuccessResponse,
+	IProductDetailSuccessResponse,
+	IProductDetailFailureResponse,
 } from '#types/products';
 import useCustomAxios from '@hooks/useCustomAxios';
 import { useQuery } from '@tanstack/react-query';
@@ -8,12 +8,12 @@ import { isAxiosError, type AxiosInstance } from 'axios';
 
 const fetchProductDetail = async (id: number, instance: AxiosInstance) => {
 	try {
-		const response = await instance.get<IProductListSuccessResponse>(
+		const response = await instance.get<IProductDetailSuccessResponse>(
 			`/products/${id}`,
 		);
 		return response.data;
 	} catch (error) {
-		if (isAxiosError<IProductListFailureResponse>(error)) {
+		if (isAxiosError<IProductDetailFailureResponse>(error)) {
 			if (error.response?.status === 401) {
 				throw new Error('Unauthorized. Please login again.');
 			} else if (error.response?.status === 403) {
@@ -27,12 +27,13 @@ const fetchProductDetail = async (id: number, instance: AxiosInstance) => {
 	}
 };
 
-const useGetProductDetail = (id: number) => {
+const useGetProductDetail = (id: number, enabled = true) => {
 	const axios = useCustomAxios();
 
 	return useQuery({
 		queryKey: ['product', id],
 		queryFn: () => fetchProductDetail(id, axios),
+		enabled,
 	});
 };
 

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useUserStore } from '@store/useUserStore';
 import ImageSwiper from '@components/Swiper/ImageSwiper';
 import { useState } from 'react';
@@ -7,42 +7,24 @@ import QuantityInput from '@components/Input/QuantityInput';
 import useGetProductDetail from '@hooks/useGetProductDetail';
 import ProductDetailSkeleton from '@components/Skeleton/ProductDetailSkeleton';
 
-const images = [
-	{
-		id: 2,
-		imageUrl:
-			'https://www.benbridge.com/dw/image/v2/ABAW_PRD/on/demandware.static/-/Library-Sites-BBJSharedLibrary/default/dwb5648ec2/category-pages/jewelry/2025/09/20250902-jewelry-LP-hero_1661x1864.jpg?sw=1440&sfrm=png&q=70',
-		isThumbnail: false,
-	},
-	{
-		id: 3,
-		imageUrl:
-			'https://simpleanddainty.com/cdn/shop/files/SignatureStarterJewelrySet_1400x.png?v=1726182421',
-		isThumbnail: false,
-	},
-	{
-		id: 4,
-		imageUrl:
-			'https://cdn.shopify.com/s/files/1/0764/4005/files/07-06-21-18_1_480x480.jpg?v=1630095231',
-		isThumbnail: true,
-	},
-	{
-		id: 5,
-		imageUrl:
-			'https://objects-prod.cdn.chopard.com/image/upload/t_navigation-card-portrait/q_auto,f_auto,dpr_auto/Navigation/all-collections-jewellery-4',
-		isThumbnail: false,
-	},
-];
-
 const ProductDetail = () => {
 	const { id } = useParams();
+	const productId = Number(id);
+	const isValidProductId = Number.isInteger(productId) && productId > 0;
+
 	const accessToken = useUserStore((state) => state.accessToken);
 	const [quantity, setQuantity] = useState<number>(1);
 	const {
 		data: productDetail,
 		isLoading,
 		error,
-	} = useGetProductDetail(Number(id));
+	} = useGetProductDetail(productId, isValidProductId);
+
+	const navigate = useNavigate();
+
+	if (!isValidProductId) {
+		return <div className="py-2xl">Invalid product ID.</div>;
+	}
 
 	return (
 		<div className="py-2xl">
@@ -54,19 +36,26 @@ const ProductDetail = () => {
 			) : error ? (
 				<div>Error: {error.message}</div>
 			) : productDetail ? (
-				<section className="flex gap-xl">
+				<section className="flex gap-3xl">
 					{/* 상품 이미지 영역 */}
 					<div className="shrink-0 w-[60rem] aspect-square">
-						<ImageSwiper images={images} />
+						<ImageSwiper
+							images={productDetail.data.images.map((image) => ({
+								...image,
+								imageUrl: `${import.meta.env.VITE_DECO_BACKEND_URL}${image.imageUrl}`,
+							}))}
+						/>
 					</div>
 
 					{/* 상품 정보 영역 */}
 					<div className="w-full flex flex-col">
-						<div className="grow flex flex-col gap-lg">
-							<h3 className="text-titleXlarge">{`Product Title`}</h3>
-							<p className="text-bodyMedium text-base500">{`Product Description`}</p>
+						<div className="grow flex flex-col gap-2xl">
+							<h3 className="text-titleXlarge">{productDetail.data.name}</h3>
+							<p className="text-bodyMedium text-base500">
+								{productDetail.data.description}
+							</p>
 
-							<dl className="flex flex-col gap-lg">
+							<dl className="flex flex-col gap-2xl">
 								<div className="flex items-center gap-2xl">
 									<dt className="w-[12rem] font-bold text-bodyBase text-base500">
 										Product ID
@@ -77,7 +66,9 @@ const ProductDetail = () => {
 									<dt className="w-[12rem] font-bold text-bodyBase text-base500">
 										Availability
 									</dt>
-									<dd className="font-bold text-bodyBase text-base700">{`In Stock`}</dd>
+									<dd className="font-bold text-bodyBase text-base700">
+										{productDetail.data.stock > 0 ? 'In Stock' : 'Out of Stock'}
+									</dd>
 								</div>
 							</dl>
 
@@ -101,18 +92,32 @@ const ProductDetail = () => {
 										<p className="grow font-bold text-bodyBase text-base500">
 											Total Price
 										</p>
-										<p className="ml-auto font-bold text-bodyBase text-primaryDark">{`$ ${320 * quantity}.00`}</p>
+										<p className="ml-auto font-bold text-bodyBase text-primaryDark">{`$ ${productDetail.data.price * quantity}.00`}</p>
 									</div>
 								</>
 							)}
 						</div>
 
 						<div className="flex gap-lg">
-							<TextButton variant="light" size="fullMedium" onClick={() => {}}>
+							<TextButton
+								variant="light"
+								size="fullMedium"
+								onClick={() => {
+									// TODO: 장바구니에 상품 추가 API 호출
+									navigate('/cart');
+								}}
+							>
 								Add to cart
 							</TextButton>
 							{accessToken && (
-								<TextButton variant="dark" size="fullMedium" onClick={() => {}}>
+								<TextButton
+									variant="dark"
+									size="fullMedium"
+									onClick={() => {
+										// TODO: 주문 내역 전역상태 저장
+										navigate('/checkout/cart');
+									}}
+								>
 									Buy Now
 								</TextButton>
 							)}
