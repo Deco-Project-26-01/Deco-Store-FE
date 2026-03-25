@@ -6,6 +6,7 @@ import { MYPAGE_SIBLINGS } from '@constants/siblings';
 import Login from '@pages/Auth/Login';
 import Register from '@pages/Auth/Register';
 import Cart from '@pages/Cart/Cart';
+import CheckoutCart from '@pages/Checkout/CheckoutCart';
 import Home from '@pages/Home/Home';
 import Account from '@pages/Mypage/Account';
 import Mypage from '@pages/Mypage/Mypage';
@@ -27,12 +28,6 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Home />,
-			},
-			// 상품 상세
-			{
-				path: 'products/:id',
-				element: <ProductDetail />,
-				handle: { label: `Product` },
 			},
 			// 장바구니
 			{
@@ -84,6 +79,29 @@ const router = createBrowserRouter([
 									label: 'Support',
 									siblings: MYPAGE_SIBLINGS,
 								},
+							},
+						],
+					},
+					// 상품 상세
+					{
+						path: 'products/:id',
+						element: <ProductDetail />,
+						handle: { label: `Product` },
+					},
+					// 장바구니
+					{
+						path: 'cart',
+						element: <Cart />,
+						handle: { label: 'Cart' },
+					},
+					// 주문
+					{
+						path: 'checkout',
+						children: [
+							{
+								path: 'cart',
+								element: <CheckoutCart />,
+								handle: { label: 'Cart Checkout' },
 							},
 						],
 					},
