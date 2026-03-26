@@ -11,8 +11,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "test": "vitest",
-    "test-storybook": "vitest --project=storybook"
+    "test": "vitest"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -28,11 +27,9 @@
     "zustand": "^5.0.10"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^5.0.0",
     "@eslint/js": "^9.39.1",
     "@storybook/addon-a11y": "10.2.14",
     "@storybook/addon-docs": "10.2.14",
-    "@storybook/addon-vitest": "10.2.14",
     "@storybook/react-vite": "10.2.14",
     "eslint-plugin-storybook": "10.2.14",
     "storybook": "10.2.14",
