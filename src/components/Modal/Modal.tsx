@@ -124,7 +124,7 @@ const Modal = ({
 	return createPortal(
 		<div
 			className={`
-        fixed inset-0 bg-black/60 z-999
+        fixed inset-0 bg-black/60 z-[999]
         flex items-center justify-center
       `}
 			// 모달 외부 클릭 시 모달 닫기

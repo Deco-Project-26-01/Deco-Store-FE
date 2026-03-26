@@ -6,6 +6,9 @@ import TextButton from '@components/Button/TextButton';
 import QuantityInput from '@components/Input/QuantityInput';
 import useGetProductDetail from '@hooks/useGetProductDetail';
 import ProductDetailSkeleton from '@components/Skeleton/ProductDetailSkeleton';
+import useAddCart from '@hooks/useAddCart';
+import { useModalStore } from '@store/useModalStore';
+import AlertModal from '@components/Modal/AlertModal';
 
 const ProductDetail = () => {
 	const { id } = useParams();
@@ -25,6 +28,38 @@ const ProductDetail = () => {
 	if (!isValidProductId) {
 		return <div className="py-2xl">Invalid product ID.</div>;
 	}
+
+	const { mutate: addToCart, isPending: isAddingToCart } = useAddCart();
+	const openModal = useModalStore((state) => state.openModal);
+
+	const handleAddCart = (productId: number, quantity: number) => {
+		addToCart(
+			{ productId, quantity },
+			{
+				onSuccess: () => {
+					openModal(
+						<AlertModal
+							title="Add to Cart"
+							description="Product has been added to your cart."
+							buttonText="Confirm"
+							onConfirm={() => {
+								navigate('/cart');
+							}}
+						/>,
+					);
+				},
+				onError: (error) => {
+					openModal(
+						<AlertModal
+							title="Failed to Add to Cart"
+							description={error.message}
+							buttonText="OK"
+						/>,
+					);
+				},
+			},
+		);
+	};
 
 	return (
 		<div className="py-2xl">
@@ -102,9 +137,9 @@ const ProductDetail = () => {
 							<TextButton
 								variant="light"
 								size="fullMedium"
+								disabled={isAddingToCart || productDetail.data.stock === 0}
 								onClick={() => {
-									// TODO: 장바구니에 상품 추가 API 호출
-									navigate('/cart');
+									handleAddCart(productDetail.data.id, quantity);
 								}}
 							>
 								Add to cart
