@@ -52,7 +52,11 @@ const ProductDetail = () => {
 					openModal(
 						<AlertModal
 							title="Failed to Add to Cart"
-							description={error.message}
+							description={
+								error instanceof Error
+									? error.message
+									: 'An unknown error occurred.'
+							}
 							buttonText="OK"
 						/>,
 					);
