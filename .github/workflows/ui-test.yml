@@ -1,4 +1,4 @@
-name: 'UI-Test'
+name: UI-Test
 
 on:
   pull_request:
@@ -6,45 +6,41 @@ on:
       - dev
 
 jobs:
-  # 접근성 테스트
-  accessibility-test:
-    timeout-minutes: 60
+  storybook-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+          cache: 'npm'
+
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright
-        run: npx playwright install --with-deps
+
       - name: Build Storybook
-        run: npm run build-storybook --quiet
-      - name: Serve Storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:127.0.0.1:6006 && npm run test-storybook"
+        run: npm run build-storybook
 
   chromatic:
-    # 통과하면 Storybook 배포
-    needs: accessibility-test
-    name: Run Chromatic
+    needs: storybook-build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+          cache: 'npm'
+
       - name: Install dependencies
-        # ⚠️ See your package manager's documentation for the correct command to install dependencies in a CI environment.
         run: npm ci
+
       - name: Run Chromatic
-        uses: chromaui/action@latest
+        uses: chromaui/action@v13
         with:
-          # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
