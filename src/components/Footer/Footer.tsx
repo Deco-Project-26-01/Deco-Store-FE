@@ -25,7 +25,7 @@ const Footer = () => {
 				{/* 주소 및 대표자 정보 */}
 				<div className="mb-sm px-lg py-md text-bodyCaption">
 					<address className="mb-sm flex items-center gap-lg">
-						<p>Deco Corp</p>
+						<p>Deco</p>
 						<p>Jongno 3-ga, Seoul, Korea</p>
 					</address>
 					<dl className="flex items-center gap-lg">
@@ -39,7 +39,7 @@ const Footer = () => {
 						</div>
 						<div className="flex items-center gap-xs">
 							<dt>Hosting Provider:</dt>
-							<dd>Deco corp Co., Ltd.</dd>
+							<dd>Deco Ind Co., Ltd.</dd>
 						</div>
 					</dl>
 				</div>
@@ -51,7 +51,7 @@ const Footer = () => {
 					<ul className="py-xs flex items-center gap-xl ml-auto">
 						<li>
 							<IconTextLink
-								href="/"
+								href="https://www.linkedin.com/company/112441487/admin/dashboard/"
 								variant="textGray"
 								size="medium"
 								iconPath={iconLinkedInGray}
