@@ -43,10 +43,10 @@ const Footer = () => {
 						</div>
 					</dl>
 				</div>
-				{/* 저작권 및 각종 링크 */}
+				{/* 저작권 및 각종 링크 whatsapp */}
 				<div className="w-full px-lg flex items-center justify-between gap-3xl">
 					<p className="text-bodyCaption">
-						COPYRIGHT © Deco corp All Rights RESERVED
+						COPYRIGHT © Deco Ind Co., Ltd. All Rights RESERVED
 					</p>
 					<ul className="py-xs flex items-center gap-xl ml-auto">
 						<li>
@@ -71,12 +71,12 @@ const Footer = () => {
 						</li>
 						<li>
 							<IconTextLink
-								href="/"
+								href="https://decoindco.tradekorea.com/main.do#"
 								variant="textGray"
 								size="medium"
 								iconPath={iconYouTubeGray}
 							>
-								YouTube
+								TradeKorea
 							</IconTextLink>
 						</li>
 					</ul>
