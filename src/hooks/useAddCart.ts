@@ -1,7 +1,7 @@
 import type {
-	IAddCartFailureResponse,
+	ICartFailureResponse,
 	IAddCartRequestData,
-	IAddCartSuccessResponse,
+	ICartSuccessResponse,
 } from '#types/order';
 import useCustomAxios from '@hooks/useCustomAxios';
 import { useMutation } from '@tanstack/react-query';
@@ -13,13 +13,13 @@ const addCart = async (
 	instance: AxiosInstance,
 ) => {
 	try {
-		const response = await instance.post<IAddCartSuccessResponse>('/carts', {
+		const response = await instance.post<ICartSuccessResponse>('/carts', {
 			productId,
 			quantity,
 		});
 		return response.data;
 	} catch (error) {
-		if (isAxiosError<IAddCartFailureResponse>(error)) {
+		if (isAxiosError<ICartFailureResponse>(error)) {
 			if (error.response?.status === 400) {
 				throw new Error(
 					'Quantity must be at least 1. Please check and try again.',

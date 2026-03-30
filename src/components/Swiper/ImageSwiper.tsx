@@ -41,7 +41,7 @@ const ImageSwiper = ({ images }: { images: IProductImage[] }) => {
 								<img
 									src={image.imageUrl}
 									alt={`Product Image ${image.id}`}
-									className="w-full h-full object-cover"
+									className="w-full h-full object-contain"
 								/>
 							</div>
 						</SwiperSlide>

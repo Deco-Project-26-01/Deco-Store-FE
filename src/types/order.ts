@@ -3,7 +3,7 @@ export interface IAddCartRequestData {
 	quantity: number;
 }
 
-export interface IAddCartResponse {
+export interface ICartResponse {
 	success: boolean;
 	message: string;
 }
@@ -25,13 +25,13 @@ interface ICartData {
 	items: ICartItem[];
 }
 
-export interface IAddCartSuccessResponse extends IAddCartResponse {
+export interface ICartSuccessResponse extends ICartResponse {
 	success: true;
 	data: ICartData;
 	error: null;
 }
 
-export interface IAddCartFailureResponse extends IAddCartResponse {
+export interface ICartFailureResponse extends ICartResponse {
 	success: false;
 	data: null;
 	error: {

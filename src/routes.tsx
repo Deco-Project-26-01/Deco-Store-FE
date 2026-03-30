@@ -29,12 +29,7 @@ const router = createBrowserRouter([
 				index: true,
 				element: <Home />,
 			},
-			// 장바구니
-			{
-				path: 'cart',
-				element: <Cart />,
-				handle: { label: 'Cart' },
-			},
+
 			// 🔐 로그인 필요 영역
 			{
 				element: <ProtectedRoute />,
@@ -104,6 +99,12 @@ const router = createBrowserRouter([
 								handle: { label: 'Cart Checkout' },
 							},
 						],
+					},
+					// 장바구니
+					{
+						path: 'cart',
+						element: <Cart />,
+						handle: { label: 'Cart' },
 					},
 				],
 			},
