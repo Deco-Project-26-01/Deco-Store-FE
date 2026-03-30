@@ -36,9 +36,7 @@ const ProductLink = ({
 					</span>
 				</span>
 				{isAuthorized && (
-					<span className="text-titleBase text-primaryDark">
-						$ {(price / 1000).toLocaleString()}
-					</span>
+					<span className="text-titleBase text-primaryDark">$ {price}.00</span>
 				)}
 			</span>
 		</button>
