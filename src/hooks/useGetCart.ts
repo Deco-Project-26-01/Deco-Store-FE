@@ -10,7 +10,7 @@ const fetchCart = async (instance: AxiosInstance) => {
 	} catch (error) {
 		if (isAxiosError<ICartFailureResponse>(error)) {
 			if (error.response?.status === 404) {
-				throw new Error('Cannot find items. Please login again.');
+				throw new Error('Cart not found or is empty.');
 			}
 		}
 		throw new Error('Failed to fetch cart data. Please try again.');

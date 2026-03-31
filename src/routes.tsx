@@ -83,12 +83,6 @@ const router = createBrowserRouter([
 						element: <ProductDetail />,
 						handle: { label: `Product` },
 					},
-					// 장바구니
-					{
-						path: 'cart',
-						element: <Cart />,
-						handle: { label: 'Cart' },
-					},
 					// 주문
 					{
 						path: 'checkout',
