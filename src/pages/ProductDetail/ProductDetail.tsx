@@ -77,7 +77,7 @@ const ProductDetail = () => {
 			) : productDetail ? (
 				<section className="flex gap-3xl">
 					{/* 상품 이미지 영역 */}
-					<div className="shrink-0 w-[60rem] aspect-square">
+					<div className="shrink-0 w-[50rem] aspect-square">
 						<ImageSwiper
 							images={productDetail.data.images.map((image) => ({
 								...image,

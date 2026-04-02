@@ -18,7 +18,7 @@ const ImageSwiper = ({ images }: { images: IProductImage[] }) => {
 	return (
 		<div className="flex flex-col gap-xl">
 			{/* 메인 이미지 */}
-			<div className="relative w-[60rem]">
+			<div className="relative w-[50rem]">
 				<Swiper
 					modules={[Navigation]}
 					slidesPerView={1}
@@ -33,15 +33,15 @@ const ImageSwiper = ({ images }: { images: IProductImage[] }) => {
 						setIsBeginning(swiper.isBeginning);
 						setIsEnd(swiper.isEnd);
 					}}
-					className="w-[60rem] h-[60rem]"
+					className="w-[50rem] h-[50rem]"
 				>
 					{images.map((image) => (
 						<SwiperSlide key={image.id}>
-							<div className="w-[60rem] h-[60rem] overflow-hidden rounded-sm bg-base200">
+							<div className="w-[50rem] h-[50rem] overflow-hidden rounded-sm bg-base200">
 								<img
 									src={image.imageUrl}
 									alt={`Product Image ${image.id}`}
-									className="w-full h-full object-cover"
+									className="w-full h-full object-contain"
 								/>
 							</div>
 						</SwiperSlide>
@@ -80,7 +80,7 @@ const ImageSwiper = ({ images }: { images: IProductImage[] }) => {
 			</div>
 
 			{/* 썸네일 목록 */}
-			<div className="flex w-[60rem] justify-center gap-md overflow-x-auto">
+			<div className="flex w-[50rem] justify-center gap-md overflow-x-auto">
 				{images.map((image, index) => {
 					const isActive = activeIndex === index;
 
