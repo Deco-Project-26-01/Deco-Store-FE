@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUserStore } from '@store/useUserStore';
 import ImageSwiper from '@components/Swiper/ImageSwiper';
 import { useState } from 'react';
 import TextButton from '@components/Button/TextButton';
@@ -9,13 +8,13 @@ import ProductDetailSkeleton from '@components/Skeleton/ProductDetailSkeleton';
 import useAddCart from '@hooks/useAddCart';
 import { useModalStore } from '@store/useModalStore';
 import AlertModal from '@components/Modal/AlertModal';
+import useGetUserInfo from '@hooks/useGetUserInfo';
 
 const ProductDetail = () => {
+	const { data: userData } = useGetUserInfo();
 	const { id } = useParams();
 	const productId = Number(id);
 	const isValidProductId = Number.isInteger(productId) && productId > 0;
-
-	const accessToken = useUserStore((state) => state.accessToken);
 	const [quantity, setQuantity] = useState<number>(1);
 	const {
 		data: productDetail,
@@ -71,7 +70,9 @@ const ProductDetail = () => {
 			<h2 className="sr-only">Product ID: {id}</h2>
 			{/* 상품 상세 정보 영역 */}
 			{isLoading ? (
-				<ProductDetailSkeleton isAuthorized={!!accessToken} />
+				<ProductDetailSkeleton
+					isAuthorized={userData.data.status === 'ACTIVE'}
+				/>
 			) : error ? (
 				<div>Error: {error.message}</div>
 			) : productDetail ? (
@@ -110,21 +111,22 @@ const ProductDetail = () => {
 									</dd>
 								</div>
 							</dl>
-
-							<div className="flex items-center gap-2xl">
-								<p className="grow font-bold text-bodyBase text-base500">
-									Quantity
-								</p>
-								<QuantityInput
-									value={quantity}
-									min={1}
-									max={10}
-									onDecrease={() => setQuantity((prev) => prev - 1)}
-									onIncrease={() => setQuantity((prev) => prev + 1)}
-								/>
-							</div>
+							{userData.data.status === 'ACTIVE' && (
+								<div className="flex items-center gap-2xl">
+									<p className="grow font-bold text-bodyBase text-base500">
+										Quantity
+									</p>
+									<QuantityInput
+										value={quantity}
+										min={1}
+										max={productDetail.data.stock}
+										onDecrease={() => setQuantity((prev) => prev - 1)}
+										onIncrease={() => setQuantity((prev) => prev + 1)}
+									/>
+								</div>
+							)}
 							{/* 가격 영역 */}
-							{accessToken && (
+							{userData.data.status === 'ACTIVE' && (
 								<>
 									<hr className="border border-base300" />
 									<div className="flex items-center gap-2xl">
@@ -143,12 +145,22 @@ const ProductDetail = () => {
 								size="fullMedium"
 								disabled={isAddingToCart || productDetail.data.stock === 0}
 								onClick={() => {
-									handleAddCart(productDetail.data.id, quantity);
+									if (userData.data.status === 'ACTIVE') {
+										handleAddCart(productDetail.data.id, quantity);
+									} else {
+										openModal(
+											<AlertModal
+												title="Authorization Required"
+												description="Please get authorization to add items to your cart."
+												buttonText="Confirm"
+											/>,
+										);
+									}
 								}}
 							>
 								Add to cart
 							</TextButton>
-							{accessToken && (
+							{userData.data.status === 'ACTIVE' && (
 								<TextButton
 									variant="dark"
 									size="fullMedium"

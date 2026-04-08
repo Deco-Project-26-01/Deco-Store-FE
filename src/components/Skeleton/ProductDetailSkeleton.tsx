@@ -55,10 +55,12 @@ const ProductDetailSkeleton = ({
 					</div>
 
 					{/* 수량 영역 */}
-					<div className="flex items-center gap-2xl">
-						<div className="h-6 grow rounded-md bg-base200 animate-pulse" />
-						<div className="h-12 w-[14rem] rounded-md bg-base200 animate-pulse" />
-					</div>
+					{isAuthorized && (
+						<div className="flex items-center gap-2xl">
+							<div className="h-6 grow rounded-md bg-base200 animate-pulse" />
+							<div className="h-12 w-[14rem] rounded-md bg-base200 animate-pulse" />
+						</div>
+					)}
 
 					{/* 가격 */}
 					{isAuthorized && (
@@ -73,12 +75,13 @@ const ProductDetailSkeleton = ({
 				</div>
 
 				{/* 버튼 영역 */}
-				<div className="mt-auto flex gap-lg">
-					<div className="h-12 w-full rounded-md bg-base200 animate-pulse" />
-					{isAuthorized && (
+				{isAuthorized && (
+					<div className="mt-auto flex gap-lg">
 						<div className="h-12 w-full rounded-md bg-base200 animate-pulse" />
-					)}
-				</div>
+
+						<div className="h-12 w-full rounded-md bg-base200 animate-pulse" />
+					</div>
+				)}
 			</div>
 		</section>
 	);
