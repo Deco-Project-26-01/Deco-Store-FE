@@ -3,12 +3,12 @@ import ProductLink from '@components/Link/ProductLink';
 import Pagination from '@components/Pagination/Pagination';
 import ProductListSkeleton from '@components/Skeleton/ProductListSkeleton';
 import useGetProducts from '@hooks/useGetProducts';
-import { useUserStore } from '@store/useUserStore';
+import useGetUserInfo from '@hooks/useGetUserInfo';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
-	const accessToken = useUserStore((state) => state.accessToken);
+	const { data: userData } = useGetUserInfo();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('category') || '';
 	const sortBy = searchParams.get('sortBy') || '';
@@ -133,7 +133,7 @@ const Home = () => {
 										description={product.description}
 										price={product.price}
 										imageUrl={imageUrl}
-										isAuthorized={!!accessToken}
+										isAuthorized={userData.data.status === 'ACTIVE'}
 									/>
 								);
 							})}

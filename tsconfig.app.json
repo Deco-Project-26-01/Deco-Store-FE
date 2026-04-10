@@ -17,6 +17,7 @@
 		"jsx": "react-jsx",
 
 		/* Alias */
+		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
 		"paths": {
 			"@assets/*": ["src/assets/*"],
@@ -39,7 +40,8 @@
 		"noUnusedParameters": true,
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
-		"noUncheckedSideEffectImports": true
+		"noUncheckedSideEffectImports": true,
+		
 	},
 	"include": ["src"]
 }
