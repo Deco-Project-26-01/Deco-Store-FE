@@ -3,7 +3,8 @@ import type {
 	IUserInfoSuccessResponse,
 } from '#types/userinfo';
 import useCustomAxios from '@hooks/useCustomAxios';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useUserStore } from '@store/useUserStore';
+import { useQuery } from '@tanstack/react-query';
 import { isAxiosError, type AxiosInstance } from 'axios';
 
 const fetchUserInfo = async (instance: AxiosInstance) => {
@@ -22,11 +23,13 @@ const fetchUserInfo = async (instance: AxiosInstance) => {
 };
 
 const useGetUserInfo = () => {
+	const accessToken = useUserStore((state) => state.accessToken);
 	const axios = useCustomAxios();
 
-	return useSuspenseQuery({
+	return useQuery({
 		queryKey: ['userInfo'],
 		queryFn: () => fetchUserInfo(axios),
+		enabled: !!accessToken,
 		retry: false,
 	});
 };
