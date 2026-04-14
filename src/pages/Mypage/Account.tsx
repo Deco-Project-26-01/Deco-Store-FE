@@ -11,14 +11,28 @@ import NewAddressModal from '@components/Modal/NewAddressModal';
 
 const Account = () => {
 	const openModal = useModalStore((state) => state.openModal);
-	const { data } = useGetUserInfo();
 	const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
 
-	const userData = data.data;
+	const { data, isLoading, error } = useGetUserInfo();
+	const userData = data?.data;
 
 	useEffect(() => {
-		setUserInfo(userData);
+		if (userData) {
+			setUserInfo(userData);
+		}
 	}, [userData, setUserInfo]);
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Failed to load user info.</p>;
+	}
+
+	if (!userData) {
+		return <p>No user info found.</p>;
+	}
 
 	return (
 		<>

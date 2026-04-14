@@ -11,7 +11,9 @@ import AlertModal from '@components/Modal/AlertModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 
 const ProductDetail = () => {
-	const { data: userData } = useGetUserInfo();
+	const { data } = useGetUserInfo();
+	const userData = data?.data;
+
 	const { id } = useParams();
 	const productId = Number(id);
 	const isValidProductId = Number.isInteger(productId) && productId > 0;
@@ -70,9 +72,7 @@ const ProductDetail = () => {
 			<h2 className="sr-only">Product ID: {id}</h2>
 			{/* 상품 상세 정보 영역 */}
 			{isLoading ? (
-				<ProductDetailSkeleton
-					isAuthorized={userData.data.status === 'ACTIVE'}
-				/>
+				<ProductDetailSkeleton isAuthorized={userData?.status === 'ACTIVE'} />
 			) : error ? (
 				<div>Error: {error.message}</div>
 			) : productDetail ? (
@@ -111,7 +111,7 @@ const ProductDetail = () => {
 									</dd>
 								</div>
 							</dl>
-							{userData.data.status === 'ACTIVE' && (
+							{userData?.status === 'ACTIVE' && (
 								<div className="flex items-center gap-2xl">
 									<p className="grow font-bold text-bodyBase text-base500">
 										Quantity
@@ -126,7 +126,7 @@ const ProductDetail = () => {
 								</div>
 							)}
 							{/* 가격 영역 */}
-							{userData.data.status === 'ACTIVE' && (
+							{userData?.status === 'ACTIVE' && (
 								<>
 									<hr className="border border-base300" />
 									<div className="flex items-center gap-2xl">
@@ -145,7 +145,7 @@ const ProductDetail = () => {
 								size="fullMedium"
 								disabled={isAddingToCart || productDetail.data.stock === 0}
 								onClick={() => {
-									if (userData.data.status === 'ACTIVE') {
+									if (userData?.status === 'ACTIVE') {
 										handleAddCart(productDetail.data.id, quantity);
 									} else {
 										openModal(
@@ -160,7 +160,7 @@ const ProductDetail = () => {
 							>
 								Add to cart
 							</TextButton>
-							{userData.data.status === 'ACTIVE' && (
+							{userData?.status === 'ACTIVE' && (
 								<TextButton
 									variant="dark"
 									size="fullMedium"

@@ -3,13 +3,13 @@ import iconEmptyCart from '@assets/icons/icon-empty-cart-base500.svg';
 import TextLink from '@components/Link/TextLink';
 import { useState } from 'react';
 import TextButton from '@components/Button/TextButton';
+import QuantityInput from '@components/Input/QuantityInput';
 
 const Cart = () => {
 	const { data, isLoading, error } = useGetCart();
 	const [selectedItems] = useState<number[]>([]);
 
 	const cartItems = data?.data.items;
-	const totalQuantity = data?.data.totalQuantity ?? 0;
 	const totalPrice = data?.data.totalPrice ?? 0;
 
 	console.log(totalPrice);
@@ -59,7 +59,8 @@ const Cart = () => {
 					<div className="mt-lg">
 						<div className="mb-2xl flex flex-col gap-lg">
 							<p className="text-titleMedium text-base700">
-								Total <span className="text-primaryDark">{totalQuantity}</span>{' '}
+								Total{' '}
+								<span className="text-primaryDark">{cartItems.length}</span>{' '}
 								items ({' '}
 								<span className="text-primaryDark">{selectedItems.length}</span>{' '}
 								selected )
@@ -68,33 +69,89 @@ const Cart = () => {
 							<div>
 								<table className="table-fixed w-full text-center">
 									<colgroup>
-										<col className="w-[3.6rem]" />
-										<col className="w-[50%]" />
-										<col className="w-[10rem]" />
-										<col className="w-[12rem]" />
-										<col className="w-[9.2rem]" />
+										<col className="w-[88px]" />
+										<col />
+										<col className="w-[164px]" />
+										<col className="w-[184px]" />
+										<col className="w-[134px]" />
 									</colgroup>
-									<thead className="text-titleBase bg-base100 border-solid border-0 border-y border-base500 box-border">
+									<thead className="text-titleBase bg-base100 border-solid border-0 border-y border-base500">
 										<tr>
-											<th className="py-sm pl-lg" scope="col">
+											<th className="pl-lg pr-3xl py-sm" scope="col">
 												<span className="sr-only">Select</span>
 											</th>
-											<th className="py-sm" scope="col">
+											<th className="px-2xl py-sm" scope="col">
 												Product
 											</th>
-											<th className="py-sm" scope="col">
+											<th className="px-2xl py-sm" scope="col">
 												Quantity
 											</th>
-											<th className="py-sm" scope="col">
+											<th className="px-2xl py-sm" scope="col">
 												Price
 											</th>
-											<th className="py-sm pr-lg" scope="col">
+											<th className="pl-2xl pr-lg py-sm" scope="col">
 												<span className="sr-only">Remove</span>
 											</th>
 										</tr>
 									</thead>
 
-									<tbody></tbody>
+									<tbody>
+										{cartItems.map((item) => (
+											<tr
+												key={item.cartProductId}
+												className="border-solid border-0 border-y border-base500"
+											>
+												{/* Checkbox */}
+												<td className="pl-lg pr-3xl py-lg align-middle"></td>
+												{/* Products */}
+												<td className="px-2xl py-lg align-middle">
+													<div className="flex items-center gap-3xl">
+														<div className="w-[20rem] h-[20rem] bg-secondaryLight"></div>
+														<div className="flex flex-col gap-lg">
+															<p className="text-titleMedium">
+																{item.productName}
+															</p>
+														</div>
+													</div>
+												</td>
+												{/* Quantity */}
+												<td className="px-2xl py-lg align-middle">
+													<div className="flex flex-col justify-center items-center gap-lg">
+														<QuantityInput
+															value={item.quantity}
+															min={1}
+															onDecrease={() => {}}
+															onIncrease={() => {}}
+														/>
+														<TextButton
+															variant="light"
+															size="fullSmall"
+															onClick={() => {}}
+															disabled={item.quantity === 1}
+														>
+															Save
+														</TextButton>
+													</div>
+												</td>
+												{/* Price */}
+												<td className="px-2xl py-lg align-middle">
+													<p className="text-titleMedium text-primaryDark">
+														$ {item.unitPrice * item.quantity}.00
+													</p>
+												</td>
+												{/* Remove Button */}
+												<td className="px-2xl py-lg align-middle">
+													<TextButton
+														variant="light"
+														size="small"
+														onClick={() => {}}
+													>
+														Remove
+													</TextButton>
+												</td>
+											</tr>
+										))}
+									</tbody>
 								</table>
 							</div>
 						</div>

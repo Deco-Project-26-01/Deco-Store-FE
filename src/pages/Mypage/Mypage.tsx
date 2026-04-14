@@ -13,7 +13,20 @@ const Mypage = () => {
 	const { mutate: logout } = useLogout();
 	const openModal = useModalStore((state) => state.openModal);
 	const navigate = useNavigate();
-	const { data } = useGetUserInfo();
+	const { data, isLoading, error } = useGetUserInfo();
+	const userData = data?.data;
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Failed to load user info.</p>;
+	}
+
+	if (!userData) {
+		return <p>No user info found.</p>;
+	}
 
 	const handleLogout = () => {
 		openModal(
@@ -40,8 +53,8 @@ const Mypage = () => {
 					<h2 className="text-titleXlarge text-primaryDark">
 						Hello,{' '}
 						{data.data.userType === 'PERSONAL'
-							? `${data.data.firstName} ${data.data.lastName}`
-							: `${data.data.companyName}`}
+							? `${userData.firstName} ${userData.lastName}`
+							: `${userData.companyName}`}
 					</h2>
 					<TextButton variant="dark" size="small" onClick={handleLogout}>
 						Logout

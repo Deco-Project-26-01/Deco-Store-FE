@@ -4,10 +4,12 @@ import Pagination from '@components/Pagination/Pagination';
 import ProductListSkeleton from '@components/Skeleton/ProductListSkeleton';
 import useGetProducts from '@hooks/useGetProducts';
 import useGetUserInfo from '@hooks/useGetUserInfo';
+import { useUserStore } from '@store/useUserStore';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
+	const accessToken = useUserStore((state) => state.accessToken);
 	const { data: userData } = useGetUserInfo();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const category = searchParams.get('category') || '';
@@ -26,6 +28,8 @@ const Home = () => {
 
 	const products = data?.products ?? [];
 	const baseImageUrl = import.meta.env.VITE_DECO_BACKEND_URL;
+
+	const isAuthorized = !!accessToken && userData?.data?.status === 'ACTIVE';
 
 	const pageInfo = {
 		currentPage: data?.pageInfo?.currentPage ?? 1,
@@ -133,7 +137,7 @@ const Home = () => {
 										description={product.description}
 										price={product.price}
 										imageUrl={imageUrl}
-										isAuthorized={userData.data.status === 'ACTIVE'}
+										isAuthorized={isAuthorized}
 									/>
 								);
 							})}
