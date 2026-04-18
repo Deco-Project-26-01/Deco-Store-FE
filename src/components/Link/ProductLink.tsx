@@ -24,14 +24,18 @@ const ProductLink = ({
 			type="button"
 			onClick={() => navigate(`/products/${id}`)}
 			className={`
-        flex flex-col gap-sm
+        flex flex-col gap-md
       `}
 		>
-			<img src={imageUrl} alt={name} className={`w-full aspect-square`} />
-			<span className="flex items-center gap-sm justify-between">
+			<img
+				src={imageUrl}
+				alt={name}
+				className={`w-full p-lg aspect-square object-contain rounded-md border border-solid border-base500`}
+			/>
+			<span className="flex items-center gap-sm justify-between px-sm">
 				<span className={`flex flex-col gap-sm`}>
-					<span className="text-titleMedium w-[20rem] ellipsis">{name}</span>
-					<span className="text-bodyCaption text-base500 w-[20rem] ellipsis">
+					<span className="text-titleMedium w-[15rem] ellipsis">{name}</span>
+					<span className="text-bodyCaption text-base500 w-[15rem] ellipsis">
 						{description}
 					</span>
 				</span>
