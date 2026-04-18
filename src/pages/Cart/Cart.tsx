@@ -4,6 +4,7 @@ import TextLink from '@components/Link/TextLink';
 import { useState } from 'react';
 import TextButton from '@components/Button/TextButton';
 import QuantityInput from '@components/Input/QuantityInput';
+import iconCheckWhite from '@assets/icons/icon-check-white.svg';
 
 const Cart = () => {
 	const { data, isLoading, error } = useGetCart();
@@ -102,20 +103,45 @@ const Cart = () => {
 												className="border-solid border-0 border-y border-base500"
 											>
 												{/* Checkbox */}
-												<td className="pl-lg pr-3xl py-lg align-middle"></td>
+												<td className="pl-lg pr-3xl py-xl align-middle">
+													<label
+														htmlFor={`select-${item.cartProductId}`}
+														className="inline-flex items-center gap-md"
+													>
+														<input
+															type="checkbox"
+															id={`select-${item.cartProductId}`}
+															className="peer sr-only"
+															checked={selectedItems.includes(
+																item.cartProductId,
+															)}
+															onChange={() => {}}
+														/>
+														<span
+															className={`
+																flex justify-center items-center
+																w-lg h-lg
+																rounded-xs
+																cursor-pointer
+																border border-solid box-border border-base500
+																peer-checked:bg-primaryDark peer-checked:border-none
+															`}
+															aria-hidden="true"
+														>
+															<img
+																src={iconCheckWhite}
+																alt=""
+																className="w-[10px]"
+															/>
+														</span>
+													</label>
+												</td>
 												{/* Products */}
-												<td className="px-2xl py-lg align-middle">
-													<div className="flex items-center gap-3xl">
-														<div className="w-[20rem] h-[20rem] bg-secondaryLight"></div>
-														<div className="flex flex-col gap-lg">
-															<p className="text-titleMedium">
-																{item.productName}
-															</p>
-														</div>
-													</div>
+												<td className="px-2xl py-xl align-middle">
+													<p className="text-titleMedium">{item.productName}</p>
 												</td>
 												{/* Quantity */}
-												<td className="px-2xl py-lg align-middle">
+												<td className="px-2xl py-xl align-middle">
 													<div className="flex flex-col justify-center items-center gap-lg">
 														<QuantityInput
 															value={item.quantity}
@@ -134,13 +160,13 @@ const Cart = () => {
 													</div>
 												</td>
 												{/* Price */}
-												<td className="px-2xl py-lg align-middle">
+												<td className="px-2xl py-xl align-middle">
 													<p className="text-titleMedium text-primaryDark">
 														$ {item.unitPrice * item.quantity}.00
 													</p>
 												</td>
 												{/* Remove Button */}
-												<td className="px-2xl py-lg align-middle">
+												<td className="pl-2xl pr-lg py-xl align-middle">
 													<TextButton
 														variant="light"
 														size="small"

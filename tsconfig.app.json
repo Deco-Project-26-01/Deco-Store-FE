@@ -17,21 +17,19 @@
 		"jsx": "react-jsx",
 
 		/* Alias */
-		"ignoreDeprecations": "6.0",
-		"baseUrl": ".",
 		"paths": {
-			"@assets/*": ["src/assets/*"],
-			"@components/*": ["src/components/*"],
-			"@hooks/*": ["src/hooks/*"],
-			"@pages/*": ["src/pages/*"],
-			"@store/*": ["src/store/*"],
-			"@styles/*": ["src/styles/*"],
-			"@stories/*": ["src/stories/*"],
-			"@tests/*": ["src/tests/*"],
-			"#types/*": ["src/types/*"],
-			"@utils/*": ["src/utils/*"],
-			"@constants/*": ["src/constants/*"],
-			"@/*": ["src/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@components/*": ["./src/components/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@pages/*": ["./src/pages/*"],
+			"@store/*": ["./src/store/*"],
+			"@styles/*": ["./src/styles/*"],
+			"@stories/*": ["./src/stories/*"],
+			"@tests/*": ["./src/tests/*"],
+			"#types/*": ["./src/types/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@constants/*": ["./src/constants/*"],
+			"@/*": ["./src/*"],
 		},
 
 		/* Linting */
