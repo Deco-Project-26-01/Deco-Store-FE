@@ -17,7 +17,7 @@ const Cart = () => {
 	const [selectedItemIds, setSelectedItemIds] = useState<Set<number>>(
 		new Set(),
 	);
-	const [isInitialized, setIsInitialized] = useState(false);
+
 	const [quantity, setQuantity] = useState<Record<number, number>>({});
 
 	const cartItems = data?.data.items;
@@ -25,20 +25,41 @@ const Cart = () => {
 
 	// 처음 장바구니 진입 시 자동으로 모두 선택
 	useEffect(() => {
-		if (!isInitialized && cartItems && cartItems.length > 0) {
-			setSelectedItemIds(new Set(cartItems.map((item) => item.productId)));
-			setQuantity(
-				cartItems.reduce(
-					(acc, item) => {
-						acc[item.productId] = item.quantity;
-						return acc;
-					},
-					{} as Record<number, number>,
-				),
-			);
-			setIsInitialized(true);
-		}
-	}, [cartItems, isInitialized]);
+		if (!cartItems) return;
+
+		setSelectedItemIds((prev) => {
+			const currentIds = new Set(cartItems.map((item) => item.productId));
+
+			// 초기 진입: 이전 선택이 비어 있으면 전체 선택
+			if (prev.size === 0) {
+				return currentIds;
+			}
+
+			// 이후: 현재 cartItems에 존재하는 id만 유지
+			const next = new Set<number>();
+			prev.forEach((id) => {
+				if (currentIds.has(id)) {
+					next.add(id);
+				}
+			});
+
+			return next;
+		});
+
+		setQuantity((prev) => {
+			const next: Record<number, number> = {};
+			// 현재 cartItems에 존재하는 edit 값만 유지
+			cartItems.forEach((item) => {
+				if (
+					prev[item.productId] !== undefined &&
+					prev[item.productId] !== item.quantity
+				) {
+					next[item.productId] = prev[item.productId];
+				}
+			});
+			return next;
+		});
+	}, [cartItems]);
 
 	const { mutate: changeCart, isPending } = useChangeCart();
 	const handleSave = ({
@@ -298,7 +319,7 @@ const Cart = () => {
 												{/* Price */}
 												<td className="px-2xl py-xl align-middle">
 													<p className="text-titleMedium text-primaryDark">
-														$ {item.unitPrice * item.quantity}.00
+														$ {item.unitPrice * getDisplayQuantity(item)}.00
 													</p>
 												</td>
 												{/* Remove Button */}

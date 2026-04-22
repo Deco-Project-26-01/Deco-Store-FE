@@ -20,11 +20,7 @@ const changeCart = async (
 		return response.data;
 	} catch (error) {
 		if (isAxiosError<ICartFailureResponse>(error)) {
-			if (error.response?.status === 400) {
-				throw new Error(
-					'Quantity must be at least 1. Please check and try again.',
-				);
-			} else if (error.response?.status === 404) {
+			if (error.response?.status === 404) {
 				throw new Error('Product not found. Please check and try again.');
 			}
 		}

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 type OrderItem = {
 	productId: number;
@@ -15,6 +15,10 @@ type OrderPageState = {
 const CheckoutCart = () => {
 	const location = useLocation();
 	const orderItems = (location.state as OrderPageState | null)?.orderItems;
+
+	if (!orderItems?.length) {
+		return <Navigate to="/cart" replace />;
+	}
 
 	console.log(orderItems);
 
