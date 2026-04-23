@@ -87,11 +87,7 @@ const CheckoutCart = () => {
 							<div className="mb-lg flex gap-lg align-center justify-between">
 								<p className="text-bodyLarge text-base500">Subtotal</p>
 								<p className="w-[12rem] text-bodyLarge text-primaryDark font-normal text-center">
-									${' '}
-									{orderItems.reduce(
-										(total, item) => total + item.unitPrice * item.quantity,
-										0,
-									)}
+									$ {totalPrice}
 									.00
 								</p>
 							</div>

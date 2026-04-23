@@ -6,13 +6,10 @@ const CheckoutInfo = () => {
 
 	const state = location.state as OrderPageState | null;
 	const orderItems = state?.orderItems;
-	const prevPage = state?.from;
 
 	if (!orderItems?.length) {
 		return <Navigate to="/checkout/cart" replace />;
 	}
-
-	console.log(orderItems, prevPage);
 
 	return (
 		<>
