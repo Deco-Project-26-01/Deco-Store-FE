@@ -165,8 +165,20 @@ const ProductDetail = () => {
 									variant="dark"
 									size="fullMedium"
 									onClick={() => {
-										// TODO: 주문 내역 전역상태 저장
-										navigate('/checkout/cart');
+										navigate('/checkout/cart', {
+											state: {
+												orderItems: [
+													{
+														productId: productDetail.data.id,
+														productName: productDetail.data.name,
+														quantity: quantity,
+														unitPrice: productDetail.data.price,
+														totalPrice: productDetail.data.price * quantity,
+													},
+												],
+												from: location.pathname,
+											},
+										});
 									}}
 								>
 									Buy Now

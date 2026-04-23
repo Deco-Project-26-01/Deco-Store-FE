@@ -162,6 +162,7 @@ const Cart = () => {
 		navigate('/checkout/cart', {
 			state: {
 				orderItems: selectedOrderItems,
+				from: location.pathname,
 			},
 		});
 	};
