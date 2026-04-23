@@ -28,6 +28,7 @@ const ProductLink = ({
       `}
 		>
 			<img
+				// fallback 이미지 사용
 				src={imageUrl}
 				alt={name}
 				className={`w-full p-lg aspect-square object-contain rounded-md border border-solid border-base500`}

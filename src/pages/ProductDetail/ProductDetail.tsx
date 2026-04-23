@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ImageSwiper from '@components/Swiper/ImageSwiper';
 import { useState } from 'react';
 import TextButton from '@components/Button/TextButton';
@@ -11,6 +11,7 @@ import AlertModal from '@components/Modal/AlertModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 
 const ProductDetail = () => {
+	const location = useLocation();
 	const { data } = useGetUserInfo();
 	const userData = data?.data;
 
@@ -165,8 +166,20 @@ const ProductDetail = () => {
 									variant="dark"
 									size="fullMedium"
 									onClick={() => {
-										// TODO: 주문 내역 전역상태 저장
-										navigate('/checkout/cart');
+										navigate('/checkout/cart', {
+											state: {
+												orderItems: [
+													{
+														productId: productDetail.data.id,
+														productName: productDetail.data.name,
+														quantity: quantity,
+														unitPrice: productDetail.data.price,
+														totalPrice: productDetail.data.price * quantity,
+													},
+												],
+												from: location.pathname,
+											},
+										});
 									}}
 								>
 									Buy Now

@@ -7,6 +7,7 @@ import Login from '@pages/Auth/Login';
 import Register from '@pages/Auth/Register';
 import Cart from '@pages/Cart/Cart';
 import CheckoutCart from '@pages/Checkout/CheckoutCart';
+import CheckoutInfo from '@pages/Checkout/CheckoutInfo';
 import Home from '@pages/Home/Home';
 import Account from '@pages/Mypage/Account';
 import Mypage from '@pages/Mypage/Mypage';
@@ -91,6 +92,11 @@ const router = createBrowserRouter([
 								path: 'cart',
 								element: <CheckoutCart />,
 								handle: { label: 'Cart Checkout' },
+							},
+							{
+								path: 'info',
+								element: <CheckoutInfo />,
+								handle: { label: 'Info Checkout' },
 							},
 						],
 					},

@@ -39,3 +39,10 @@ export interface ICartFailureResponse extends ICartResponse {
 		code: string;
 	};
 }
+
+export type OrderItem = Omit<ICartItem, 'cartProductId'>;
+
+export type OrderPageState = {
+	orderItems: OrderItem[];
+	from: string;
+};
