@@ -8,10 +8,10 @@ const CheckoutCart = () => {
 
 	const state = location.state as OrderPageState | null;
 	const orderItems = state?.orderItems;
-	const prevPage = state?.from;
+	const returnTo = state?.returnTo;
 
 	if (!orderItems?.length) {
-		return <Navigate to={prevPage || '/'} replace />;
+		return <Navigate to={returnTo || '/cart'} replace />;
 	}
 
 	const totalPrice = orderItems.reduce(
@@ -23,8 +23,9 @@ const CheckoutCart = () => {
 		<>
 			<title>New Order</title>
 			<section>
+				<h1 className="sr-only">Checkout Cart</h1>
 				<div className="mb-4xl">
-					<h1 className="text-titleXlarge text-primaryDark mb-2xl">Orders</h1>
+					<h2 className="text-titleXlarge text-primaryDark mb-2xl">Orders</h2>
 					<div>
 						<p className="text-titleMedium text-base700 mb-lg">
 							Total{' '}
@@ -81,7 +82,7 @@ const CheckoutCart = () => {
 					</div>
 				</div>
 				<div>
-					<h1 className="text-titleXlarge text-primaryDark mb-lg">Summary</h1>
+					<h2 className="text-titleXlarge text-primaryDark mb-lg">Summary</h2>
 					<div className="mb-2xl p-lg border-y border-solid border-x-0 border-base500">
 						<div className="mb-lg pb-lg border-b border-solid border-t-0 border-x-0 border-base300">
 							<div className="mb-lg flex gap-lg align-center justify-between">
@@ -110,7 +111,7 @@ const CheckoutCart = () => {
 						<TextButton
 							variant="light"
 							size="medium"
-							onClick={() => navigate(prevPage || '/', { replace: true })}
+							onClick={() => navigate(returnTo || '/cart')}
 						>
 							Back
 						</TextButton>
@@ -121,7 +122,7 @@ const CheckoutCart = () => {
 								navigate('/checkout/info', {
 									state: {
 										orderItems,
-										from: '/checkout/cart',
+										returnTo,
 									},
 								});
 							}}

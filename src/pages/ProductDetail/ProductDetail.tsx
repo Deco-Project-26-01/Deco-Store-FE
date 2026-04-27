@@ -177,7 +177,7 @@ const ProductDetail = () => {
 														totalPrice: productDetail.data.price * quantity,
 													},
 												],
-												from: location.pathname,
+												returnTo: `/products/${productId}`,
 											},
 										});
 									}}
