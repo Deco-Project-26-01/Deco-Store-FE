@@ -1,17 +1,34 @@
-import type { OrderPageState } from '#types/order';
+import type { INewOrderRequestData, OrderPageState } from '#types/order';
+import type { INewAddressFormData } from '#types/userinfo';
+import iconBookWhite from '@assets/icons/icon-book-white.svg';
 import IconTextButton from '@components/Button/IconTextButton';
 import TextButton from '@components/Button/TextButton';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import iconBookWhite from '@assets/icons/icon-book-white.svg';
-import InputLabel from '@components/Label/InputLabel';
-import DefaultInput from '@components/Input/DefaultInput';
 import CountryDropdown from '@components/Input/CountryDropdown';
+import DefaultInput from '@components/Input/DefaultInput';
+import InputLabel from '@components/Label/InputLabel';
+import AlertModal from '@components/Modal/AlertModal';
+import useGetUserInfo from '@hooks/useGetUserInfo';
+import useOrder from '@hooks/useOrder';
+import { useModalStore } from '@store/useModalStore';
 import { Controller, useForm } from 'react-hook-form';
-import type { INewAddressFormData } from '#types/userinfo';
+import { getCountries, getCountryCallingCode } from 'react-phone-number-input';
+import en from 'react-phone-number-input/locale/en';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+
+const getCountryCodeFromNation = (nation: string | null | undefined) => {
+	if (!nation) return '';
+
+	return (
+		getCountries().find(
+			(country) => en[country as keyof typeof en] === nation,
+		) ?? ''
+	);
+};
 
 const CheckoutInfo = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const openModal = useModalStore((state) => state.openModal);
 
 	const state = location.state as OrderPageState | null;
 	const orderItems = state?.orderItems;
@@ -26,7 +43,15 @@ const CheckoutInfo = () => {
 		0,
 	);
 
-	const { control } = useForm<INewAddressFormData>({
+	const {
+		register,
+		watch,
+		setValue,
+		formState: { errors },
+		handleSubmit,
+		reset,
+		control,
+	} = useForm<INewAddressFormData>({
 		mode: 'onChange',
 		defaultValues: {
 			addressLabel: '',
@@ -37,6 +62,82 @@ const CheckoutInfo = () => {
 		},
 	});
 
+	const { refetch, isFetching } = useGetUserInfo(false);
+
+	const handleSelectSavedAddress = async () => {
+		const { data } = await refetch();
+
+		const userInfo = data;
+		const shippingAddress = userInfo?.data.shippingAddress;
+
+		if (!shippingAddress) {
+			openModal(
+				<AlertModal
+					title="No saved address found"
+					description={`You don't have any saved shipping address.\nPlease enter a new shipping address to proceed.`}
+					buttonText="OK"
+				/>,
+			);
+			return;
+		}
+
+		reset({
+			addressLabel: userInfo.data.label || '',
+			recipientName: `${userInfo.data.firstName} ${userInfo.data.lastName}`,
+			nation: getCountryCodeFromNation(userInfo.data.nation),
+			phone: userInfo.data.phone.split('-')[1],
+			address: shippingAddress,
+		});
+	};
+
+	const { mutate: createOrder } = useOrder();
+
+	const onSubmit = (data: INewAddressFormData) => {
+		const callingCode = data.nation
+			? `+${getCountryCallingCode(data.nation as any)}`
+			: '';
+
+		const formData: INewOrderRequestData = {
+			label: data.addressLabel || '',
+			recipientName: data.recipientName,
+			recipientPhone: `${callingCode}-${data.phone}`,
+			address: data.address,
+			items: orderItems.map((item) => ({
+				productId: Number(item.productId),
+				quantity: Number(item.quantity),
+			})),
+		};
+
+		createOrder(formData, {
+			onSuccess: (data) => {
+				const orderId = data.data.id;
+
+				openModal(
+					<AlertModal
+						title="Order Created Successfully"
+						description={`Your order has been created successfully.`}
+						buttonText="OK"
+						onConfirm={() => {
+							navigate(`/checkout/complete/${orderId}`, { replace: true });
+						}}
+					/>,
+				);
+			},
+			onError: (error) => {
+				openModal(
+					<AlertModal
+						title="Order Creation Failed"
+						description={
+							error.message ||
+							'An error occurred while creating your order. Please try again.'
+						}
+						buttonText="OK"
+					/>,
+				);
+			},
+		});
+	};
+
 	return (
 		<>
 			<title>New Order</title>
@@ -45,12 +146,13 @@ const CheckoutInfo = () => {
 					<h2 className="text-titleXlarge text-primaryDark mb-2xl">
 						Shipping Information
 					</h2>
-					<div className="flex gap-lg justify-between items-center mb-2xl">
+					<div className="flex gap-lg justify-between items-start mb-2xl">
 						<IconTextButton
 							variant="dark"
 							size="medium"
 							iconPath={iconBookWhite}
-							onClick={() => {}}
+							onClick={handleSelectSavedAddress}
+							disabled={isFetching}
 						>
 							Select from saved information
 						</IconTextButton>
@@ -58,29 +160,44 @@ const CheckoutInfo = () => {
 							<b className="text-alert">*</b> Required fields
 						</span>
 					</div>
-					<form>
+					<form id="shipping-form" onSubmit={handleSubmit(onSubmit)}>
 						<div className="flex gap-4xl justify-between items-center mb-lg">
-							<div className="w-full flex flex-col gap-sm">
+							<div className="min-w-[56rem] flex flex-col gap-sm">
 								<InputLabel htmlFor="addressLabel">Label</InputLabel>
 								<DefaultInput
 									id="addressLabel"
 									placeholder="e.g. Home, Work, Parents' house"
-									onClearIconClick={() => {}}
+									{...register('addressLabel')}
+									showClearIcon={!!watch('addressLabel')}
+									onClearIconClick={() =>
+										setValue('addressLabel', '', {
+											shouldDirty: true,
+											shouldValidate: true,
+										})
+									}
 								/>
 							</div>
-							<div className="w-full flex flex-col gap-sm">
+							<div className="min-w-[56rem] flex flex-col gap-sm">
 								<InputLabel htmlFor="recipientName" isRequired>
 									Name
 								</InputLabel>
 								<DefaultInput
 									id="recipientName"
 									placeholder="Please enter the recipient's name"
-									onClearIconClick={() => {}}
+									{...register('recipientName')}
+									showClearIcon={!!watch('recipientName')}
+									onClearIconClick={() =>
+										setValue('recipientName', '', {
+											shouldDirty: true,
+											shouldValidate: true,
+										})
+									}
+									error={errors.recipientName?.message}
 								/>
 							</div>
 						</div>
-						<div className="flex gap-4xl justify-between items-center">
-							<div className="w-full flex flex-col gap-sm">
+						<div className="flex gap-4xl justify-between items-start">
+							<div className="min-w-[56rem] flex flex-col gap-sm">
 								<InputLabel htmlFor="phoneNumber" isRequired>
 									Phone Number
 								</InputLabel>
@@ -101,24 +218,50 @@ const CheckoutInfo = () => {
 												/>
 											)}
 										/>
+										<p
+											role="alert"
+											className="mt-xs text-bodyXsmall text-alert"
+										>
+											{errors.nation?.message}
+										</p>
 									</div>
 
 									<DefaultInput
 										id="phoneNumber"
 										type="text"
 										placeholder="Enter your phone number"
-										onClearIconClick={() => {}}
+										{...register('phone', {
+											required: 'Phone number is required',
+										})}
+										showClearIcon={!!watch('phone')}
+										onClearIconClick={() =>
+											setValue('phone', '', {
+												shouldDirty: true,
+												shouldValidate: true,
+											})
+										}
+										error={errors.phone?.message}
 									/>
 								</div>
 							</div>
-							<div className="w-full flex flex-col gap-sm">
+							<div className="min-w-[56rem] flex flex-col gap-sm">
 								<InputLabel htmlFor="address" isRequired>
 									Address
 								</InputLabel>
 								<DefaultInput
 									id="address"
 									placeholder="Please enter the recipient's address"
-									onClearIconClick={() => {}}
+									{...register('address', {
+										required: 'Address is required',
+									})}
+									showClearIcon={!!watch('address')}
+									onClearIconClick={() =>
+										setValue('address', '', {
+											shouldDirty: true,
+											shouldValidate: true,
+										})
+									}
+									error={errors.address?.message}
 								/>
 							</div>
 						</div>
@@ -169,7 +312,12 @@ const CheckoutInfo = () => {
 						>
 							Back
 						</TextButton>
-						<TextButton variant="dark" size="medium" onClick={() => {}}>
+						<TextButton
+							variant="dark"
+							size="medium"
+							type="submit"
+							form="shipping-form"
+						>
 							Continue
 						</TextButton>
 					</div>

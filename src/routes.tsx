@@ -7,6 +7,7 @@ import Login from '@pages/Auth/Login';
 import Register from '@pages/Auth/Register';
 import Cart from '@pages/Cart/Cart';
 import CheckoutCart from '@pages/Checkout/CheckoutCart';
+import CheckoutComplete from '@pages/Checkout/CheckoutComplete';
 import CheckoutInfo from '@pages/Checkout/CheckoutInfo';
 import Home from '@pages/Home/Home';
 import Account from '@pages/Mypage/Account';
@@ -97,6 +98,18 @@ const router = createBrowserRouter([
 								path: 'info',
 								element: <CheckoutInfo />,
 								handle: { label: 'Info Checkout' },
+							},
+							{
+								path: 'complete/:orderId',
+								element: <CheckoutComplete />,
+								handle: { label: 'Complete Checkout' },
+								loader: async ({ params }) => {
+									if (!params.orderId) {
+										return { error: 'NO_ID' };
+									}
+
+									return { orderId: params.orderId };
+								},
 							},
 						],
 					},

@@ -10,14 +10,15 @@ export interface IUserInfoSuccessResponse extends IUserInfoResponse {
 	data: {
 		id: number;
 		email: string;
-		lastName: string;
-		firstName: string;
+		lastName: string | null;
+		firstName: string | null;
 		nation: string;
 		phone: string;
-		companyName: string;
-		businessNumber: string;
-		shippingAddress: string;
+		companyName: string | null;
+		businessNumber: string | null;
+		shippingAddress: string | null;
 		userType: string;
+		label: string | null;
 		role: string;
 		status: string;
 		emailVerifiedAt: string;
