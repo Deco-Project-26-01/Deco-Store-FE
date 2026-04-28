@@ -12,8 +12,6 @@ const createOrder = async (
 	instance: AxiosInstance,
 ) => {
 	try {
-		console.log(JSON.stringify(formData, null, 2));
-
 		const response = await instance.post<IOrderCreatedSuccessResponse>(
 			'/orders',
 			formData,

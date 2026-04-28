@@ -1,7 +1,13 @@
-import { useLoaderData } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CheckoutComplete = () => {
-	const { orderId } = useLoaderData();
+	const { orderId } = useParams<{ orderId: string }>();
+	const navigate = useNavigate();
+
+	if (!orderId) {
+		navigate('/mypage/order');
+		return null;
+	}
 
 	return (
 		<>

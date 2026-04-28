@@ -10,20 +10,10 @@ import AlertModal from '@components/Modal/AlertModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 import useOrder from '@hooks/useOrder';
 import { useModalStore } from '@store/useModalStore';
+import getCountryCodeFromNation from '@utils/getCountryCodeFromNation';
 import { Controller, useForm } from 'react-hook-form';
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input';
-import en from 'react-phone-number-input/locale/en';
+import { getCountryCallingCode } from 'react-phone-number-input';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-
-const getCountryCodeFromNation = (nation: string | null | undefined) => {
-	if (!nation) return '';
-
-	return (
-		getCountries().find(
-			(country) => en[country as keyof typeof en] === nation,
-		) ?? ''
-	);
-};
 
 const CheckoutInfo = () => {
 	const location = useLocation();
@@ -65,10 +55,33 @@ const CheckoutInfo = () => {
 	const { refetch, isFetching } = useGetUserInfo(false);
 
 	const handleSelectSavedAddress = async () => {
-		const { data } = await refetch();
+		const result = await refetch();
 
-		const userInfo = data;
-		const shippingAddress = userInfo?.data.shippingAddress;
+		if (result.isError) {
+			openModal(
+				<AlertModal
+					title="Failed to load saved information"
+					description="Could not load your saved shipping information. Please try again."
+					buttonText="OK"
+				/>,
+			);
+			return;
+		}
+
+		const userInfo = result.data;
+
+		if (!userInfo) {
+			openModal(
+				<AlertModal
+					title="Failed to load saved information"
+					description="No user information was returned. Please try again."
+					buttonText="OK"
+				/>,
+			);
+			return;
+		}
+
+		const shippingAddress = userInfo.data.shippingAddress;
 
 		if (!shippingAddress) {
 			openModal(
@@ -81,11 +94,20 @@ const CheckoutInfo = () => {
 			return;
 		}
 
+		const phoneParts = (userInfo.data.phone || '').split('-');
+		const phoneNumber =
+			phoneParts.length > 1
+				? phoneParts.slice(1).join('-')
+				: userInfo.data.phone || '';
+
 		reset({
 			addressLabel: userInfo.data.label || '',
-			recipientName: `${userInfo.data.firstName} ${userInfo.data.lastName}`,
+			recipientName:
+				userInfo.data.firstName && userInfo.data.lastName
+					? `${userInfo.data.firstName} ${userInfo.data.lastName}`
+					: '',
 			nation: getCountryCodeFromNation(userInfo.data.nation),
-			phone: userInfo.data.phone.split('-')[1],
+			phone: phoneNumber,
 			address: shippingAddress,
 		});
 	};
@@ -98,7 +120,7 @@ const CheckoutInfo = () => {
 			: '';
 
 		const formData: INewOrderRequestData = {
-			label: data.addressLabel || '',
+			label: data.addressLabel || null,
 			recipientName: data.recipientName,
 			recipientPhone: `${callingCode}-${data.phone}`,
 			address: data.address,
@@ -161,7 +183,7 @@ const CheckoutInfo = () => {
 						</span>
 					</div>
 					<form id="shipping-form" onSubmit={handleSubmit(onSubmit)}>
-						<div className="flex gap-4xl justify-between items-center mb-lg">
+						<div className="flex gap-4xl justify-between items-start mb-lg">
 							<div className="min-w-[56rem] flex flex-col gap-sm">
 								<InputLabel htmlFor="addressLabel">Label</InputLabel>
 								<DefaultInput
@@ -184,7 +206,9 @@ const CheckoutInfo = () => {
 								<DefaultInput
 									id="recipientName"
 									placeholder="Please enter the recipient's name"
-									{...register('recipientName')}
+									{...register('recipientName', {
+										required: 'Recipient name is required',
+									})}
 									showClearIcon={!!watch('recipientName')}
 									onClearIconClick={() =>
 										setValue('recipientName', '', {

@@ -103,13 +103,6 @@ const router = createBrowserRouter([
 								path: 'complete/:orderId',
 								element: <CheckoutComplete />,
 								handle: { label: 'Complete Checkout' },
-								loader: async ({ params }) => {
-									if (!params.orderId) {
-										return { error: 'NO_ID' };
-									}
-
-									return { orderId: params.orderId };
-								},
 							},
 						],
 					},
