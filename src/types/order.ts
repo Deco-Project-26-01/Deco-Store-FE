@@ -44,5 +44,5 @@ export type OrderItem = Omit<ICartItem, 'cartProductId'>;
 
 export type OrderPageState = {
 	orderItems: OrderItem[];
-	from: string;
+	returnTo?: string;
 };
