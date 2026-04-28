@@ -1,17 +1,16 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import ImageSwiper from '@components/Swiper/ImageSwiper';
-import { useState } from 'react';
 import TextButton from '@components/Button/TextButton';
 import QuantityInput from '@components/Input/QuantityInput';
-import useGetProductDetail from '@hooks/useGetProductDetail';
-import ProductDetailSkeleton from '@components/Skeleton/ProductDetailSkeleton';
-import useAddCart from '@hooks/useAddCart';
-import { useModalStore } from '@store/useModalStore';
 import AlertModal from '@components/Modal/AlertModal';
+import ProductDetailSkeleton from '@components/Skeleton/ProductDetailSkeleton';
+import ImageSwiper from '@components/Swiper/ImageSwiper';
+import useAddCart from '@hooks/useAddCart';
+import useGetProductDetail from '@hooks/useGetProductDetail';
 import useGetUserInfo from '@hooks/useGetUserInfo';
+import { useModalStore } from '@store/useModalStore';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ProductDetail = () => {
-	const location = useLocation();
 	const { data } = useGetUserInfo();
 	const userData = data?.data;
 

@@ -3,9 +3,10 @@ import CountryDropdown from '@components/Input/CountryDropdown';
 import DefaultInput from '@components/Input/DefaultInput';
 import InputLabel from '@components/Label/InputLabel';
 import { useUserInfoStore } from '@store/useUserInfoStore';
+import getCountryCodeFromNation from '@utils/getCountryCodeFromNation';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input';
+import { getCountryCallingCode } from 'react-phone-number-input';
 import en from 'react-phone-number-input/locale/en';
 
 interface IChangeProfileFormData {
@@ -22,16 +23,6 @@ interface IChangeProfileFormProps {
 	onSubmit: (data: IChangeProfileRequestData) => void;
 	isPending?: boolean;
 }
-
-const getCountryCodeFromNation = (nation: string | null | undefined) => {
-	if (!nation) return '';
-
-	return (
-		getCountries().find(
-			(country) => en[country as keyof typeof en] === nation,
-		) ?? ''
-	);
-};
 
 const ChangeProfileForm = ({
 	onSubmit,

@@ -21,7 +21,9 @@ const AlertModal = ({
 		<Modal onClose={closeModal}>
 			<div className="pt-2xl pb-4xl px-2xl text-center">
 				<h3 className="text-titleLarge text-primaryDark mb-2xl">{title}</h3>
-				<p className="text-bodyBase text-black">{description}</p>
+				<p className="text-bodyBase text-black whitespace-pre-line">
+					{description}
+				</p>
 			</div>
 			<div>
 				<TextButton

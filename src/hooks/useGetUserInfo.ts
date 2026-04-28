@@ -22,14 +22,14 @@ const fetchUserInfo = async (instance: AxiosInstance) => {
 	}
 };
 
-const useGetUserInfo = () => {
+const useGetUserInfo = (enabled = true) => {
 	const accessToken = useUserStore((state) => state.accessToken);
 	const axios = useCustomAxios();
 
 	return useQuery({
 		queryKey: ['userInfo'],
 		queryFn: () => fetchUserInfo(axios),
-		enabled: !!accessToken,
+		enabled: !!accessToken && enabled,
 		retry: false,
 	});
 };

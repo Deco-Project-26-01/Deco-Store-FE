@@ -3,14 +3,15 @@ import { create } from 'zustand';
 interface IUserInfo {
 	id: number;
 	email: string;
-	lastName: string;
+	lastName: string | null;
 	firstName: string | null;
-	nation: string | null;
+	nation: string;
 	phone: string;
 	companyName: string | null;
 	businessNumber: string | null;
-	shippingAddress: string;
+	shippingAddress: string | null;
 	userType: string;
+	label: string | null;
 	role: string;
 	status: string;
 	emailVerifiedAt: string;
