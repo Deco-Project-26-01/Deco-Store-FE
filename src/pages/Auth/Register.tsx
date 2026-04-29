@@ -7,7 +7,9 @@ import PasswordForm from '@components/Form/PasswordForm';
 import PhoneForm from '@components/Form/PhoneForm';
 import RadioForm from '@components/Form/RadioForm';
 import CheckboxInput from '@components/Input/CheckboxInput';
+import AlertModal from '@components/Modal/AlertModal';
 import useRegister from '@hooks/useRegister';
+import { useModalStore } from '@store/useModalStore';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import en from 'react-phone-number-input/locale/en';
@@ -38,6 +40,7 @@ const Register = () => {
 	const [userType, setUserType] = useState<UserType>('personal');
 	const { mutate: registerUser } = useRegister();
 	const navigate = useNavigate();
+	const openModal = useModalStore((state) => state.openModal);
 
 	// TODO: 회원가입 제출 로직 구현
 	const handleRegister = async (data: IRegisterFormData) => {
@@ -70,20 +73,31 @@ const Register = () => {
 
 		registerUser(formData, {
 			onSuccess: () => {
-				// TODO: 모달 오픈
-				console.log(
-					'Welcome to Deco! Your account has been successfully created.',
+				openModal(
+					<AlertModal
+						title="Welcome to Deco!"
+						description="Your account has been successfully created."
+						buttonText="Login"
+						onConfirm={() => {
+							navigate('/login');
+							methods.reset();
+							setUserType('personal');
+						}}
+					/>,
 				);
-				// 임시: 로그인 페이지로 이동
-				navigate('/login');
-				methods.reset();
-				setUserType('personal');
 			},
 			onError: (error: Error) => {
-				// TODO: 모달 오픈
-				console.error('Registration failed:', error.message);
-				methods.reset();
-				setUserType('personal');
+				openModal(
+					<AlertModal
+						title="Registration Failed"
+						description={error.message}
+						buttonText="Retry"
+						onConfirm={() => {
+							methods.reset();
+							setUserType('personal');
+						}}
+					/>,
+				);
 			},
 		});
 	};

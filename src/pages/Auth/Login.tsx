@@ -1,23 +1,51 @@
 import type { IGuardState } from '#types/router';
 import LoginForm from '@components/Form/LoginForm';
 import TextLink from '@components/Link/TextLink';
-import { useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import AlertModal from '@components/Modal/AlertModal';
+import { useModalStore } from '@store/useModalStore';
+import { useEffect } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 const Login = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const state: IGuardState | null = location.state;
+	const [searchParams] = useSearchParams();
+	const openModal = useModalStore((state) => state.openModal);
 
-	const fromRef = useRef(state?.from);
+	const state: IGuardState | null = location.state;
+	const reason = state?.reason ?? searchParams.get('reason');
 
 	useEffect(() => {
-		if (state?.reason === 'auth' && state?.from) {
-			alert('You need to log in to access this page.');
+		if (reason === 'auth' && state?.from) {
+			openModal(
+				<AlertModal
+					title="Authentication Required"
+					description="You need to log in to access this page."
+					buttonText="Login"
+				/>,
+			);
+
+			navigate(location.pathname, {
+				replace: true,
+				state: { from: state.from },
+			});
+			return;
 		}
 
-		navigate(location.pathname, { replace: true, state: null });
-	}, []);
+		if (reason === 'session-expired') {
+			openModal(
+				<AlertModal
+					title="Session Expired"
+					description="Your session has expired. Please log in again."
+					buttonText="OK"
+				/>,
+			);
+
+			navigate(location.pathname, {
+				replace: true,
+			});
+		}
+	}, [reason, state?.from, openModal, navigate, location.pathname]);
 
 	return (
 		<>
@@ -26,9 +54,8 @@ const Login = () => {
 				<h2 className="mb-2xl text-center text-title2Xlarge text-primaryDark">
 					Login
 				</h2>
-				{/* 로그인 폼 영역 */}
-				<div className="p-md ">
-					<LoginForm redirectTo={fromRef.current ?? '/'} />
+				<div className="p-md">
+					<LoginForm />
 					<div className="mt-xl px-md py-xs flex items-center justify-center gap-md">
 						<p className="text-titleBase text-black">Don't have an account?</p>
 						<TextLink to="/register" variant="text" size="small">

@@ -3,6 +3,7 @@ import type {
 	ILogoutSuccessResponse,
 } from '#types/auth';
 import useCustomAxios from '@hooks/useCustomAxios';
+import { useUserInfoStore } from '@store/useUserInfoStore';
 import { useUserStore } from '@store/useUserStore';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosInstance } from 'axios';
@@ -28,7 +29,8 @@ const logout = async (instance: AxiosInstance) => {
 
 const useLogout = () => {
 	const axios = useCustomAxios();
-	const { clearTokens } = useUserStore((state) => state);
+	const clearTokens = useUserStore((state) => state.clearTokens);
+	const clearUserInfo = useUserInfoStore((state) => state.clearUserInfo);
 
 	return useMutation({
 		mutationFn: () => logout(axios),
@@ -37,6 +39,7 @@ const useLogout = () => {
 		},
 		onSettled: () => {
 			clearTokens();
+			clearUserInfo();
 		},
 	});
 };

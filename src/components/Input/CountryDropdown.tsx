@@ -7,11 +7,16 @@ import {
 import en from 'react-phone-number-input/locale/en';
 
 interface ICountryDropdownProps {
+	listHeight?: number;
 	value?: string;
 	onChange: (value?: string) => void;
 }
 
-const CountryDropdown = ({ value, onChange }: ICountryDropdownProps) => {
+const CountryDropdown = ({
+	listHeight = 20,
+	value,
+	onChange,
+}: ICountryDropdownProps) => {
 	const list = getCountries()
 		.filter((country) => !BLOCKED_COUNTRIES.includes(country))
 		.map((country) => ({
@@ -22,7 +27,7 @@ const CountryDropdown = ({ value, onChange }: ICountryDropdownProps) => {
 	return (
 		<Dropdown
 			width={20}
-			listHeight={20}
+			listHeight={listHeight}
 			selectedValue={value}
 			list={list}
 			onChange={(next) => onChange(next || undefined)}

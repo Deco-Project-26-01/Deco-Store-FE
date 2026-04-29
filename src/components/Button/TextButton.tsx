@@ -6,6 +6,7 @@ type ButtonSize = 'small' | 'medium' | 'fullSmall' | 'fullMedium';
 interface ITextButtonProps extends ComponentPropsWithoutRef<'button'> {
 	variant: ButtonVariant;
 	size: ButtonSize;
+	rect?: boolean;
 	children: string;
 }
 
@@ -47,6 +48,7 @@ const TextButton = ({
 	variant,
 	size,
 	children,
+	rect = false,
 	...rest
 }: ITextButtonProps) => {
 	return (
@@ -54,7 +56,7 @@ const TextButton = ({
 			type={type}
 			className={`
 				text-titleBase
-				rounded-xs
+				${rect ? 'rounded-none' : 'rounded-xs'}
 				${buttonVariant[variant]}
 				${buttonSize[size]}
 				${disabled}

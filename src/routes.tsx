@@ -6,6 +6,9 @@ import { MYPAGE_SIBLINGS } from '@constants/siblings';
 import Login from '@pages/Auth/Login';
 import Register from '@pages/Auth/Register';
 import Cart from '@pages/Cart/Cart';
+import CheckoutCart from '@pages/Checkout/CheckoutCart';
+import CheckoutComplete from '@pages/Checkout/CheckoutComplete';
+import CheckoutInfo from '@pages/Checkout/CheckoutInfo';
 import Home from '@pages/Home/Home';
 import Account from '@pages/Mypage/Account';
 import Mypage from '@pages/Mypage/Mypage';
@@ -13,6 +16,7 @@ import Order from '@pages/Mypage/Order/Order';
 import OrderLayout from '@pages/Mypage/Order/OrderLayout';
 import Orders from '@pages/Mypage/Order/Orders';
 import Support from '@pages/Mypage/Support';
+import ProductDetail from '@pages/ProductDetail/ProductDetail';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -27,12 +31,7 @@ const router = createBrowserRouter([
 				index: true,
 				element: <Home />,
 			},
-			// 장바구니
-			{
-				path: 'cart',
-				element: <Cart />,
-				handle: { label: 'Cart' },
-			},
+
 			// 🔐 로그인 필요 영역
 			{
 				element: <ProtectedRoute />,
@@ -79,6 +78,39 @@ const router = createBrowserRouter([
 								},
 							},
 						],
+					},
+					// 상품 상세
+					{
+						path: 'products/:id',
+						element: <ProductDetail />,
+						handle: { label: `Product` },
+					},
+					// 주문
+					{
+						path: 'checkout',
+						children: [
+							{
+								path: 'cart',
+								element: <CheckoutCart />,
+								handle: { label: 'Cart Checkout' },
+							},
+							{
+								path: 'info',
+								element: <CheckoutInfo />,
+								handle: { label: 'Info Checkout' },
+							},
+							{
+								path: 'complete/:orderId',
+								element: <CheckoutComplete />,
+								handle: { label: 'Complete Checkout' },
+							},
+						],
+					},
+					// 장바구니
+					{
+						path: 'cart',
+						element: <Cart />,
+						handle: { label: 'Cart' },
 					},
 				],
 			},
