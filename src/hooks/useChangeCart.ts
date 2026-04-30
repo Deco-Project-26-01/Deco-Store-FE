@@ -1,10 +1,10 @@
 import type {
-	ICartFailureResponse,
 	IAddCartRequestData,
+	ICartFailureResponse,
 	ICartSuccessResponse,
 } from '#types/order';
 import useCustomAxios from '@hooks/useCustomAxios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { isAxiosError, type AxiosInstance } from 'axios';
 
 const changeCart = async (
@@ -31,14 +31,10 @@ const changeCart = async (
 
 const useChangeCart = () => {
 	const axios = useCustomAxios();
-	const queryClient = useQueryClient();
 
 	return useMutation({
 		mutationFn: (payload: IAddCartRequestData) =>
 			changeCart(payload.productId, payload.quantity, axios),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['cart'] });
-		},
 	});
 };
 

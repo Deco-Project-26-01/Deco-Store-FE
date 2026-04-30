@@ -8,6 +8,7 @@ import ConfirmModal from '@components/Modal/ConfirmModal';
 import useChangeCart from '@hooks/useChangeCart';
 import useGetCart from '@hooks/useGetCart';
 import { useModalStore } from '@store/useModalStore';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,6 +63,8 @@ const Cart = () => {
 	}, [cartItems]);
 
 	const { mutate: changeCart, isPending } = useChangeCart();
+	const queryClient = useQueryClient();
+
 	const handleSave = ({
 		productId,
 		quantity,
@@ -72,6 +75,9 @@ const Cart = () => {
 		changeCart(
 			{ productId, quantity },
 			{
+				onSuccess: () => {
+					queryClient.invalidateQueries({ queryKey: ['cart'] });
+				},
 				onError: (error) => {
 					openModal(
 						<AlertModal

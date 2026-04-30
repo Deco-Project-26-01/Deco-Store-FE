@@ -99,3 +99,52 @@ export interface IOrderCreatedFailureResponse extends IOrderCreatedResponse {
 		code: string;
 	};
 }
+
+export interface IOrderDetailResponse {
+	success: boolean;
+	message: string;
+}
+
+export interface IOrderDetailSuccessResponse extends IOrderDetailResponse {
+	success: true;
+	data: {
+		id: number;
+		userId: number;
+		orderNumber: string;
+		orderPrice: number;
+		currencySnapshot: number;
+		status:
+			| 'PENDING'
+			| 'PREPARING'
+			| 'SHIPPED'
+			| 'IN_TRANSIT'
+			| 'DELIVERED'
+			| 'CANCELLED'
+			| 'REFUNDED';
+		address: string;
+		label: string | null;
+		recipientName: string;
+		phone: string;
+		trackingNumber: null;
+		orderedAt: string;
+		cancelledAt: null;
+		items: {
+			orderProductId: number;
+			productId: number;
+			productName: string;
+			quantity: number;
+			unitPrice: number;
+			totalPrice: number;
+		}[];
+	};
+	error: null;
+}
+
+export interface IOrderDetailFailureResponse extends IOrderDetailResponse {
+	success: false;
+	data: null;
+	error: {
+		status: number;
+		code: string;
+	};
+}
