@@ -1,15 +1,22 @@
 import type {
 	IChangeProfileRequestData,
-	INewAddressRequestData,
+	IEditAddressRequestData,
 } from '#types/userinfo';
-import NewAddressForm from '@components/Form/NewAddressForm';
+import EditAddressForm from '@components/Form/EditAddressForm';
 import AlertModal from '@components/Modal/AlertModal';
 import FormModal from '@components/Modal/FormModal';
 import useChangeProfile from '@hooks/useChangeProfile';
 import { useModalStore } from '@store/useModalStore';
 import { useUserInfoStore } from '@store/useUserInfoStore';
 
-const NewAddressModal = () => {
+interface IEditAddressModalProps {
+	data: {
+		label: string | null;
+		shippingAddress: string;
+	};
+}
+
+const EditAddressModal = ({ data }: IEditAddressModalProps) => {
 	const userInfo = useUserInfoStore((state) => state.userInfo);
 
 	const closeModal = useModalStore((state) => state.closeModal);
@@ -17,7 +24,7 @@ const NewAddressModal = () => {
 
 	const { mutate: changeProfile, isPending } = useChangeProfile();
 
-	const handleSave = (formData: INewAddressRequestData) => {
+	const handleSave = (formData: IEditAddressRequestData) => {
 		if (!userInfo) return;
 
 		const payload: IChangeProfileRequestData = {
@@ -34,7 +41,7 @@ const NewAddressModal = () => {
 
 		changeProfile(payload, {
 			onSuccess: () => {
-				closeModal(); // 모달 닫기
+				closeModal();
 			},
 			onError: (error) => {
 				openModal(
@@ -54,16 +61,23 @@ const NewAddressModal = () => {
 
 	return (
 		<FormModal
-			title="New Address"
+			title="Edit Address"
 			firstButtonText="Cancel"
 			secondButtonText={isPending ? 'Saving...' : 'Save'}
-			formId="newAddressForm"
+			formId="editAddressForm"
 			closeOnOverlayClick={false}
 			isPending={isPending}
 		>
-			<NewAddressForm onSubmit={handleSave} isPending={isPending} />
+			<EditAddressForm
+				onSubmit={handleSave}
+				isPending={isPending}
+				defaultValues={{
+					label: data.label || null,
+					shippingAddress: data.shippingAddress,
+				}}
+			/>
 		</FormModal>
 	);
 };
 
-export default NewAddressModal;
+export default EditAddressModal;

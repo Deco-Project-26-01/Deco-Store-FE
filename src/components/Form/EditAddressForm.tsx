@@ -1,33 +1,41 @@
 import type {
-	INewAddressFormData,
-	INewAddressRequestData,
+	IEditAddressFormData,
+	IEditAddressRequestData,
 } from '#types/userinfo';
 import DefaultInput from '@components/Input/DefaultInput';
 import InputLabel from '@components/Label/InputLabel';
 import { useForm } from 'react-hook-form';
 
-interface INewAddressForm {
-	onSubmit: (data: INewAddressRequestData) => void;
+interface IEditAddressForm {
+	onSubmit: (data: IEditAddressRequestData) => void;
 	isPending: boolean;
+	defaultValues: {
+		label: string | null;
+		shippingAddress: string;
+	};
 }
 
-const NewAddressForm = ({ onSubmit, isPending }: INewAddressForm) => {
+const EditAddressForm = ({
+	onSubmit,
+	isPending,
+	defaultValues,
+}: IEditAddressForm) => {
 	const {
 		register,
 		handleSubmit,
 		watch,
 		setValue,
 		formState: { errors },
-	} = useForm<INewAddressFormData>({
+	} = useForm<IEditAddressFormData>({
 		mode: 'onChange',
 		defaultValues: {
-			label: '',
-			shippingAddress: '',
+			label: defaultValues.label ? defaultValues.label : '',
+			shippingAddress: defaultValues.shippingAddress,
 		},
 	});
 
-	const handleSave = (data: INewAddressFormData) => {
-		const formData: INewAddressRequestData = {
+	const handleSave = (data: IEditAddressFormData) => {
+		const formData: IEditAddressRequestData = {
 			label: data.label ? data.label : null,
 			shippingAddress: data.shippingAddress,
 		};
@@ -36,7 +44,7 @@ const NewAddressForm = ({ onSubmit, isPending }: INewAddressForm) => {
 	};
 
 	return (
-		<form id="newAddressForm" onSubmit={handleSubmit(handleSave)}>
+		<form id="editAddressForm" onSubmit={handleSubmit(handleSave)}>
 			{/* 배송지 이름 */}
 			<div className="flex flex-col gap-sm mb-lg">
 				<InputLabel htmlFor="addressLabel">Label</InputLabel>
@@ -80,4 +88,4 @@ const NewAddressForm = ({ onSubmit, isPending }: INewAddressForm) => {
 	);
 };
 
-export default NewAddressForm;
+export default EditAddressForm;

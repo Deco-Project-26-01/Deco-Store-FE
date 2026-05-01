@@ -8,6 +8,7 @@ import { useUserInfoStore } from '@store/useUserInfoStore';
 import { useEffect } from 'react';
 import iconPlusWhite from '@assets/icons/icon-plus-white.svg';
 import NewAddressModal from '@components/Modal/NewAddressModal';
+import EditAddressModal from '@components/Modal/EditAddressModal';
 
 const Account = () => {
 	const openModal = useModalStore((state) => state.openModal);
@@ -94,8 +95,6 @@ const Account = () => {
 						<table className="table-fixed w-full text-center">
 							<colgroup>
 								<col className="w-[20%]" />
-								<col className="w-[20%]" />
-								<col className="w-[20%]" />
 								<col className="w-[32rem]" />
 								<col className="w-[5.5rem]" />
 							</colgroup>
@@ -103,14 +102,6 @@ const Account = () => {
 								<tr>
 									<th className="px-lg py-sm" scope="col">
 										Label
-									</th>
-
-									<th className="px-lg py-sm" scope="col">
-										Recipient
-									</th>
-
-									<th className="px-lg py-sm" scope="col">
-										Phone
 									</th>
 
 									<th className="py-sm w-[32rem]" scope="col">
@@ -125,21 +116,34 @@ const Account = () => {
 							<tbody>
 								{userData.shippingAddress ? (
 									<tr className="border-solid border-0 border-b border-base500">
-										<td className="px-lg py-lg align-middle">Home</td>
-										<td className="px-lg py-lg align-middle">Elon Musk</td>
-										<td className="px-lg py-lg align-middle">
-											+1 512-555-0000
+										<td className="px-lg py-lg text-bodyBase align-middle">
+											{userData.label}
 										</td>
-										<td className="px-lg py-lg text-left align-middle">
-											1 Tesla Road, Austin, TX 78725, USA
+										<td className="px-lg py-lg text-center align-middle text-bodyBase font-normal text-base700">
+											{userData.shippingAddress}
 										</td>
 										<td className="px-lg py-lg align-middle">
-											<button type="button">Edit</button>
+											<TextButton
+												variant="light"
+												size="small"
+												onClick={() =>
+													openModal(
+														<EditAddressModal
+															data={{
+																label: userData.label || null,
+																shippingAddress: userData.shippingAddress!,
+															}}
+														/>,
+													)
+												}
+											>
+												Edit
+											</TextButton>
 										</td>
 									</tr>
 								) : (
 									<tr>
-										<td colSpan={5}>
+										<td colSpan={3}>
 											<div className="w-full p-3xl flex flex-col justify-center items-center gap-lg border-solid border-0 border-b border-base500 box-border">
 												<span className="text-titleMedium">
 													No shipping address yet.

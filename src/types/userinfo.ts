@@ -40,13 +40,14 @@ export interface IUserInfoFailureResponse extends IUserInfoResponse {
 
 // 회원 정보 수정 요청의 데이터 타입
 export interface IChangeProfileRequestData {
-	lastName?: string | null;
-	firstName?: string | null;
-	companyName?: string | null;
-	businessNumber?: string | null;
-	nation?: string;
-	phone?: string;
-	shippingAddress?: string;
+	lastName: string | null;
+	firstName: string | null;
+	companyName: string | null;
+	businessNumber: string | null;
+	nation: string;
+	phone: string;
+	label: string | null;
+	shippingAddress: string | null;
 }
 
 // 비밀번호 수정 요청의 데이터 타입
@@ -79,17 +80,23 @@ export interface IChangePasswordFailureResponse extends IChangePasswordResponse 
 
 // 배송지 정보 추가 폼의 데이터 타입
 export interface INewAddressFormData {
-	addressLabel: string;
-	recipientName: string;
-	nation: string;
-	phone: string;
-	address: string;
+	label: string;
+	shippingAddress: string;
+}
+
+export interface IEditAddressFormData {
+	label: string;
+	shippingAddress: string;
 }
 
 // 배송지 정보 등록 요청의 데이터 타입
 export interface INewAddressRequestData {
 	label: string | null;
-	recipientName: string;
-	phone: string;
-	address: string;
+	shippingAddress: string;
+}
+
+// 배송지 정보 수정 요청의 데이터 타입
+export interface IEditAddressRequestData {
+	label: string | null;
+	shippingAddress: string;
 }
