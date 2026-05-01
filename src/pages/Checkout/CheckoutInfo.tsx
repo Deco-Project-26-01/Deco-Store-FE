@@ -137,10 +137,11 @@ const CheckoutInfo = () => {
 		createOrder(formData, {
 			onSuccess: async (data) => {
 				const orderId = data.data.id;
+				let hasCartCleanupError = false;
 
 				try {
 					if (returnTo === '/cart') {
-						await Promise.all(
+						const results = await Promise.allSettled(
 							orderItems.map((item) =>
 								changeCartAsync({
 									productId: item.productId,
@@ -149,31 +150,34 @@ const CheckoutInfo = () => {
 							),
 						);
 
+						hasCartCleanupError = results.some(
+							(result) => result.status === 'rejected',
+						);
+					}
+				} finally {
+					if (returnTo === '/cart') {
 						await queryClient.invalidateQueries({ queryKey: ['cart'] });
 					}
-
-					openModal(
-						<AlertModal
-							title="Order Created Successfully"
-							description="Your order has been created successfully."
-							buttonText="OK"
-							onConfirm={() => {
-								navigate(`/checkout/complete/${orderId}`, { replace: true });
-							}}
-						/>,
-					);
-				} catch {
-					openModal(
-						<AlertModal
-							title="Cart cleanup failed"
-							description="Order created but failed to clear cart."
-							buttonText="OK"
-							onConfirm={() => {
-								navigate(`/checkout/complete/${orderId}`, { replace: true });
-							}}
-						/>,
-					);
 				}
+
+				openModal(
+					<AlertModal
+						title={
+							hasCartCleanupError
+								? 'Order Created, But Cart Cleanup Failed'
+								: 'Order Created Successfully'
+						}
+						description={
+							hasCartCleanupError
+								? 'Your order was created, but some cart items may not have been removed. Please check your cart.'
+								: 'Your order has been created successfully.'
+						}
+						buttonText="OK"
+						onConfirm={() => {
+							navigate(`/checkout/complete/${orderId}`, { replace: true });
+						}}
+					/>,
+				);
 			},
 			onError: (error) => {
 				openModal(

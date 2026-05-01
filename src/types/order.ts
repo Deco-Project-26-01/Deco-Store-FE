@@ -76,9 +76,9 @@ export interface IOrderCreatedSuccessResponse extends IOrderCreatedResponse {
 		label: string | null;
 		recipientName: string;
 		phone: string;
-		trackingNumber: null;
+		trackingNumber: string | null;
 		orderedAt: string;
-		cancelledAt: null;
+		cancelledAt: string | null;
 		items: {
 			orderProductId: number;
 			productId: number;
@@ -125,9 +125,9 @@ export interface IOrderDetailSuccessResponse extends IOrderDetailResponse {
 		label: string | null;
 		recipientName: string;
 		phone: string;
-		trackingNumber: null;
+		trackingNumber: string | null;
 		orderedAt: string;
-		cancelledAt: null;
+		cancelledAt: string | null;
 		items: {
 			orderProductId: number;
 			productId: number;

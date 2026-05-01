@@ -1,14 +1,13 @@
 import TextButton from '@components/Button/TextButton';
 import useGetOrderDetail from '@hooks/useGetOrderDetail';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 const CheckoutComplete = () => {
 	const { orderId } = useParams<{ orderId: string }>();
 	const navigate = useNavigate();
 
 	if (!orderId) {
-		navigate('/mypage/order');
-		return null;
+		return <Navigate to="/mypage/order" replace />;
 	}
 
 	const { data: orderDetailData, error } = useGetOrderDetail(orderId);
@@ -51,7 +50,7 @@ const CheckoutComplete = () => {
 									<>
 										{orderDetailData.data.items.map((item) => (
 											<tr
-												key={item.productId}
+												key={item.orderProductId}
 												className="border-solid border-0 border-y border-base500"
 											>
 												{/* Order */}
