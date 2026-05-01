@@ -7,9 +7,11 @@ import CountryDropdown from '@components/Input/CountryDropdown';
 import DefaultInput from '@components/Input/DefaultInput';
 import InputLabel from '@components/Label/InputLabel';
 import AlertModal from '@components/Modal/AlertModal';
+import useChangeCart from '@hooks/useChangeCart';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 import useOrder from '@hooks/useOrder';
 import { useModalStore } from '@store/useModalStore';
+import { useQueryClient } from '@tanstack/react-query';
 import getCountryCodeFromNation from '@utils/getCountryCodeFromNation';
 import { Controller, useForm } from 'react-hook-form';
 import { getCountryCallingCode } from 'react-phone-number-input';
@@ -113,6 +115,8 @@ const CheckoutInfo = () => {
 	};
 
 	const { mutate: createOrder } = useOrder();
+	const { mutateAsync: changeCartAsync } = useChangeCart();
+	const queryClient = useQueryClient();
 
 	const onSubmit = (data: INewAddressFormData) => {
 		const callingCode = data.nation
@@ -131,13 +135,43 @@ const CheckoutInfo = () => {
 		};
 
 		createOrder(formData, {
-			onSuccess: (data) => {
+			onSuccess: async (data) => {
 				const orderId = data.data.id;
+				let hasCartCleanupError = false;
+
+				try {
+					if (returnTo === '/cart') {
+						const results = await Promise.allSettled(
+							orderItems.map((item) =>
+								changeCartAsync({
+									productId: item.productId,
+									quantity: 0,
+								}),
+							),
+						);
+
+						hasCartCleanupError = results.some(
+							(result) => result.status === 'rejected',
+						);
+					}
+				} finally {
+					if (returnTo === '/cart') {
+						await queryClient.invalidateQueries({ queryKey: ['cart'] });
+					}
+				}
 
 				openModal(
 					<AlertModal
-						title="Order Created Successfully"
-						description={`Your order has been created successfully.`}
+						title={
+							hasCartCleanupError
+								? 'Order Created, But Cart Cleanup Failed'
+								: 'Order Created Successfully'
+						}
+						description={
+							hasCartCleanupError
+								? 'Your order was created, but some cart items may not have been removed. Please check your cart.'
+								: 'Your order has been created successfully.'
+						}
 						buttonText="OK"
 						onConfirm={() => {
 							navigate(`/checkout/complete/${orderId}`, { replace: true });
