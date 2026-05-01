@@ -82,6 +82,8 @@ const ChangeProfileForm = ({
 				userType === 'CORPORATE' ? String(data.businessNumber) : null,
 			nation: en[data.nation as keyof typeof en],
 			phone: `${data.callingCode}-${data.phone}`,
+			label: userInfo.label,
+			shippingAddress: userInfo.shippingAddress,
 		};
 
 		onSubmit(formData);
