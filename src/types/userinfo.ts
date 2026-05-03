@@ -4,27 +4,29 @@ export interface IUserInfoResponse {
 	message: string;
 }
 
+export interface IUserInfo {
+	id: number;
+	email: string;
+	lastName: string | null;
+	firstName: string | null;
+	nation: string;
+	phone: string;
+	companyName: string | null;
+	businessNumber: string | null;
+	shippingAddress: string | null;
+	userType: string;
+	label: string | null;
+	role: string;
+	status: string;
+	emailVerifiedAt: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
 // 회원 정보 조회 성공 응답의 타입
 export interface IUserInfoSuccessResponse extends IUserInfoResponse {
 	success: true;
-	data: {
-		id: number;
-		email: string;
-		lastName: string | null;
-		firstName: string | null;
-		nation: string;
-		phone: string;
-		companyName: string | null;
-		businessNumber: string | null;
-		shippingAddress: string | null;
-		userType: string;
-		label: string | null;
-		role: string;
-		status: string;
-		emailVerifiedAt: string;
-		createdAt: string;
-		updatedAt: string;
-	};
+	data: IUserInfo;
 	error: null;
 }
 

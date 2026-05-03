@@ -7,34 +7,22 @@ import AlertModal from '@components/Modal/AlertModal';
 import FormModal from '@components/Modal/FormModal';
 import useChangeProfile from '@hooks/useChangeProfile';
 import { useModalStore } from '@store/useModalStore';
-import { useUserInfoStore } from '@store/useUserInfoStore';
 
 const NewAddressModal = () => {
-	const userInfo = useUserInfoStore((state) => state.userInfo);
-
 	const closeModal = useModalStore((state) => state.closeModal);
 	const openModal = useModalStore((state) => state.openModal);
 
 	const { mutate: changeProfile, isPending } = useChangeProfile();
 
 	const handleSave = (formData: INewAddressRequestData) => {
-		if (!userInfo) return;
-
-		const payload: IChangeProfileRequestData = {
-			firstName: userInfo.firstName ?? null,
-			lastName: userInfo.lastName ?? null,
-			companyName: userInfo.companyName ?? null,
-			businessNumber: userInfo.businessNumber ?? null,
-			nation: userInfo.nation,
-			phone: userInfo.phone,
-
+		const payload: Partial<IChangeProfileRequestData> = {
 			label: formData.label || null,
 			shippingAddress: formData.shippingAddress || null,
 		};
 
 		changeProfile(payload, {
 			onSuccess: () => {
-				closeModal(); // 모달 닫기
+				closeModal();
 			},
 			onError: (error) => {
 				openModal(

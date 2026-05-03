@@ -20,7 +20,7 @@ interface IChangeProfileFormData {
 }
 
 interface IChangeProfileFormProps {
-	onSubmit: (data: IChangeProfileRequestData) => void;
+	onSubmit: (data: Partial<IChangeProfileRequestData>) => void;
 	isPending?: boolean;
 }
 
@@ -74,7 +74,7 @@ const ChangeProfileForm = ({
 	const userType = userInfo.userType;
 
 	const handleSave = (data: IChangeProfileFormData) => {
-		const formData: IChangeProfileRequestData = {
+		const formData: Partial<IChangeProfileRequestData> = {
 			lastName: userType === 'PERSONAL' ? String(data.lastName) : null,
 			firstName: userType === 'PERSONAL' ? String(data.firstName) : null,
 			companyName: userType === 'CORPORATE' ? String(data.companyName) : null,
@@ -82,8 +82,6 @@ const ChangeProfileForm = ({
 				userType === 'CORPORATE' ? String(data.businessNumber) : null,
 			nation: en[data.nation as keyof typeof en],
 			phone: `${data.callingCode}-${data.phone}`,
-			label: userInfo.label,
-			shippingAddress: userInfo.shippingAddress,
 		};
 
 		onSubmit(formData);

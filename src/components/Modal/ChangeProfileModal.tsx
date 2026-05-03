@@ -10,7 +10,7 @@ const ChangeProfileModal = () => {
 	const openModal = useModalStore((state) => state.openModal);
 	const { mutate, isPending } = useChangeProfile();
 
-	const handleSave = (formData: IChangeProfileRequestData) => {
+	const handleSave = (formData: Partial<IChangeProfileRequestData>) => {
 		mutate(formData, {
 			onSuccess: () => {
 				closeModal();

@@ -1,14 +1,14 @@
+import iconPlusWhite from '@assets/icons/icon-plus-white.svg';
 import IconTextButton from '@components/Button/IconTextButton';
 import TextButton from '@components/Button/TextButton';
 import ChangePasswordModal from '@components/Modal/ChangePasswordModal';
 import ChangeProfileModal from '@components/Modal/ChangeProfileModal';
+import EditAddressModal from '@components/Modal/EditAddressModal';
+import NewAddressModal from '@components/Modal/NewAddressModal';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 import { useModalStore } from '@store/useModalStore';
 import { useUserInfoStore } from '@store/useUserInfoStore';
 import { useEffect } from 'react';
-import iconPlusWhite from '@assets/icons/icon-plus-white.svg';
-import NewAddressModal from '@components/Modal/NewAddressModal';
-import EditAddressModal from '@components/Modal/EditAddressModal';
 
 const Account = () => {
 	const openModal = useModalStore((state) => state.openModal);
@@ -127,14 +127,7 @@ const Account = () => {
 												variant="light"
 												size="small"
 												onClick={() =>
-													openModal(
-														<EditAddressModal
-															data={{
-																label: userData.label || null,
-																shippingAddress: userData.shippingAddress!,
-															}}
-														/>,
-													)
+													openModal(<EditAddressModal userData={userData} />)
 												}
 											>
 												Edit
