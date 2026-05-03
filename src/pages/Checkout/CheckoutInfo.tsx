@@ -1,5 +1,8 @@
-import type { INewOrderRequestData, OrderPageState } from '#types/order';
-import type { INewAddressFormData } from '#types/userinfo';
+import type {
+	IAddressFormData,
+	INewOrderRequestData,
+	OrderPageState,
+} from '#types/order';
 import iconBookWhite from '@assets/icons/icon-book-white.svg';
 import IconTextButton from '@components/Button/IconTextButton';
 import TextButton from '@components/Button/TextButton';
@@ -43,7 +46,7 @@ const CheckoutInfo = () => {
 		handleSubmit,
 		reset,
 		control,
-	} = useForm<INewAddressFormData>({
+	} = useForm<IAddressFormData>({
 		mode: 'onChange',
 		defaultValues: {
 			addressLabel: '',
@@ -118,7 +121,7 @@ const CheckoutInfo = () => {
 	const { mutateAsync: changeCartAsync } = useChangeCart();
 	const queryClient = useQueryClient();
 
-	const onSubmit = (data: INewAddressFormData) => {
+	const onSubmit = (data: IAddressFormData) => {
 		const callingCode = data.nation
 			? `+${getCountryCallingCode(data.nation as any)}`
 			: '';

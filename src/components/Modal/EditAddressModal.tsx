@@ -1,20 +1,25 @@
 import type {
 	IChangeProfileRequestData,
-	INewAddressRequestData,
+	IEditAddressRequestData,
+	IUserInfo,
 } from '#types/userinfo';
-import NewAddressForm from '@components/Form/NewAddressForm';
+import EditAddressForm from '@components/Form/EditAddressForm';
 import AlertModal from '@components/Modal/AlertModal';
 import FormModal from '@components/Modal/FormModal';
 import useChangeProfile from '@hooks/useChangeProfile';
 import { useModalStore } from '@store/useModalStore';
 
-const NewAddressModal = () => {
+interface EditAddressModalProps {
+	userData: IUserInfo;
+}
+
+const EditAddressModal = ({ userData }: EditAddressModalProps) => {
 	const closeModal = useModalStore((state) => state.closeModal);
 	const openModal = useModalStore((state) => state.openModal);
 
 	const { mutate: changeProfile, isPending } = useChangeProfile();
 
-	const handleSave = (formData: INewAddressRequestData) => {
+	const handleSave = (formData: IEditAddressRequestData) => {
 		const payload: Partial<IChangeProfileRequestData> = {
 			label: formData.label || null,
 			shippingAddress: formData.shippingAddress || null,
@@ -42,16 +47,23 @@ const NewAddressModal = () => {
 
 	return (
 		<FormModal
-			title="New Address"
+			title="Edit Address"
 			firstButtonText="Cancel"
 			secondButtonText={isPending ? 'Saving...' : 'Save'}
-			formId="newAddressForm"
+			formId="editAddressForm"
 			closeOnOverlayClick={false}
 			isPending={isPending}
 		>
-			<NewAddressForm onSubmit={handleSave} isPending={isPending} />
+			<EditAddressForm
+				onSubmit={handleSave}
+				isPending={isPending}
+				defaultValues={{
+					label: userData.label || null,
+					shippingAddress: userData.shippingAddress ?? '',
+				}}
+			/>
 		</FormModal>
 	);
 };
 
-export default NewAddressModal;
+export default EditAddressModal;

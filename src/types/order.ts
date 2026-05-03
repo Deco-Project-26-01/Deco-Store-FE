@@ -148,3 +148,11 @@ export interface IOrderDetailFailureResponse extends IOrderDetailResponse {
 		code: string;
 	};
 }
+
+export interface IAddressFormData {
+	addressLabel: string;
+	recipientName: string;
+	nation: string;
+	phone: string;
+	address: string;
+}
