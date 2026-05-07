@@ -156,3 +156,63 @@ export interface IAddressFormData {
 	phone: string;
 	address: string;
 }
+
+export interface IOrderListResponse {
+	success: boolean;
+	message: string;
+}
+
+export interface IOrderContent {
+	id: number;
+	userId: number;
+	orderNumber: string;
+	orderPrice: number;
+	currencySnapshot: number;
+	status:
+		| 'PENDING'
+		| 'PREPARING'
+		| 'SHIPPED'
+		| 'IN_TRANSIT'
+		| 'DELIVERED'
+		| 'CANCELLED'
+		| 'REFUNDED';
+	address: string;
+	label: string;
+	recipientName: string;
+	trackingNumber: string | null;
+	orderedAt: string;
+	cancelledAt: string | null;
+	items: {
+		orderProductId: number;
+		productId: number;
+		productName: string;
+		quantity: number;
+		unitPrice: number;
+		totalPrice: number;
+	}[];
+}
+
+export interface IOrderListData {
+	content: IOrderContent[];
+	currentPage: number;
+	totalPages: number;
+	totalElements: number;
+	size: number;
+	hasNext: boolean;
+	hasPrevious: boolean;
+}
+
+export interface IOrderListSuccessResponse extends IOrderListResponse {
+	success: true;
+	data: IOrderListData;
+	error: null;
+}
+
+export interface IOrderListFailureResponse extends IOrderListResponse {
+	success: false;
+	data: null;
+	error: {
+		status: number;
+		code: string;
+	};
+}
