@@ -37,7 +37,7 @@ const useCancelOrder = () => {
 			});
 
 			queryClient.invalidateQueries({
-				queryKey: ['order', orderId],
+				queryKey: ['orderDetail', orderId],
 			});
 		},
 	});

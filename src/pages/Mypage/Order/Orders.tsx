@@ -35,7 +35,9 @@ const Orders = () => {
 	const [searchParams] = useSearchParams();
 	const currentStatus = searchParams.get('status') ?? '';
 
-	const pageNum = Math.max(0, Number(searchParams.get('page') ?? '0'));
+	const pageParam = Number(searchParams.get('page'));
+
+	const pageNum = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 0;
 	const params = new URLSearchParams(searchParams);
 	params.delete('page');
 
@@ -138,7 +140,10 @@ const Orders = () => {
 											<td className="px-sm py-lg align-middle">
 												<div className="flex flex-col items-center gap-sm">
 													{order.items.map((item) => (
-														<p className="text-bodyBase">
+														<p
+															key={item.orderProductId}
+															className="text-bodyBase"
+														>
 															{item.productName} x {item.quantity}
 														</p>
 													))}

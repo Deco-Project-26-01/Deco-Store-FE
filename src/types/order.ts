@@ -177,7 +177,7 @@ export interface IOrderContent {
 		| 'CANCELLED'
 		| 'REFUNDED';
 	address: string;
-	label: string;
+	label: string | null;
 	recipientName: string;
 	trackingNumber: string | null;
 	orderedAt: string;
