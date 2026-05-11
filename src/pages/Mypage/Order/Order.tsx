@@ -23,7 +23,6 @@ const Order = () => {
 	if (error) {
 		return (
 			<div className="py-4xl flex flex-col gap-3xl items-center">
-				{/* 에러 아이콘 변경 필요 */}
 				<img src={iconError} alt="Error" className="w-[15rem] h-[15rem]" />
 				<p className="text-titleLarge">Something went wrong</p>
 				<p className="text-bodyBase">{error.message}</p>

@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 type OrderStatusType =
 	| 'PENDING'
 	| 'PREPARING'
@@ -68,7 +70,7 @@ const OrderStatus = ({ status }: IOrderStatusProps) => {
 				style={
 					{
 						'--progress-width': `calc((100% - 6.7rem) * ${progressRatio})`,
-					} as React.CSSProperties
+					} as CSSProperties
 				}
 			>
 				{orderStatusOptions.map((step, index) => {
