@@ -220,3 +220,20 @@ body {
 		@apply max-w-[1280px] mx-auto;
 	}
 }
+
+/* Order Status Progress */
+.order-status-progress::before {
+	background-image: repeating-linear-gradient(
+		to right,
+		var(--color-base-500) 0 6px,
+		transparent 6px 10px
+	);
+}
+
+.order-status-progress::after {
+	background-image: repeating-linear-gradient(
+		to right,
+		var(--color-primary-dark) 0 6px,
+		transparent 6px 10px
+	);
+}
