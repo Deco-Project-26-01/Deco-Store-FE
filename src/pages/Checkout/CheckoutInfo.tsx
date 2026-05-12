@@ -1,5 +1,8 @@
-import type { INewOrderRequestData, OrderPageState } from '#types/order';
-import type { INewAddressFormData } from '#types/userinfo';
+import type {
+	IAddressFormData,
+	INewOrderRequestData,
+	OrderPageState,
+} from '#types/order';
 import iconBookWhite from '@assets/icons/icon-book-white.svg';
 import IconTextButton from '@components/Button/IconTextButton';
 import TextButton from '@components/Button/TextButton';
@@ -7,9 +10,11 @@ import CountryDropdown from '@components/Input/CountryDropdown';
 import DefaultInput from '@components/Input/DefaultInput';
 import InputLabel from '@components/Label/InputLabel';
 import AlertModal from '@components/Modal/AlertModal';
+import useChangeCart from '@hooks/useChangeCart';
 import useGetUserInfo from '@hooks/useGetUserInfo';
 import useOrder from '@hooks/useOrder';
 import { useModalStore } from '@store/useModalStore';
+import { useQueryClient } from '@tanstack/react-query';
 import getCountryCodeFromNation from '@utils/getCountryCodeFromNation';
 import { Controller, useForm } from 'react-hook-form';
 import { getCountryCallingCode } from 'react-phone-number-input';
@@ -41,7 +46,7 @@ const CheckoutInfo = () => {
 		handleSubmit,
 		reset,
 		control,
-	} = useForm<INewAddressFormData>({
+	} = useForm<IAddressFormData>({
 		mode: 'onChange',
 		defaultValues: {
 			addressLabel: '',
@@ -113,8 +118,10 @@ const CheckoutInfo = () => {
 	};
 
 	const { mutate: createOrder } = useOrder();
+	const { mutateAsync: changeCartAsync } = useChangeCart();
+	const queryClient = useQueryClient();
 
-	const onSubmit = (data: INewAddressFormData) => {
+	const onSubmit = (data: IAddressFormData) => {
 		const callingCode = data.nation
 			? `+${getCountryCallingCode(data.nation as any)}`
 			: '';
@@ -131,13 +138,43 @@ const CheckoutInfo = () => {
 		};
 
 		createOrder(formData, {
-			onSuccess: (data) => {
+			onSuccess: async (data) => {
 				const orderId = data.data.id;
+				let hasCartCleanupError = false;
+
+				try {
+					if (returnTo === '/cart') {
+						const results = await Promise.allSettled(
+							orderItems.map((item) =>
+								changeCartAsync({
+									productId: item.productId,
+									quantity: 0,
+								}),
+							),
+						);
+
+						hasCartCleanupError = results.some(
+							(result) => result.status === 'rejected',
+						);
+					}
+				} finally {
+					if (returnTo === '/cart') {
+						await queryClient.invalidateQueries({ queryKey: ['cart'] });
+					}
+				}
 
 				openModal(
 					<AlertModal
-						title="Order Created Successfully"
-						description={`Your order has been created successfully.`}
+						title={
+							hasCartCleanupError
+								? 'Order Created, But Cart Cleanup Failed'
+								: 'Order Created Successfully'
+						}
+						description={
+							hasCartCleanupError
+								? 'Your order was created, but some cart items may not have been removed. Please check your cart.'
+								: 'Your order has been created successfully.'
+						}
 						buttonText="OK"
 						onConfirm={() => {
 							navigate(`/checkout/complete/${orderId}`, { replace: true });

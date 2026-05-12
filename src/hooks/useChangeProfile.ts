@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError, type AxiosInstance } from 'axios';
 
 const changeProfile = async (
-	formData: IChangeProfileRequestData,
+	formData: Partial<IChangeProfileRequestData>,
 	instance: AxiosInstance,
 ) => {
 	try {
@@ -35,7 +35,7 @@ const useChangeProfile = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (formData: IChangeProfileRequestData) =>
+		mutationFn: (formData: Partial<IChangeProfileRequestData>) =>
 			changeProfile(formData, axios),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['userInfo'] });

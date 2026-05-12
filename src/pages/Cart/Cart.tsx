@@ -1,5 +1,6 @@
 import iconCheckWhite from '@assets/icons/icon-check-white.svg';
 import iconEmptyCart from '@assets/icons/icon-empty-cart-base500.svg';
+import iconError from '@assets/icons/icon-error-base500.svg';
 import TextButton from '@components/Button/TextButton';
 import QuantityInput from '@components/Input/QuantityInput';
 import TextLink from '@components/Link/TextLink';
@@ -8,6 +9,7 @@ import ConfirmModal from '@components/Modal/ConfirmModal';
 import useChangeCart from '@hooks/useChangeCart';
 import useGetCart from '@hooks/useGetCart';
 import { useModalStore } from '@store/useModalStore';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,6 +64,8 @@ const Cart = () => {
 	}, [cartItems]);
 
 	const { mutate: changeCart, isPending } = useChangeCart();
+	const queryClient = useQueryClient();
+
 	const handleSave = ({
 		productId,
 		quantity,
@@ -72,6 +76,9 @@ const Cart = () => {
 		changeCart(
 			{ productId, quantity },
 			{
+				onSuccess: () => {
+					queryClient.invalidateQueries({ queryKey: ['cart'] });
+				},
 				onError: (error) => {
 					openModal(
 						<AlertModal
@@ -177,12 +184,7 @@ const Cart = () => {
 				{/* 에러 발생 */}
 				{error && (
 					<div className="py-4xl flex flex-col gap-3xl items-center">
-						{/* 에러 아이콘 변경 필요 */}
-						<img
-							src={iconEmptyCart}
-							alt="Empty Cart"
-							className="w-[15rem] h-[15rem]"
-						/>
+						<img src={iconError} alt="Error" className="w-[15rem] h-[15rem]" />
 						<p className="text-titleLarge">Something went wrong</p>
 						<p className="text-bodyBase">{error.message}</p>
 						<TextLink to="/" variant="dark" size="small">

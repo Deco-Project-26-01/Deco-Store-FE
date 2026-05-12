@@ -76,9 +76,9 @@ export interface IOrderCreatedSuccessResponse extends IOrderCreatedResponse {
 		label: string | null;
 		recipientName: string;
 		phone: string;
-		trackingNumber: null;
+		trackingNumber: string | null;
 		orderedAt: string;
-		cancelledAt: null;
+		cancelledAt: string | null;
 		items: {
 			orderProductId: number;
 			productId: number;
@@ -92,6 +92,123 @@ export interface IOrderCreatedSuccessResponse extends IOrderCreatedResponse {
 }
 
 export interface IOrderCreatedFailureResponse extends IOrderCreatedResponse {
+	success: false;
+	data: null;
+	error: {
+		status: number;
+		code: string;
+	};
+}
+
+export interface IOrderDetailResponse {
+	success: boolean;
+	message: string;
+}
+
+export interface IOrderDetailSuccessResponse extends IOrderDetailResponse {
+	success: true;
+	data: {
+		id: number;
+		userId: number;
+		orderNumber: string;
+		orderPrice: number;
+		currencySnapshot: number;
+		status:
+			| 'PENDING'
+			| 'PREPARING'
+			| 'SHIPPED'
+			| 'IN_TRANSIT'
+			| 'DELIVERED'
+			| 'CANCELLED'
+			| 'REFUNDED';
+		address: string;
+		label: string | null;
+		recipientName: string;
+		phone: string;
+		trackingNumber: string | null;
+		orderedAt: string;
+		cancelledAt: string | null;
+		items: {
+			orderProductId: number;
+			productId: number;
+			productName: string;
+			quantity: number;
+			unitPrice: number;
+			totalPrice: number;
+		}[];
+	};
+	error: null;
+}
+
+export interface IOrderDetailFailureResponse extends IOrderDetailResponse {
+	success: false;
+	data: null;
+	error: {
+		status: number;
+		code: string;
+	};
+}
+
+export interface IAddressFormData {
+	addressLabel: string;
+	recipientName: string;
+	nation: string;
+	phone: string;
+	address: string;
+}
+
+export interface IOrderListResponse {
+	success: boolean;
+	message: string;
+}
+
+export interface IOrderContent {
+	id: number;
+	userId: number;
+	orderNumber: string;
+	orderPrice: number;
+	currencySnapshot: number;
+	status:
+		| 'PENDING'
+		| 'PREPARING'
+		| 'SHIPPED'
+		| 'IN_TRANSIT'
+		| 'DELIVERED'
+		| 'CANCELLED'
+		| 'REFUNDED';
+	address: string;
+	label: string | null;
+	recipientName: string;
+	trackingNumber: string | null;
+	orderedAt: string;
+	cancelledAt: string | null;
+	items: {
+		orderProductId: number;
+		productId: number;
+		productName: string;
+		quantity: number;
+		unitPrice: number;
+		totalPrice: number;
+	}[];
+}
+
+export interface IOrderListData {
+	content: IOrderContent[];
+	currentPage: number;
+	totalPages: number;
+	totalElements: number;
+	size: number;
+	hasNext: boolean;
+	hasPrevious: boolean;
+}
+
+export interface IOrderListSuccessResponse extends IOrderListResponse {
+	success: true;
+	data: IOrderListData;
+	error: null;
+}
+
+export interface IOrderListFailureResponse extends IOrderListResponse {
 	success: false;
 	data: null;
 	error: {
